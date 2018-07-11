@@ -41,8 +41,9 @@ function Login() {
             pairsKeyValuePair[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
         }
 
-        alert(pairsKeyValuePair["access_token"]);
-
-        console.log(pairsArray);
+        // Save the token in storage so it can be used later
+        chrome.storage.sync.set({ 
+            'access_token' : pairsKeyValuePair['access_token'] 
+        }, null);
     });
 }

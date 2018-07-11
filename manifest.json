@@ -10,8 +10,13 @@
         "default_popup": "popup.html"
     },
 
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["libs/graph-js-sdk-web.js", "timeline.js"],
+        "run_at": "document_end"
+    }],
+
     "permissions": [
-        "tabs",
         "identity",
         "storage",
         "https://graph.microsoft.com/v1.0/me/activities/*",
