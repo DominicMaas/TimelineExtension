@@ -1,5 +1,5 @@
 // Run when document has loaded
-document.body.onload = Init();
+(document.readyState == 'complete' || document.readyState == 'interactive') ? Init() : document.addEventListener('DOMContentLoaded', Init);
 
 // Code to run when the document has loaded
 function Init() {
