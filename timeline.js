@@ -1,5 +1,5 @@
 // Run when document has loaded
-document.body.onload = Init();
+(document.readyState == 'complete' || document.readyState == 'interactive') ? Init() : document.addEventListener('DOMContentLoaded', Init);
 
 // Code to run when the document has loaded
 function Init() {
@@ -26,23 +26,32 @@ function CreateOrUpdateActivity(accessToken) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Activity data
-    let activityTitle = (document.querySelector('meta[property="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"]').content;
+    let activityTitle = (document.querySelector('meta[property="og:title"],meta[name="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"],meta[name="og:title"]').content;
     let activityDescription = (document.querySelector('link[rel~="canonical"][href]') === null) ? ((document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]') === null) ? document.location : document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]').content) : document.querySelector('link[rel~="canonical"][href]').href;
     let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
-    let backgroundImage = (document.querySelector('meta[property="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"]').content;
+    let backgroundImage = (document.querySelector('meta[property="og:image"],meta[name="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"],meta[name="og:image"]').content;
 
+    if (navigator.userAgent.includes('Chrome')) {
+      var browserName = 'Google Chrome';
+      var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
+    }
+    else if (navigator.userAgent.includes('Firefox')) {
+      var browserName = 'Firefox';
+      var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
+    }
+    
     // Perform a fetch
     fetch(url, { 
         body: JSON.stringify({
             'appActivityId': activityId,
             'activitySourceHost': location.origin,
             'userTimezone': timeZone,
-            'appDisplayName': 'Google Chrome',
+            'appDisplayName': browserName,
             'activationUrl': location.href,
             'fallbackUrl': location.href,
             'visualElements': {
                 'attribution': {
-                    'iconUrl': 'https://www.google.com/images/icons/product/chrome-32.png',
+                    'iconUrl': browserIcon,
                     'alternateText': activityOriginUrl,
                     'addImageQuery': 'false'
                 },
