@@ -18,7 +18,7 @@ function CreateOrUpdateActivity(accessToken) {
     let activityId = encodeURIComponent(location.href.replace(/\//g, '_'));
 
     // Create the url
-    let url = 'https://graph.microsoft.com/1.0/me/activities/';
+    let url = 'https://graph.microsoft.com/beta/me/activities/';
         url += activityId;
 
     // Get the current date time
@@ -26,9 +26,10 @@ function CreateOrUpdateActivity(accessToken) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Activity data
-    let activityTitle = document.querySelector('meta[property="og:title"]').content || document.title;
+    let activityTitle = (document.querySelector('meta[property="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"]').content;
     let activityDescription = location.href;
-    let activityOriginUrl = location.origin;
+    let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
+    let backgroundImage = (document.querySelector('meta[property="og:title"]') === null) ? '' : document.querySelector('meta[property="og:title"]').content;
 
     // Perform a fetch
     fetch(url, { 
@@ -50,7 +51,7 @@ function CreateOrUpdateActivity(accessToken) {
                 'content': {
                     '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',
                     'type': 'AdaptiveCard',
-                    'backgroundImage': document.querySelector('meta[property="og:image"]').content,
+                    'backgroundImage': backgroundImage,
                     'body':
                     [{
                         'type': 'Container',
