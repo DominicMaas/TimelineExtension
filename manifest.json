@@ -13,6 +13,8 @@
     "permissions": [
         "tabs",
         "identity",
-        "storage"
+        "storage",
+        "https://graph.microsoft.com/v1.0/me/activities/*",
+        "https://login.microsoftonline.com/common/oauth2/v2.0/token"
     ]
 }
