@@ -31,7 +31,11 @@ function CreateOrUpdateActivity(accessToken) {
     let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
     let backgroundImage = (document.querySelector('meta[property="og:image"],meta[name="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"],meta[name="og:image"]').content;
 
-    if (navigator.userAgent.includes('Chrome')) {
+    if (navigator.userAgent.includes('Vivaldi')) {
+        var browserName = 'Vivaldi';
+        var browserIcon = 'https://vivaldi.com/assets/vivaldi-logo-32.png';
+    }
+    else if (navigator.userAgent.includes('Chrome')) {
         var browserName = 'Google Chrome';
         var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
     }
