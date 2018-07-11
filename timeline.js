@@ -1,5 +1,6 @@
 // Run when document has loaded
-(document.readyState == 'complete' || document.readyState == 'interactive') ? Init() : document.addEventListener('DOMContentLoaded', Init);
+(document.readyState == 'complete' || document.readyState == 'interactive') 
+    ? Init() : document.addEventListener('DOMContentLoaded', Init);
 
 // Code to run when the document has loaded
 function Init() {
@@ -14,14 +15,13 @@ function Init() {
 
 // Create or update the activity
 function CreateOrUpdateActivity(accessToken) {
-    // Activity Id
+    // Grab the activity id (url with // replaced with _)
     let activityId = encodeURIComponent(location.href.replace(/\//g, '_'));
 
-    // Create the url
-    let url = 'https://graph.microsoft.com/beta/me/activities/';
-        url += activityId;
+    // Create the microsoft graph activity url
+    let url = `https://graph.microsoft.com/beta/me/activities/${activityId}`;
 
-    // Get the current date time
+    // Get the current date time and time zone
     let date = new Date().toISOString();
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -32,12 +32,12 @@ function CreateOrUpdateActivity(accessToken) {
     let backgroundImage = (document.querySelector('meta[property="og:image"],meta[name="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"],meta[name="og:image"]').content;
 
     if (navigator.userAgent.includes('Chrome')) {
-      var browserName = 'Google Chrome';
-      var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
+        var browserName = 'Google Chrome';
+        var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
     }
     else if (navigator.userAgent.includes('Firefox')) {
-      var browserName = 'Firefox';
-      var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
+        var browserName = 'Firefox';
+        var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
     }
     
     // Perform a fetch
