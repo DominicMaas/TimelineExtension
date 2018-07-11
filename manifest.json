@@ -12,14 +12,12 @@
 
     "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
-        "js": ["libs/graph-js-sdk-web.js", "timeline.js"],
+        "js": ["timeline.js"],
         "run_at": "document_end"
     }],
 
     "permissions": [
         "identity",
-        "storage",
-        "https://graph.microsoft.com/v1.0/me/activities/*",
-        "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+        "storage"
     ]
 }
