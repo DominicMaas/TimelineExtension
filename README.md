@@ -16,3 +16,4 @@ Before I can publish to the Google Chrome store, these things need to be fixed.
 - [ ] Handle refresh tokens so the user does not have to login when the access token expires.
 - [ ] Better error checking.
 - [ ] Icons and assets.
+- [ ] Don't add activity to Timeline unless the page has been active for more than 30 seconds (will filter out login redirects).
