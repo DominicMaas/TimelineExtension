@@ -26,10 +26,10 @@ function CreateOrUpdateActivity(accessToken) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Activity data
-    let activityTitle = (document.querySelector('meta[property="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"]').content;
+    let activityTitle = (document.querySelector('meta[property="og:title"],meta[name="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"],meta[name="og:title"]').content;
     let activityDescription = location.href;
     let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
-    let backgroundImage = (document.querySelector('meta[property="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"]').content;
+    let backgroundImage = (document.querySelector('meta[property="og:image"],meta[name="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"],meta[name="og:image"]').content;
 
     // Perform a fetch
     fetch(url, { 
