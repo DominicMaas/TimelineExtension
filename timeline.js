@@ -26,10 +26,10 @@ function CreateOrUpdateActivity(accessToken) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Activity data
-    let activityTitle = (document.querySelector('meta[property="og:title"],meta[name="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"],meta[name="og:title"]').content;
+    let activityTitle = (document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]') === null) ? document.title : document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]').content;
     let activityDescription = (document.querySelector('link[rel~="canonical"][href]') === null) ? ((document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]') === null) ? document.location : document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]').content) : document.querySelector('link[rel~="canonical"][href]').href;
     let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
-    let backgroundImage = (document.querySelector('meta[property="og:image"],meta[name="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"],meta[name="og:image"]').content;
+    let backgroundImage = (document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]') === null) ? '' : document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]').content;
 
     if (navigator.userAgent.includes('Chrome')) {
         var browserName = 'Google Chrome';
