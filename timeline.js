@@ -29,7 +29,7 @@ function CreateOrUpdateActivity(accessToken) {
     let activityTitle = (document.querySelector('meta[property="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"]').content;
     let activityDescription = location.href;
     let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
-    let backgroundImage = (document.querySelector('meta[property="og:title"]') === null) ? '' : document.querySelector('meta[property="og:title"]').content;
+    let backgroundImage = (document.querySelector('meta[property="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"]').content;
 
     // Perform a fetch
     fetch(url, { 
