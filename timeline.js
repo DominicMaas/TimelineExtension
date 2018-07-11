@@ -27,7 +27,7 @@ function CreateOrUpdateActivity(accessToken) {
 
     // Activity data
     let activityTitle = (document.querySelector('meta[property="og:title"]') === null) ? document.title : document.querySelector('meta[property="og:title"]').content;
-    let activityDescription = location.href;
+    let activityDescription = (document.querySelector('link[rel~="canonical"][href]') === null) ? ((document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]') === null) ? document.location : document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]').content) : document.querySelector('link[rel~="canonical"][href]').href;
     let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
     let backgroundImage = (document.querySelector('meta[property="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"]').content;
 
