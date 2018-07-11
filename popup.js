@@ -42,7 +42,7 @@ function Login() {
         }
 
         // Save the token in storage so it can be used later
-        chrome.storage.sync.set({ 
+        chrome.storage.local.set({
             'access_token' : pairsKeyValuePair['access_token'] 
         }, null);
     });
