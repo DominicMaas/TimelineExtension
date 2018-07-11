@@ -4,8 +4,15 @@
     "name": "Windows Timeline for Chrome",
     "description": "Sync your chrome history across devices using Windows Timeline.",
     "version": "1.0.0",
+    "author": "Dominic Maas",
+
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
 
     "permissions": [
-        "tabs"
+        "tabs",
+        "identity",
+        "storage"
     ]
 }
