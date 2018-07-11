@@ -5,7 +5,7 @@
 // Code to run when the document has loaded
 function Init() {
     // Get the access token (may be null if not logged in)
-    chrome.storage.sync.get('access_token', function(data) {
+    chrome.storage.local.get('access_token', function(data) {
         // Only run this code if an access token exists
         if (data.access_token !== null) {
             CreateOrUpdateActivity(data.access_token);
