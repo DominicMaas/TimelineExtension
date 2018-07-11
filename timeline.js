@@ -31,18 +31,27 @@ function CreateOrUpdateActivity(accessToken) {
     let activityOriginUrl = location.origin.replace(/(^\w+:|^)\/\//, '');
     let backgroundImage = (document.querySelector('meta[property="og:image"],meta[name="og:image"]') === null) ? '' : document.querySelector('meta[property="og:image"],meta[name="og:image"]').content;
 
+    if (navigator.userAgent.includes('Chrome')) {
+      var browserName = 'Google Chrome';
+      var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
+    }
+    else if (navigator.userAgent.includes('Firefox')) {
+      var browserName = 'Firefox';
+      var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
+    }
+    
     // Perform a fetch
     fetch(url, { 
         body: JSON.stringify({
             'appActivityId': activityId,
             'activitySourceHost': location.origin,
             'userTimezone': timeZone,
-            'appDisplayName': 'Google Chrome',
+            'appDisplayName': browserName,
             'activationUrl': location.href,
             'fallbackUrl': location.href,
             'visualElements': {
                 'attribution': {
-                    'iconUrl': 'https://www.google.com/images/icons/product/chrome-32.png',
+                    'iconUrl': browserIcon,
                     'alternateText': activityOriginUrl,
                     'addImageQuery': 'false'
                 },
