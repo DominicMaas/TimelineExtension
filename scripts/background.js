@@ -14,7 +14,7 @@ if (navigator.userAgent.includes('Vivaldi')) {
     var browserIcon = 'https://vivaldi.com/assets/vivaldi-logo-32.png';
 
      // Client Id
-     var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
+     var clientId = '';
 }
 else if (navigator.userAgent.includes('Chrome')) {
     // Branding
@@ -30,7 +30,7 @@ else if (navigator.userAgent.includes('Firefox')) {
     var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
 
     // Client Id
-    var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
+    var clientId = '6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3';
 }
 
 // Get the access token (may be null if not logged in)
