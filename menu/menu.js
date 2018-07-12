@@ -4,17 +4,25 @@ var accessToken;
 // Get the access token (may be null if not logged in)
 chrome.storage.local.get('access_token', function(data) {
     // Only run this code if an access token exists
+
+
     if (data.access_token !== null) {
         accessToken = data.access_token;
+        toggleLoginState();
     }
 });
+
+
+function toggleLoginState() {
+    document.getElementById('section-login-pending').style.display = accessToken ? 'none' : 'block';
+    document.getElementById('section-login-completed').style.display = accessToken ? 'block' : 'none';
+}
 
 // Run when document has loaded
 document.addEventListener('DOMContentLoaded', function() {
 
     // login/logout views
-    document.getElementById('section-login-pending').style.display = accessToken ? 'none' : 'block';
-    document.getElementById('section-login-completed').style.display = accessToken ? 'block' : 'none';
+    toggleLoginState();
 
     // settings toggle visible views
     document.getElementById('toggle-settings').addEventListener('click', function() {
