@@ -179,7 +179,7 @@ function Logout() {
 // Take in the redirect url and grab the access 
 // token from it.
 function ValidateLogin(redirect_url) {
-    console.log(redirect_url);
+    console.debug(redirect_url);
 
     // Get the data from the redirect url
     let data = redirect_url.split('#')[1];
