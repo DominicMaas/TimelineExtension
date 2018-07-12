@@ -6,7 +6,7 @@ if (window.parent.location == window.location) {
     // Get minimum time on page time
     (chrome.storage.sync || chrome.storage.local).get('min_sec_loaded', function(data) {
         if (data.min_sec_loaded) {
-            minimumTimeOnPage = data.access_token;
+            minimumTimeOnPage = data.min_sec_loaded;
         }
 
         // Run when document has loaded
