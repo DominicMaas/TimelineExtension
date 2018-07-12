@@ -52,6 +52,8 @@ p
     margin-left: 8px;
 }
 
-#section-settings {
+/* initial state */
+#section-settings,
+#section-login-completed {
     display: none;
 }

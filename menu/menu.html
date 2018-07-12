@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Timeline Extension</title>
     <!-- CSS for this page -->
     <link rel="stylesheet" href="menu.css" />
@@ -19,12 +20,12 @@
         <h2>Settings</h2>
         
         <section id="section-timeonpage">
-            <h3>Page Timeout</h3>
-            <p>Change how long the extension should wait after page load before pushing a user activity to Windows Timeline.</p>
+            <h3>Minimum time on page</h3>
+            <p>Sets how long a page must have been opened before it’s sent to Windows Timeline.</p>
             <input type="number" />
         </section>
 
-        <section id="section-dev-clientid">
+        <section id="section-clientid">
             <h3>Custom Client ID</h3>
             <p>Note: This is only for development. Specify a Client Id to use instead of the application defaults.</p>
             <input type="text" />
@@ -34,8 +35,17 @@
     <section id="section-account">
         <section id="section-login">
             <h2>Microsoft Account</h2>
-            <p>Login with the same Microsoft Account as you use with your Windows Account. After you login, your browsing history will be sent to Microsoft.</p>
-            <button id="login">Login with your Microsoft Account</button> <span class="required">Required</span>
+
+            <section id="section-login-pending">
+                <p>Login with the same Microsoft Account as you use with your Windows Account. After you login, your browsing history will be sent to Microsoft.</p>
+                <button id="login">Login with your Microsoft Account</button> <span class="required">Required</span>
+            </section>
+
+            <section id="section-login-completed">
+                <p>You’re logged in as “<span id="section-login-accountname"></span>”.</p>
+                <button id="logout">Log out</button>
+                <p>Visit your Activity History Dashboard to manage or delete your browsing history. Private/incognito mode browsing history is not recorded.</p>
+            </section>
         </section>
 
         <section id="section-privacy">
