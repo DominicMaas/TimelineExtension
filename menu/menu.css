@@ -1,14 +1,21 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body
 {
     font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     background-color: #F4F4F4;
     color: #24292e;
-    width: 300px;
-    height: 800px;
+    width: 380px;
+    min-height: 400px;
+    margin: 0 18px 12px 12px;
+    padding: 0;
 }
 
-h3 
+h2, h3 
 {
     margin:0;
     margin-top:10px;
@@ -16,11 +23,20 @@ h3
     font-size: 16px;
 }
 
+h2 {
+    font-size: 18px;
+}
+
 p 
 {
-    margin: 0;
-    margin-top:5px;
+    margin: 8px 0;
     opacity: 1;
     font-size: 14px;
     font-weight: 300;
+}
+
+.required {
+    color: red;
+    display: inline-block;
+    margin-left: 8px;
 }
