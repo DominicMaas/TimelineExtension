@@ -7,25 +7,14 @@ const Scopes = ['UserActivity.ReadWrite.CreatedByApp', 'offline_access'];
 // Run when document has loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Get the login button and bind the click event
-    document.getElementById('login').addEventListener('click', Login());
+    document.getElementById('login').addEventListener('click', Login);
 });
 
 // Open the Microsoft account login dialog, let the user login,
 // grab the token and then store it for later use.
 function Login() {
-    // Build the request url
-    let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
-        authURL += `?client_id=${ClientID}`;
-        authURL += `&response_type=token`;
-        authURL += `&response_mode=fragment`;
-        authURL += `&redirect_uri=${encodeURIComponent('https://mmpefenajbmfcmgfadibmkmancoljggp.chromiumapp.org/provider_cb')}`;
-        authURL += `&scope=${encodeURIComponent(Scopes.join(' '))}`;
 
-    // Launch the web flow to login the user
-    chrome.identity.launchWebAuthFlow({
-        'url': authURL,
-        'interactive': true
-    }, redirect_url => {
+    function validate(redirect_url) {
         // Get the data from the redirect url
         let data = redirect_url.split('#')[1];
 
@@ -42,8 +31,31 @@ function Login() {
         }
 
         // Save the token in storage so it can be used later
-        chrome.storage.local.set({
+        chrome.storage.local.set({ 
             'access_token' : pairsKeyValuePair['access_token'] 
         }, null);
-    });
+    }
+
+    // Build the request url
+    let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
+        authURL += `?client_id=${ClientID}`;
+        authURL += `&response_type=token`;
+        authURL += `&response_mode=fragment`;
+        authURL += `&redirect_uri=${encodeURIComponent('https://mmpefenajbmfcmgfadibmkmancoljggp.chromiumapp.org/provider_cb')}`;
+        authURL += `&scope=${encodeURIComponent(Scopes.join(' '))}`;
+
+
+    // Launch the web flow to login the user
+    // COMPAT: Firefox requires promise, Chrome requires callback.
+    if (browser) {
+        browser.identity.launchWebAuthFlow({
+            'url': authURL,
+            'interactive': true
+        }).then(validate)
+    } else {
+        chrome.identity.launchWebAuthFlow({
+            'url': authURL,
+            'interactive': true
+        }, validate);
+    }
 }
