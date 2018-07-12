@@ -107,8 +107,6 @@ function SendActivityBeacon(webActivity) {
         ]
     });
     
-    console.log(data);
-
     // Perform a fetch
     fetch(url, {
         body: data,
@@ -119,6 +117,16 @@ function SendActivityBeacon(webActivity) {
         },
         method: 'PUT'
     }).then(function(response) {
+        // The user is not allowed to access this resource
+        if (response.status === 401) {
+            // Debug
+            console.log("Returned 401, attempting to login the user again...");
+
+            // Get a new token and attempt another request
+            Login(true);
+            SendActivityBeacon(webActivity);
+        }
+
         console.debug(response);
         response.text().then(function(text){console.debug(text)});
     });
@@ -127,7 +135,7 @@ function SendActivityBeacon(webActivity) {
 
 // Open the Microsoft account login dialog, let the user login,
 // grab the token and then store it for later use.
-function Login() {
+function Login(silent) {
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
         authURL += `?client_id=${clientId}`;
@@ -136,17 +144,21 @@ function Login() {
         authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
         authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
 
+    // If refreshing a token, don't display UI
+    if (silent)
+        authURL += `&prompt=none`;
+
     // Launch the web flow to login the user
     // COMPAT: Firefox requires promise, Chrome requires callback.
     if (typeof browser === 'undefined' || !browser) {
         chrome.identity.launchWebAuthFlow({
             'url': authURL,
-            'interactive': true
+            'interactive': !silent
         }, ValidateLogin);
     } else {
         browser.identity.launchWebAuthFlow({
             'url': authURL,
-            'interactive': true
+            'interactive': !silent
         }).then(ValidateLogin);
     }
 }
@@ -154,6 +166,8 @@ function Login() {
 // Take in the redirect url and grab the access 
 // token from it.
 function ValidateLogin(redirect_url) {
+    console.log(redirect_url);
+
     // Get the data from the redirect url
     let data = redirect_url.split('#')[1];
 
@@ -169,6 +183,10 @@ function ValidateLogin(redirect_url) {
         pairsKeyValuePair[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
     }
 
+    // If there is an error, log it
+    if (pairsKeyValuePair["error"] != null)
+        console.error(pairsKeyValuePair["error_description"]);
+    
     // Save the token in storage so it can be used later
     chrome.storage.local.set({ 
         'access_token' : pairsKeyValuePair['access_token'] 
@@ -188,6 +206,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     // The user has requested a login, open the login dialog 
     if (request.type == 'Login') {
-        Login();
+        Login(false);
     }
 });
