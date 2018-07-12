@@ -1,6 +1,9 @@
-// Run when document has loaded
-(document.readyState == 'complete' || document.readyState == 'interactive') 
-    ? CreateOrUpdateActivity() : document.addEventListener('DOMContentLoaded', CreateOrUpdateActivity);
+// Only run in main frame (primary document)
+if (window.parent.location == window.location) {
+    // Run when document has loaded
+    (document.readyState == 'complete' || document.readyState == 'interactive') 
+        ? CreateOrUpdateActivity() : document.addEventListener('DOMContentLoaded', CreateOrUpdateActivity);
+}
 
 // Create or update the activity
 function CreateOrUpdateActivity() {
