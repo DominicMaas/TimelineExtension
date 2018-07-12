@@ -1,17 +1,6 @@
 // Run when document has loaded
 (document.readyState == 'complete' || document.readyState == 'interactive') 
-    ? Init() : document.addEventListener('DOMContentLoaded', Init);
-
-
-function Init() {
-    // Get the access token (may be null if not logged in)
-    chrome.storage.local.get('access_token', function(data) {
-        // Only run this code if an access token exists
-        if (data.access_token) {
-            CreateOrUpdateActivity();
-        }
-    });
-}
+    ? CreateOrUpdateActivity() : document.addEventListener('DOMContentLoaded', CreateOrUpdateActivity);
 
 
 // Create or update the activity

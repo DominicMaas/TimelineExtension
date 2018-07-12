@@ -121,7 +121,7 @@ function HandleMessages(request, sender, sendResponse) {
 
     if (request.type == 'WebActivity' && request.payload) {
         SendActivityBeacon(request.payload);
-    
+    }
 }
 
 chrome.runtime.onMessage.addListener(HandleMessages);
