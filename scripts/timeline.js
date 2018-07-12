@@ -1,6 +1,19 @@
-// Run when document has loaded
-(document.readyState == 'complete' || document.readyState == 'interactive') 
-    ? CreateOrUpdateActivity() : document.addEventListener('DOMContentLoaded', CreateOrUpdateActivity);
+var minimumTimeOnPage = 8;
+
+// Only run in main frame (primary document)
+if (window.parent.location == window.location) {
+
+    // Get minimum time on page time
+    (chrome.storage.sync || chrome.storage.local).get('min_sec_loaded', function(data) {
+        if (data.min_sec_loaded) {
+            minimumTimeOnPage = data.min_sec_loaded;
+        }
+
+        // Run when document has loaded
+        (document.readyState == 'complete' || document.readyState == 'interactive')
+            ? CreateOrUpdateActivity() : document.addEventListener('DOMContentLoaded', CreateOrUpdateActivity);
+    });
+}
 
 // Create or update the activity
 function CreateOrUpdateActivity() {
@@ -22,6 +35,8 @@ function CreateOrUpdateActivity() {
         }
     }
 
-    // send activity data to background script
-    chrome.runtime.sendMessage(activityMessage);
+    setTimeout(function(activityMessage) {
+        // send activity data to background script
+        chrome.runtime.sendMessage(activityMessage);
+    }, (minimumTimeOnPage * 1000), activityMessage);
 }
