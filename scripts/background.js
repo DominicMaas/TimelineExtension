@@ -4,6 +4,8 @@ const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'offline_access'];
 // Redirect url for auth login
 const redirectURL = chrome.identity.getRedirectURL();
 
+console.log(redirectURL);
+
 // Access token for the users Microsoft Account
 var accessToken;
 
