@@ -36,14 +36,18 @@ function Login() {
         }, null);
     }
 
+    // Get the redirect url (this is only client side, the generated url must
+    // match the server side url. So if cloning this repo, you may have to provide
+    // your own client id).
+    let redirectURL = chrome.identity.getRedirectURL();
+
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
         authURL += `?client_id=${ClientID}`;
         authURL += `&response_type=token`;
         authURL += `&response_mode=fragment`;
-        authURL += `&redirect_uri=${encodeURIComponent('https://mmpefenajbmfcmgfadibmkmancoljggp.chromiumapp.org/provider_cb')}`;
+        authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
         authURL += `&scope=${encodeURIComponent(Scopes.join(' '))}`;
-
 
     // Launch the web flow to login the user
     // COMPAT: Firefox requires promise, Chrome requires callback.
