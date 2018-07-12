@@ -1,35 +1,45 @@
-// Browser branding
-if (navigator.userAgent.includes('Vivaldi')) {
-    var browserName = 'Vivaldi';
-    var browserIcon = 'https://vivaldi.com/assets/vivaldi-logo-32.png';
-}
-else if (navigator.userAgent.includes('Chrome')) {
-    var browserName = 'Google Chrome';
-    var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
-}
-else if (navigator.userAgent.includes('Firefox')) {
-    var browserName = 'Firefox';
-    var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
-}
+// Scopes required for this extension
+const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'offline_access'];
 
+// Redirect url for auth login
+const redirectURL = chrome.identity.getRedirectURL();
 
-// Get and monitor access token for changes
+// Access token for the users Microsoft Account
 var accessToken;
 
-function UpdateAccessToken() {
-    // Get the access token (may be null if not logged in)
-    chrome.storage.local.get('access_token', function(data) {
-        // Only run this code if an access token exists
-        if (data.access_token !== null) {
-            accessToken = data.access_token;
-        }
-    });
+// Some features are browser specific (such as branding and client id)
+if (navigator.userAgent.includes('Vivaldi')) {
+    // Branding
+    var browserName = 'Vivaldi';
+    var browserIcon = 'https://vivaldi.com/assets/vivaldi-logo-32.png';
 
+     // Client Id
+     var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
+}
+else if (navigator.userAgent.includes('Chrome')) {
+    // Branding
+    var browserName = 'Google Chrome';
+    var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
+
+     // Client Id
+     var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
+}
+else if (navigator.userAgent.includes('Firefox')) {
+    // Branding
+    var browserName = 'Firefox';
+    var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
+
+    // Client Id
+    var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
 }
 
-UpdateAccessToken();
-chrome.storage.onChanged.addListener(UpdateAccessToken);
-
+// Get the access token (may be null if not logged in)
+chrome.storage.local.get('access_token', function(data) {
+    // Only run this code if an access token exists
+    if (data.access_token !== null) {
+        accessToken = data.access_token;
+    }
+});
 
 // Submit collected activity data to Microsoft
 function SendActivityBeacon(webActivity) {
@@ -115,14 +125,69 @@ function SendActivityBeacon(webActivity) {
 
 }
 
+// Open the Microsoft account login dialog, let the user login,
+// grab the token and then store it for later use.
+function Login() {
+    // Build the request url
+    let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
+        authURL += `?client_id=${clientId}`;
+        authURL += `&response_type=token`;
+        authURL += `&response_mode=fragment`;
+        authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
+        authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
 
-function HandleMessages(request, sender, sendResponse) {
-    console.debug('Message received');
-
-    if (request.type == 'WebActivity' && request.payload) {
-        SendActivityBeacon(request.payload);
+    // Launch the web flow to login the user
+    // COMPAT: Firefox requires promise, Chrome requires callback.
+    if (typeof browser === 'undefined' || !browser) {
+        chrome.identity.launchWebAuthFlow({
+            'url': authURL,
+            'interactive': true
+        }, ValidateLogin);
+    } else {
+        browser.identity.launchWebAuthFlow({
+            'url': authURL,
+            'interactive': true
+        }).then(ValidateLogin);
     }
 }
 
-chrome.runtime.onMessage.addListener(HandleMessages);
+// Take in the redirect url and grab the access 
+// token from it.
+function ValidateLogin(redirect_url) {
+    // Get the data from the redirect url
+    let data = redirect_url.split('#')[1];
 
+    // Split the data into pairs
+    var pairsArray = data.split('&');
+    
+    // Object that will store the key value pairs
+    var pairsKeyValuePair = {};
+
+    // Store the data into a key value pair object
+    for (pair in pairsArray) {
+        var split = pairsArray[pair].split('=');
+        pairsKeyValuePair[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
+    }
+
+    // Save the token in storage so it can be used later
+    chrome.storage.local.set({ 
+        'access_token' : pairsKeyValuePair['access_token'] 
+    }, null);
+
+    // Update the local variable
+    accessToken = pairsKeyValuePair['access_token'];
+}
+
+// Handle messages sent to this background script. Handles either
+// activity or login requests.
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    // Send a web activity request to the Microsoft Graph.
+    if (request.type == 'WebActivity' && request.payload) {
+        SendActivityBeacon(request.payload);
+    }
+
+    // The user has requested a login, open the login dialog 
+    if (request.type == 'Login') {
+        Login();
+    }
+});
