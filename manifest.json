@@ -10,9 +10,27 @@
 		"scripts": ["scripts/background.js"]
     },
     "browser_action": {
+        "default_icon": {
+            "16": "images/icon_16.png",
+            "19": "images/icon_19.png",
+            "24": "images/icon_24.png",
+            "32": "images/icon_32.png",
+            "38": "images/icon_38.png"
+        },
+        "default_title": "Timeline Extension",
         "default_popup": "menu/menu.html"
     },
-
+    "icons": {
+        "16": "images/icon_16.png",
+        "19": "images/icon_19.png",
+        "24": "images/icon_24.png",
+        "32": "images/icon_32.png",
+        "38": "images/icon_38.png",
+        "64": "images/icon_64.png",
+        "96": "images/icon_96.png",
+        "128": "images/icon_128.png",
+        "256": "images/icon_256.png"
+    },
     "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
         "js": ["scripts/timeline.js"],
