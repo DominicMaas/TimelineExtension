@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="0 0 256 256"
+   height="256"
+   width="256"
+   id="svg815"
+   version="1.1">
+  <metadata
+     id="metadata821">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs819" />
+  <path
+     id="rect846"
+     d="M 29.895478,79.71932 103.24206,39.103539 128,127.99999 40.296766,152.42561 Z"
+     style="opacity:1;fill:#f35022;fill-opacity:0.98431373;stroke:none;stroke-width:23.65483475;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.97254902" />
+  <path
+     id="rect846-3"
+     d="m 103.24206,39.103539 81.21716,-2.38702 31.24401,66.857861 L 128,127.99999 Z"
+     style="opacity:1;fill:#80bb03;fill-opacity:0.98823529;stroke:none;stroke-width:23.65483475;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.97254902" />
+  <path
+     id="rect846-3-6"
+     d="M 40.296766,152.42561 128,127.99999 l 24.75793,88.89647 -76.046742,4.95628 z"
+     style="opacity:1;fill:#03a5f0;fill-opacity:0.99215686;stroke:none;stroke-width:23.65483475;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.97254902" />
+  <path
+     id="rect846-3-6-7"
+     d="m 128,127.99999 87.70323,-24.42561 8.89953,78.90888 -71.84483,34.4132 z"
+     style="opacity:1;fill:#ffb903;fill-opacity:0.98039216;stroke:none;stroke-width:23.65483475;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.97254902" />
+  <path
+     id="path825"
+     d="M 230.86959,128 A 102.86959,102.86959 0 0 1 128,230.86959 102.86959,102.86959 0 0 1 25.130413,128 102.86959,102.86959 0 0 1 128,25.130412 102.86959,102.86959 0 0 1 230.86959,128 Z"
+     style="opacity:1;fill:none;stroke:#141414;stroke-width:27.51112747;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <rect
+     transform="rotate(-15)"
+     y="182.23351"
+     x="37.882683"
+     height="72.163445"
+     width="105.25397"
+     id="rect907-3-5-6"
+     style="opacity:1;fill:#141414;fill-opacity:1;stroke:none;stroke-width:28.60148621;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <rect
+     transform="rotate(-15)"
+     y="59.137745"
+     x="37.882675"
+     height="72.163445"
+     width="105.25397"
+     id="rect907-3-5-6-9"
+     style="opacity:1;fill:#141414;fill-opacity:1;stroke:none;stroke-width:28.60148621;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+</svg>
