@@ -43,7 +43,7 @@ chrome.storage.local.get('access_token', function(data) {
 });
 
 // Submit collected activity data to Microsoft
-function SendActivityBeacon(webActivity) {
+function SendActivityBeacon(webActivity, secondAttempt) {
 
     if (!accessToken) {
         console.error('Unauthorized, no auth token set.');
@@ -120,12 +120,15 @@ function SendActivityBeacon(webActivity) {
     }).then(function(response) {
         // The user is not allowed to access this resource
         if (response.status === 401) {
-            // Debug
-            console.log("Returned 401, attempting to login the user again...");
+            console.debug("Returned 401, attempting to login the user again...");
 
-            // Get a new token and attempt another request
+            // Get a new token
             Login(true);
-            SendActivityBeacon(webActivity);
+
+            // Retry recording activity once
+            if (!secondAttempt) {
+                SendActivityBeacon(webActivity, true);
+            }
         }
 
         console.debug(response);
@@ -162,6 +165,13 @@ function Login(silent) {
             'interactive': !silent
         }).then(ValidateLogin);
     }
+}
+
+function Logout() {
+    chrome.storage.local.remove('access_token');
+
+    // Update the local variable
+    accessToken = undefined;
 }
 
 // Take in the redirect url and grab the access 
@@ -206,7 +216,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     // The user has requested a login, open the login dialog 
-    if (request.type == 'Login') {
+    else if (request.type == 'Login') {
         Login(false);
+    }
+
+    // The user has requested a logout
+    else if (request.type == 'Logout') {
+        Logout();
     }
 });
