@@ -1,16 +1,35 @@
 var settingsToggle = false;
+var minimumTimeOnPage = 8;
 var accessToken;
 
-// Get the access token (may be null if not logged in)
+// Get local preferences
 chrome.storage.local.get('access_token', function(data) {
-    // Only run this code if an access token exists
-
-
     if (data.access_token !== null) {
         accessToken = data.access_token;
         toggleLoginState();
     }
 });
+
+// Get synced preferences
+(chrome.storage.sync || chrome.storage.local).get('min_sec_loaded', function(data) {
+    if (data.min_sec_loaded) {
+        minimumTimeOnPage = data.min_sec_loaded;
+        updateMinimumTimeOnPage();
+    }
+});
+
+
+function updateMinimumTimeOnPage() {
+    document.getElementById('setting-seconpage').value = minimumTimeOnPage;
+}
+
+
+function setMinimumTimeOnPage(value) {
+    (chrome.storage.sync || chrome.storage.local).set({
+        'min_sec_loaded' : value
+    }, null);
+    minimumTimeOnPage = value;
+}
 
 
 function toggleLoginState() {
@@ -21,8 +40,9 @@ function toggleLoginState() {
 // Run when document has loaded
 document.addEventListener('DOMContentLoaded', function() {
 
-    // login/logout views
+    // Set some initial views and states
     toggleLoginState();
+    updateMinimumTimeOnPage();
 
     // settings toggle visible views
     document.getElementById('toggle-settings').addEventListener('click', function() {
@@ -54,4 +74,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // close the popout
         window.close();
     });
+
+    document.getElementById('setting-seconpage').addEventListener('change', function() {
+        setMinimumTimeOnPage(document.getElementById('setting-seconpage').value);
+    });
+
 });

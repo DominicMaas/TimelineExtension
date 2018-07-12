@@ -212,8 +212,12 @@ function ValidateLogin(redirect_url) {
 // Handle messages sent to this background script. Handles either
 // activity or login requests.
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (typeof request === 'undefined') {
+        return;
+    }
+
     // Send a web activity request to the Microsoft Graph.
-    if (request.type == 'WebActivity' && request.payload) {
+    else if (request.type == 'WebActivity' && request.payload) {
         SendActivityBeacon(request.payload);
     }
 
