@@ -1,9 +1,26 @@
 body
 {
-    font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size:15px;
-    background-color: #E4E4E4;
-    color: #222;
-    width:300px;
-    height:800px;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    background-color: #F4F4F4;
+    color: #24292e;
+    width: 300px;
+    height: 800px;
+}
+
+h3 
+{
+    margin:0;
+    margin-top:10px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+p 
+{
+    margin: 0;
+    margin-top:5px;
+    opacity: 1;
+    font-size: 14px;
+    font-weight: 300;
 }
