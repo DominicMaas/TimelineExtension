@@ -47,15 +47,15 @@ function Login() {
 
     // Launch the web flow to login the user
     // COMPAT: Firefox requires promise, Chrome requires callback.
-    if (browser) {
-        browser.identity.launchWebAuthFlow({
-            'url': authURL,
-            'interactive': true
-        }).then(validate)
-    } else {
+    if (typeof browser === 'undefined' || !browser) {
         chrome.identity.launchWebAuthFlow({
             'url': authURL,
             'interactive': true
         }, validate);
+    } else {
+        browser.identity.launchWebAuthFlow({
+            'url': authURL,
+            'interactive': true
+        }).then(validate);
     }
 }
