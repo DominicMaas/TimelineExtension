@@ -10,22 +10,10 @@
   <body>
     <!-- Header with title, version and contact links -->
     <header>
+        <nav><a href="#" id="toggle-settings">Settings</a></nav>
         <h1>Timeline Extension</h1>
         <p>Note: This extension is in beta. Not all features are complete.</p>
     </header>
-
-    <section id="section-main">
-        <section id="section-login">
-            <h2>Microsoft Account</h2>
-            <p>Login with the same Microsoft Account as you use with your Windows Account. After you login, your browsing history will be sent to Microsoft.</p>
-            <button id="login">Login with your Microsoft Account</button> <span class="required">Required</span>
-        </section>
-
-        <section id="section-privacy">
-            <p><a href="https://privacy.microsoft.com/en-us/privacystatement">Microsoft Privacy Statement</a></p>
-            <p><a href="https://account.microsoft.com/privacy/activity-history">Microsoft Account Activity History Dashboard</a></p>
-        </section>
-    </section>
 
     <section id="section-settings">
         <h2>Settings</h2>
@@ -40,6 +28,19 @@
             <h3>Custom Client ID</h3>
             <p>Note: This is only for development. Specify a Client Id to use instead of the application defaults.</p>
             <input type="text" />
+        </section>
+    </section>
+
+    <section id="section-account">
+        <section id="section-login">
+            <h2>Microsoft Account</h2>
+            <p>Login with the same Microsoft Account as you use with your Windows Account. After you login, your browsing history will be sent to Microsoft.</p>
+            <button id="login">Login with your Microsoft Account</button> <span class="required">Required</span>
+        </section>
+
+        <section id="section-privacy">
+            <p><a href="https://privacy.microsoft.com/en-us/privacystatement">Microsoft Privacy Statement</a></p>
+            <p><a href="https://account.microsoft.com/privacy/activity-history">Microsoft Account Activity History Dashboard</a></p>
         </section>
     </section>
 
