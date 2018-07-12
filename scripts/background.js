@@ -7,30 +7,31 @@ const redirectURL = chrome.identity.getRedirectURL();
 // Access token for the users Microsoft Account
 var accessToken;
 
-// Some features are browser specific (such as branding and client id)
+// Client branding
 if (navigator.userAgent.includes('Vivaldi')) {
-    // Branding
     var browserName = 'Vivaldi';
     var browserIcon = 'https://vivaldi.com/assets/vivaldi-logo-32.png';
-
-     // Client Id
-     var clientId = '';
 }
 else if (navigator.userAgent.includes('Chrome')) {
-    // Branding
     var browserName = 'Google Chrome';
     var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
-
-     // Client Id
-     var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
 }
 else if (navigator.userAgent.includes('Firefox')) {
-    // Branding
     var browserName = 'Firefox';
     var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
+}
 
-    // Client Id
+// Client Id
+if (navigator.userAgent.includes('Firefox')) {
+    // Mozilla Add-Ons Catalog – (Firefox, Tor Browser)
     var clientId = '6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3';
+}
+else if (navigator.userAgent.includes('Chrome')) {
+    // Chrome Web Store – (Google Chrome, Chromium, Vivaldi, others)
+    var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
+}
+else {
+    console.error('Unrecognized web browser, unknown client ID.');
 }
 
 // Get the access token (may be null if not logged in)
