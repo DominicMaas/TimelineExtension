@@ -10,7 +10,7 @@ body
     background-color: #F4F4F4;
     color: #24292e;
     width: 380px;
-    min-height: 400px;
+    min-height: 340px;
     margin: 0 18px 12px 12px;
     padding: 0;
 }
@@ -38,13 +38,20 @@ h2 {
     font-size: 18px;
 }
 
-p 
-{
+h1 small {
+    text-transform: uppercase;
+    color: red;
+    font-size: 10px;
+}
+
+p {
     margin: 8px 0;
     opacity: 1;
     font-size: 14px;
     font-weight: 300;
 }
+
+h1, h2, h3, span, p, nav { user-select: none }
 
 .required {
     color: red;
