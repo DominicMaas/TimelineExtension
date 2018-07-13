@@ -1,5 +1,5 @@
 // Scopes required for this extension
-const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'openid', 'preferred_username', 'offline_access'];
+const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'openid', 'offline_access'];
 
 // Redirect url for auth login
 const redirectURL = chrome.identity.getRedirectURL();
@@ -168,7 +168,7 @@ function Login(silent) {
     if (silent)
     {
         authURL += `&prompt=none`;
-        authURL += `&preferred_username=${email}`;
+        authURL += `&preferred_username=${preferredUsername}`;
     }    
 
     // Launch the web flow to login the user
@@ -199,7 +199,7 @@ function Logout() {
 // Take in the redirect url and grab the access 
 // token from it.
 function ValidateLogin(redirect_url) {
-    console.debug(redirect_url);
+    console.log(redirect_url);
 
     // Get the data from the redirect url
     let data = redirect_url.split('#')[1];
@@ -221,18 +221,21 @@ function ValidateLogin(redirect_url) {
         console.error(pairsKeyValuePair["error_description"]);
     
     // We need to get the preferred username from the id token
-    let idToken = pairsKeyValuePair['id_token'];
-
-    // TEMP
-    console.log(idToken);
+    let base64Url = pairsKeyValuePair['id_token'].split('.')[1];
+    let base64 = base64Url.replace('-', '+').replace('_', '/');
+    
+    // Email
+    let email = JSON.parse(window.atob(base64)).email;
 
     // Save the token in storage so it can be used later
     chrome.storage.local.set({ 
-        'access_token' : pairsKeyValuePair['access_token'] 
+        'access_token' : pairsKeyValuePair['access_token'] ,
+        'preferred_username': email
     }, null);
 
     // Update the local variable
     accessToken = pairsKeyValuePair['access_token'];
+    preferredUsername = email;
 }
 
 // Handle messages sent to this background script. Handles either
