@@ -6,7 +6,7 @@ var accessToken;
 chrome.storage.local.get('access_token', function(data) {
     if (data.access_token !== null) {
         accessToken = data.access_token;
-        toggleLoginState();
+        UpdateLoginState();
     }
 });
 
@@ -18,11 +18,9 @@ chrome.storage.local.get('access_token', function(data) {
     }
 });
 
-
 function updateMinimumTimeOnPage() {
-    document.getElementById('setting-seconpage').value = minimumTimeOnPage;
+    document.getElementById('setting-timeout').value = minimumTimeOnPage;
 }
-
 
 function setMinimumTimeOnPage(value) {
     (chrome.storage.sync || chrome.storage.local).set({
@@ -31,8 +29,8 @@ function setMinimumTimeOnPage(value) {
     minimumTimeOnPage = value;
 }
 
-
-function toggleLoginState() {
+// Update the UI to reflect the internal login state.
+function UpdateLoginState() {
     document.getElementById('section-login-pending').style.display = accessToken ? 'none' : 'block';
     document.getElementById('section-login-completed').style.display = accessToken ? 'block' : 'none';
 }
@@ -41,7 +39,7 @@ function toggleLoginState() {
 document.addEventListener('DOMContentLoaded', function() {
 
     // Set some initial views and states
-    toggleLoginState();
+    UpdateLoginState();
     updateMinimumTimeOnPage();
 
     // settings toggle visible views
@@ -75,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
         window.close();
     });
 
-    document.getElementById('setting-seconpage').addEventListener('change', function() {
-        setMinimumTimeOnPage(document.getElementById('setting-seconpage').value);
+    // When the user changes the timeout field
+    document.getElementById('setting-timeout').addEventListener('change', function() {
+        setMinimumTimeOnPage(document.getElementById('setting-timeout').value);
     });
-
 });
