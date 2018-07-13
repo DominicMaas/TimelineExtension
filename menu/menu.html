@@ -31,25 +31,53 @@
             <p>The number of seconds a page must remain open before its included in Windows Timeline.</p>
             <input id="setting-timeout" type="number" value="0" />
         </section>
-
-        <section id="section-privacy">
-            <p><a href="https://privacy.microsoft.com/en-us/privacystatement">Microsoft Privacy Statement</a></p>
-            <p><a href="https://account.microsoft.com/privacy/activity-history">Microsoft Account Activity History Dashboard</a></p>
-        </section>
     </section>
 
     <section id="section-home">
-        <h2>Microsoft Account</h2>
-
         <section id="section-login-pending">
-            <p>Login with the same Microsoft Account as you use with your Windows Account. After you login, your browsing history will be sent to Microsoft.</p>
-            <button id="login">Login with your Microsoft Account</button> <span class="required">Required</span>
+            <!-- Login -->
+            <a id="login" href="#" class="inline-button">
+                <p>Sign in with your Microsoft Account</p>
+                <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="M3 16 L23 16 M15 8 L23 16 15 24 M21 4 L29 4 29 28 21 28" />
+                </svg>
+            </a>
+
+            <!-- Login Info -->
+            <p style="margin: 10px 15px;">
+                Login with the same Microsoft Account as you use with your Windows Account. After you login, your browsing history will be sent to Microsoft.
+            </p>
+            
+            <!-- View Microsoft privacy statement -->
+            <a href="https://privacy.microsoft.com/en-us/privacystatement" class="inline-button">
+                <p>Microsoft Privacy Statement</p>
+                <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="M16 14 L16 23 M16 8 L16 10" />
+                    <circle cx="16" cy="16" r="14" />
+                </svg>
+            </a>
         </section>
 
         <section id="section-login-completed">
-            <p>You’re logged in and syncing your browser history with your Microsoft Account.</p>
-            <button id="logout">Log out</button>
-            <p>Visit your Activity History Dashboard to manage or delete your browsing history. Private/incognito mode browsing history is not recorded.</p>
+            <!-- Logout -->
+            <a id="logout" href="#" class="inline-button">
+                <p>Sign out of your Microsoft Account</p>
+                <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="M28 16 L8 16 M20 8 L28 16 20 24 M11 28 L3 28 3 4 11 4" />
+                </svg>
+            </a>
+
+            <!-- Logout info -->
+            <p style="margin: 10px 15px;">You’re logged in and syncing your browser history with your Microsoft Account.</p>
+            <p style="margin: 10px 15px;">Visit your Activity History Dashboard to manage or delete your browsing history. Private/incognito mode browsing history is not recorded.</p>
+       
+            <!-- View Microsoft Account Activity History Dashboard -->
+            <a href="https://account.microsoft.com/privacy/activity-history" class="inline-button">
+                <p>Microsoft Activity History Dashboard</p>
+                <svg id="i-activity" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="M4 16 L11 16 14 29 18 3 21 16 28 16" />
+                </svg>
+            </a>          
         </section>
     </section>
   </body>

@@ -11,7 +11,7 @@ body
     color: #24292e;
     width: 350px;
     margin:0;
-    min-height: 340px;
+    min-height: 380px;
     padding: 0;
 }
 
@@ -51,6 +51,9 @@ h1 small {
     color: red;
     font-weight: 600;
     font-size: 10px;
+    position: relative;
+    right:0px;
+    top:-8px;
 }
 
 p {
@@ -62,19 +65,52 @@ p {
 
 h1, h2, h3, span, p, nav { user-select: none }
 
-.required {
-    color: red;
+#section-settings {
+    margin: 0px 15px 10px 15px;
+}
+
+.inline-button {
+    background:#FFFFFF;
+    border-top:1px solid #E4E4E4;
+    border-bottom:1px solid #E4E4E4;
+    padding:10px 15px;
+    margin-top:10px;
+    display:block;
+    text-decoration: none;
+    color: #24292e;
+    user-select: all;
+}
+
+.inline-button p {
     display: inline-block;
-    margin-left: 8px;
+    left:0;
+    width: 270px;
+    font-weight:500;
+    opacity: 0.8;
+    font-size:15px;
+}
+
+.inline-button svg {
+    float: right;
+    margin-top:7px;
+    margin-right:5px;
+    width:22px;
+    height:22px;
+}
+
+.inline-button:hover {
+    background:#FCFCFC;
+    border-top:1px solid #D0D0D0;
+    border-bottom:1px solid #D0D0D0;
+}
+
+.inline-button:hover > p {
+    font-weight:600;
+    opacity: 1.0;
 }
 
 /* initial state */
 #section-settings,
 #section-login-completed {
     display: none;
-}
-
-#section-home,
-#section-settings {
-    margin: 0 18px 12px 12px;
 }
