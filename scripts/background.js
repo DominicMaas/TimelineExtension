@@ -1,13 +1,14 @@
 // Scopes required for this extension
-const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'offline_access'];
+const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'openid', 'preferred_username', 'offline_access'];
 
 // Redirect url for auth login
 const redirectURL = chrome.identity.getRedirectURL();
 
-console.log(redirectURL);
-
 // Access token for the users Microsoft Account
 var accessToken;
+
+// Used for re-login hint
+var preferredUsername;
 
 // Client branding
 if (navigator.userAgent.includes('Vivaldi')) {
@@ -41,6 +42,13 @@ chrome.storage.local.get('access_token', function(data) {
     // Only run this code if an access token exists
     if (data.access_token !== null) {
         accessToken = data.access_token;
+    }
+});
+
+// Get the preferred username, this is used for re-login
+chrome.storage.local.get('preferred_username', function(data) {
+    if (data.preferred_username !== null) {
+        preferredUsername = data.preferred_username;
     }
 });
 
@@ -142,17 +150,26 @@ function SendActivityBeacon(webActivity, secondAttempt) {
 // Open the Microsoft account login dialog, let the user login,
 // grab the token and then store it for later use.
 function Login(silent) {
+    // Build required random numbers
+    let state = Math.floor(Math.random() * 1000000);
+    let nonce = Math.floor(Math.random()*1000000);
+
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
         authURL += `?client_id=${clientId}`;
-        authURL += `&response_type=token`;
+        authURL += `&response_type=id_token+token`;
         authURL += `&response_mode=fragment`;
         authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
         authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
+        authURL += `&state=${state}`;
+        authURL += `&nonce=${nonce}`;
 
     // If refreshing a token, don't display UI
     if (silent)
+    {
         authURL += `&prompt=none`;
+        authURL += `&preferred_username=${email}`;
+    }    
 
     // Launch the web flow to login the user
     // COMPAT: Firefox requires promise, Chrome requires callback.
@@ -170,10 +187,13 @@ function Login(silent) {
 }
 
 function Logout() {
+    // Remove the stored values
+    chrome.storage.local.remove('preferred_username');
     chrome.storage.local.remove('access_token');
 
-    // Update the local variable
+    // Update the local variables
     accessToken = undefined;
+    preferredUsername = undefined;
 }
 
 // Take in the redirect url and grab the access 
@@ -200,6 +220,12 @@ function ValidateLogin(redirect_url) {
     if (pairsKeyValuePair["error"] != null)
         console.error(pairsKeyValuePair["error_description"]);
     
+    // We need to get the preferred username from the id token
+    let idToken = pairsKeyValuePair['id_token'];
+
+    // TEMP
+    console.log(idToken);
+
     // Save the token in storage so it can be used later
     chrome.storage.local.set({ 
         'access_token' : pairsKeyValuePair['access_token'] 
