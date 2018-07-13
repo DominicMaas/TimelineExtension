@@ -15,15 +15,15 @@ var preferredUsername;
 // Client branding
 if (navigator.userAgent.includes('Vivaldi')) {
     var browserName = 'Vivaldi';
-    var browserIcon = 'https://vivaldi.com/assets/vivaldi-logo-32.png';
+    var browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/vivaldi-32.png';
 }
 else if (navigator.userAgent.includes('Chrome')) {
     var browserName = 'Google Chrome';
-    var browserIcon = 'https://www.google.com/images/icons/product/chrome-32.png';
+    var browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/chrome-32.png';
 }
 else if (navigator.userAgent.includes('Firefox')) {
     var browserName = 'Firefox';
-    var browserIcon = 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.png';
+    var browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/firefox.png';
 }
 
 // Client Id
