@@ -1,23 +1,22 @@
 # Windows Timeline Support - Web Extension
 
-A web extension that integrates Windows Timeline support into popular browsers. Has been tested with Google Chrome. Firefox and Vivaldi support in development.
-
 ## Introduction
+Windows Timeline Support is a web extension that integrates Windows Timeline support into popular browsers. This is done by publishing your browsing history as activities to the Microsoft Graph (so a Microsoft Account is required to use this extension). Personal Microsoft Accounts are confirmed to work, work and school accounts should work.
 
-This extension syncs your browser history to Windows Timeline, which in theory (when Timeline support is enabled on Microsoft Launcher), would allow you to continue your browsing on mobile from desktop. This extension uses the Microsoft Graph to sync user activities.
+A list of known issues and planned features is located below. Before opening a new issue, check that it's not mentioned below and does not already exist. 
 
-## Why?
+## Browser Support
+|Browser|Supported|Note
+|--|--|--|
+|Google Chrome|Yes|Fully Supported|
+|Firefox|Yes|Fully Supported|
+|Microsoft Edge|No|Microsoft Edge already has Windows Timeline integration|
 
-I recently switched back to Google Chrome (from Microsoft Edge) on my Surface (due to lacking 1Password X support), I was looking around for an extension that would perform similar user activity syncing like Microsoft Edge. I did find one, but it was a paid Windows Store app and a free chrome extension (both required).
+## Known Issues
+- **BLOCKING** Microsoft Account token renewal does not work. Users are required to log back into their accounts after a set period of time.
 
-I figured that it shouldn't be too difficult to implement, so I created this repository.
-
-## Progress
-
-Before I can publish to the Google Chrome store, these things need to be fixed.
-
-- [ ] Make the UI Pretty.
-- [ ] Handle refresh tokens so the user does not have to login when the access token expires.
-- [ ] Better error checking.
-- [ ] Icons and assets.
-- [ ] Don't add activity to Timeline unless the page has been active for more than 30 seconds (will filter out login redirects).
+## Planned Features
+- Improved error checking.
+- Toggle switch for a built in ignore list (will include login urls, url shortners etc.)
+- Ability to add a custom ignore list.
+- Project Rome support (push current tab to another device).
