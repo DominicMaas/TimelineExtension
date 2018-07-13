@@ -72,7 +72,8 @@ function SendActivityBeacon(webActivity, secondAttempt) {
     // Create the microsoft graph activity url
     let url = `https://graph.microsoft.com/v1.0/me/activities/${activityId}`;
 
-    let icon = webActivity.iconURL || browserIcon;
+    // Get icon
+    let icon = webActivity.iconUrl ? webActivity.iconUrl : browserIcon;
 
     let data = JSON.stringify({
         'appActivityId': activityId,

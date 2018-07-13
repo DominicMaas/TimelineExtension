@@ -24,7 +24,7 @@ function CreateOrUpdateActivity() {
     let url = (document.querySelector('link[rel~="canonical"][href]') === null) ? ((document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]') === null) ? document.location.toString() : document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]').content) : document.querySelector('link[rel~="canonical"][href]').href;
     let origin = new URL(url).hostname;
     let image = (document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]') === null) ? '' : document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]').content;
-    let icon = (document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]')) ? '' : document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]').href;
+    let icon = (document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]') === null) ? '' : document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]').href;
     
     // Build the activity message to send to the 
     // background thread.
