@@ -47,10 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // settings toggle visible views
     document.getElementById('toggle-settings').addEventListener('click', function() {
 
-        document.getElementById('section-login').style.display = settingsToggle ? 'block' : 'none';
+        document.getElementById('section-home').style.display = settingsToggle ? 'block' : 'none';
         document.getElementById('section-settings').style.display = settingsToggle ? 'none' : 'block';
 
-        document.getElementById('toggle-settings').textContent = settingsToggle ? 'Settings' : 'Back';
+        // https://github.com/danklammer/bytesize-icons
+        document.getElementById('toggle-settings').innerHTML = settingsToggle 
+        ? '<svg id="i-settings" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M13 2 L13 6 11 7 8 4 4 8 7 11 6 13 2 13 2 19 6 19 7 21 4 24 8 28 11 25 13 26 13 30 19 30 19 26 21 25 24 28 28 24 25 21 26 19 30 19 30 13 26 13 25 11 28 8 24 4 21 7 19 6 19 2 Z" /><circle cx="16" cy="16" r="4" /></svg>' 
+        : '<svg id="i-home" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 20 L12 30 4 30 4 12 16 2 28 12 28 30 20 30 20 20 Z" /></svg>';
 
         settingsToggle = !settingsToggle;
     });

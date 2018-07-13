@@ -7,12 +7,18 @@ body
 {
     font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
-    background-color: #F4F4F4;
+    background-color: #F8F8F8;
     color: #24292e;
-    width: 380px;
+    width: 350px;
+    margin:0;
     min-height: 340px;
-    margin: 0 18px 12px 12px;
     padding: 0;
+}
+
+header {
+    background-color: #FFFFFF;
+    padding:10px 15px;
+    border-bottom:1px solid #E4E4E4;
 }
 
 header nav {
@@ -31,7 +37,9 @@ h1, h2, h3
 }
 
 h1 {
-    font-size: 22px;
+    font-size: 18px;
+    font-weight:700;
+    margin: 0;
 }
 
 h2 {
@@ -41,6 +49,7 @@ h2 {
 h1 small {
     text-transform: uppercase;
     color: red;
+    font-weight: 600;
     font-size: 10px;
 }
 
@@ -63,4 +72,9 @@ h1, h2, h3, span, p, nav { user-select: none }
 #section-settings,
 #section-login-completed {
     display: none;
+}
+
+#section-home,
+#section-settings {
+    margin: 0 18px 12px 12px;
 }
