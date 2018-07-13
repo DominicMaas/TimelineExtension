@@ -27,6 +27,13 @@ A list of known issues and planned features is located below. Before opening a n
 - Ability to add a custom ignore list.
 - Project Rome support (push current tab to another device).
 
+## Authors
+
+- **Dominic Maas** - *Initial Work and Lead* - [Twitter](https://twitter.com/dominicjmaas)
+- **Daniel Aleksandersen** - *Firefox Port, Icon and Other Misc Changes* - [GitHub](https://github.com/da2x)
+
+See also the list of [contributors](https://github.com/DominicMaas/TimelineExtension/graphs/contributors) who participated in this project.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
