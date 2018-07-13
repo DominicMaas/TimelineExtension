@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
 
-    "name": "Timeline Extension",
-    "description": "Sync your browser history to Windows Timeline.",
+    "name": "Windows Timeline Support",
+    "description": "Automatically sync your browsing history to your Windows 10 PC with Windows Timeline.",
     "version": "1.0.0",
     "author": "Dominic Maas",
 
@@ -17,7 +17,7 @@
             "32": "images/icon_32.png",
             "38": "images/icon_38.png"
         },
-        "default_title": "Timeline Extension",
+        "default_title": "Windows Timeline Support",
         "default_popup": "menu/menu.html"
     },
     "icons": {
