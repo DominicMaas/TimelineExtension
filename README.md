@@ -2,6 +2,8 @@
 
 A web extension that integrates Windows Timeline support into popular browsers.
 
+![Timeline Image](images/store/timeline.png)
+
 ## Introduction
 
 Windows Timeline Support is a web extension that integrates Windows Timeline support into popular browsers. This is done by publishing your browsing history as activities to the Microsoft Graph (so a Microsoft Account is required to use this extension). Personal Microsoft Accounts are confirmed to work, work and school accounts should work.
@@ -26,6 +28,12 @@ A list of known issues and planned features is located below. Before opening a n
 - Toggle switch for a built in ignore list (will include login urls, url shorteners etc.)
 - Ability to add a custom ignore list.
 - Project Rome support (push current tab to another device).
+
+## More Screenshots
+
+![Signed In](images/store/signed-in.png)
+
+![Signed Out](images/store/signed-out.png)
 
 ## Authors
 
