@@ -1,3 +1,5 @@
+// @ts-check
+
 var minimumTimeOnPage = 8;
 
 // Only run in main frame (primary document)

@@ -1,3 +1,5 @@
+// @ts-check
+
 // Scopes required for this extension
 const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'openid', 'offline_access'];
 
@@ -211,7 +213,7 @@ function ValidateLogin(redirect_url) {
     var pairsKeyValuePair = {};
 
     // Store the data into a key value pair object
-    for (pair in pairsArray) {
+    for (var pair in pairsArray) {
         var split = pairsArray[pair].split('=');
         pairsKeyValuePair[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
     }

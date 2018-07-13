@@ -1,3 +1,5 @@
+// @ts-check
+
 var settingsToggle = false;
 var minimumTimeOnPage = 8;
 var accessToken;
