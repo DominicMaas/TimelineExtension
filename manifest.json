@@ -5,6 +5,7 @@
     "description": "Automatically sync your browsing history to your Windows 10 PC with Windows Timeline.",
     "version": "1.0.0",
     "author": "Dominic Maas",
+    "homepage_url": "https://github.com/DominicMaas/TimelineExtension#readme",
 
     "background": {
 		"scripts": ["scripts/background.js"]
