@@ -2,7 +2,10 @@
   "name": "timeline-extension",
   "version": "1.0.0",
   "description": "Windows Timeline + Project Rome support for browsers.",
-  "scripts": { },
+  "scripts": {
+    "watch": "webpack --config webpack/webpack.dev.js --watch",
+    "build": "webpack --config webpack/webpack.prod.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DominicMaas/TimelineExtension.git"
@@ -14,7 +17,11 @@
   },
   "homepage": "https://github.com/DominicMaas/TimelineExtension#readme",
   "devDependencies": {
-    "@types/chrome": "~0.0.69",
-    "typescript": "2.9.2"
+    "@types/chrome": "0.0.69",
+    "typescript": "2.9.2",
+    "ts-loader": "4.2.2",
+    "webpack": "4.16.0",
+    "webpack-cli": "3.0.8",
+    "webpack-merge": "4.1.3"
   }
 }
