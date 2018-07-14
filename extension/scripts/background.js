@@ -41,20 +41,17 @@ else {
     console.error('Unrecognized web browser, unknown client ID.');
 }
 
-// Get the access token (may be null if not logged in)
-chrome.storage.local.get('access_token', function(data) {
-    // Only run this code if an access token exists
+chrome.storage.local.get(['access_token', 'refresh_token'], function(data) {
+    // Get the access token (may be null if not logged in)
     if (data.access_token !== null) {
         accessToken = data.access_token;
     }
-});
-
-// Get the refresh token (may be null if not logged in)
-chrome.storage.local.get('refresh_token', function(data) {
+    // Get the refresh token (may be null if not logged in)
     if (data.refresh_token !== null) {
         refreshToken = data.refresh_token;
     }
 });
+
 
 /**
  * Submit collected activity data to Microsoft
