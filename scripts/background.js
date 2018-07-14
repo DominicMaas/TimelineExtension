@@ -1,7 +1,11 @@
 // @ts-check
 
 // Scopes required for this extension
-const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'openid', 'offline_access'];
+// UserActivity.ReadWrite.CreatedByApp - Timeline Support
+// Device.Read - Read devices connected to Microsoft account (project rome)
+// Device.Command - Launch url on another device
+// offline_access - refresh tokens
+const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'Device.Read', 'Device.Command', 'offline_access'];
 
 // Redirect url for auth login
 const redirectURL = chrome.identity.getRedirectURL();
