@@ -12,5 +12,9 @@
   "bugs": {
     "url": "https://github.com/DominicMaas/TimelineExtension/issues"
   },
-  "homepage": "https://github.com/DominicMaas/TimelineExtension#readme"
+  "homepage": "https://github.com/DominicMaas/TimelineExtension#readme",
+  "devDependencies": {
+    "@types/chrome": "~0.0.69",
+    "typescript": "2.9.2"
+  }
 }
