@@ -1,0 +1,16 @@
+{
+  "name": "timeline-extension",
+  "version": "1.0.0",
+  "description": "Windows Timeline + Project Rome support for browsers.",
+  "scripts": { },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DominicMaas/TimelineExtension.git"
+  },
+  "author": "Dominic Maas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DominicMaas/TimelineExtension/issues"
+  },
+  "homepage": "https://github.com/DominicMaas/TimelineExtension#readme"
+}

@@ -28,3 +28,36 @@ class ActivityMessage extends Message {
         this.IconImage = iconImage;     
     }
 }
+
+/**
+ * 
+ */
+class LoginMessage extends Message {
+
+}
+
+/**
+ * 
+ */
+class LogoutMessage extends Message {
+    Reason: string;
+}
+
+/**
+ * 
+ */
+class GetRemoteDevicesMessage extends Message {
+
+}
+
+/**
+ * 
+ */
+class PushToRemoteDeviceMessage extends Message {
+    Url: string;
+    DeviceId: string;
+
+    constructor() {
+        super();
+    }
+}
