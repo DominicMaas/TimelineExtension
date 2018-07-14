@@ -2,6 +2,7 @@
     "manifest_version": 2,
 
     "name": "Windows Timeline Support",
+    "short_name": "Timeline",
     "description": "Automatically sync your browsing history to your Windows 10 PC with Windows Timeline.",
     "version": "1.0.0",
     "author": "Dominic Maas",
@@ -37,6 +38,8 @@
         "js": ["scripts/timeline.js"],
         "run_at": "document_end"
     }],
+
+    "incognito": "not_allowed",
 
     "permissions": [
         "identity",
