@@ -20,7 +20,7 @@ A list of known issues and planned features is located below. Before opening a n
 
 ## Known Issues
 
-- **BLOCKING** Microsoft Account token renewal does not work. Users are required to log back into their accounts after a set period of time.
+*None at the moment*
 
 ## Planned Features
 
