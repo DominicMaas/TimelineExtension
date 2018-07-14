@@ -52,9 +52,13 @@ chrome.storage.local.get('refresh_token', function(data) {
     }
 });
 
-// Submit collected activity data to Microsoft
+/**
+ * Submit collected activity data to Microsoft
+ * @param {*} webActivity The activity to post
+ * @param {boolean} secondAttempt If this is the second attempt at posting the activity
+ */
 function SendActivityBeacon(webActivity, secondAttempt) {
-
+    // Don't run if the user has not logged in
     if (!accessToken) {
         console.error('Unauthorized, no auth token set.');
         return false;
@@ -121,8 +125,6 @@ function SendActivityBeacon(webActivity, secondAttempt) {
         ]
     });
     
-    console.debug(data);
-
     // Perform a fetch
     fetch(url, {
         body: data,
@@ -135,10 +137,10 @@ function SendActivityBeacon(webActivity, secondAttempt) {
     }).then(function(response) {
         // The user is not allowed to access this resource
         if (response.status === 401) {
-            console.debug("Returned 401, attempting to login the user again...");
+            console.debug("Returned 401, refreshing access token...");
 
             // Get a new token
-            Login(true);
+            RefreshToken();
 
             // Retry recording activity once
             if (!secondAttempt) {
@@ -146,7 +148,7 @@ function SendActivityBeacon(webActivity, secondAttempt) {
             }
         }
 
-        console.debug(response);
+        // Log the response
         response.text().then(function(text){console.debug(text)});
     });
 
@@ -154,6 +156,10 @@ function SendActivityBeacon(webActivity, secondAttempt) {
 
 // Open the Microsoft account login dialog, let the user login,
 // grab the token and then store it for later use.
+
+/**
+ * Login the user into their Microsoft Account.
+ */
 function Login() {
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
@@ -178,6 +184,9 @@ function Login() {
     }
 }
 
+/**
+ * Logout the user from their Microsoft Account and delete any cached resources.
+ */
 function Logout() {
     // Remove the stored values
     chrome.storage.local.remove('preferred_username');
@@ -185,11 +194,15 @@ function Logout() {
 
     // Update the local variables
     accessToken = undefined;
-    preferredUsername = undefined;
+    refreshToken = undefined;
 }
 
-// Take in the redirect url and grab the access 
-// token from it.
+/**
+ * Callback for the Login method. Extracts the oauth code from the
+ * redirect url, calls the azure function to get both an access and 
+ * refresh token.
+ * @param {string} redirect_url Url containing the oauth code
+ */
 function ValidateLogin(redirect_url) {
     // Get the data from the redirect url
     let data = redirect_url.split('?')[1];
@@ -253,8 +266,47 @@ function ValidateLogin(redirect_url) {
     }
 }
 
-// Handle messages sent to this background script. Handles either
-// activity or login requests.
+/**
+ * Calls the refresh azure function which will return a new refresh and 
+ * access token so we can continue accessing resources from the Microsoft Graph.
+ */
+function RefreshToken() {
+    fetch('https://ge-functions.azurewebsites.net/api/refresh-token', {
+        body: JSON.stringify({
+            'client_id': clientId,
+            'scope': scopes.join(' '),
+            'refresh_token': refreshToken,
+            'redirect_uri': redirectURL
+            }),
+            method: 'POST'
+        }).then(function(response) {
+            // Get the data as json and update the variables
+            response.json().then(function(json) {
+                // Handle Server Errors
+                if (json.error !== null) {
+                    // Save the token in storage so it can be used later
+                    chrome.storage.local.set({ 
+                        'access_token' : json.access_token,
+                        'refresh_token': json.refresh_token
+                    }, null);
+
+                    // Update the local variable
+                    accessToken = json.access_token;
+                    refreshToken = json.refresh_token;
+                } else {
+                    // Log the error, TODO: show some type of error dialog.
+                    console.error(json.error_description);
+
+                    // Clear any tokens that may be cached.
+                    Logout();
+                }
+            })
+        });
+}
+
+/**
+ * Handle messages sent to this background script. Handles either
+ */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (typeof request === 'undefined') {
         return;
@@ -262,7 +314,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     // Send a web activity request to the Microsoft Graph.
     else if (request.type == 'WebActivity' && request.payload) {
-        SendActivityBeacon(request.payload);
+        SendActivityBeacon(request.payload, false);
     }
 
     // The user has requested a login, open the login dialog 
