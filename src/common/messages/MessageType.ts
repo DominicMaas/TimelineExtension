@@ -5,13 +5,19 @@ enum MessageType {
     /**
      * Push a timeline activity to the Microsoft Graph.
      */
-    Activity,
+    PublishActivity,
 
     /**
      * Start the 'push flow' which will send a url to another device and
      * open it on that device.
      */
-    Push,
+    OpenWithRemoteDevice,
+
+    /**
+     * Tells the background thread to get a list of devices that the 
+     * users Microsoft account is logged into.
+     */
+    GetRemoteDevices,
 
     /**
      * Start the logout flow, disconnect the users Microsoft Account 

@@ -67,9 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // We are loading
         document.getElementById('remote-status').innerText = 'Loading...';
 
-        // Clear List
-        document.getElementById('devices-holder').innerHTML = '';
-
         // Send a message to get data
         let remoteMessage = { type: 'RemoteDevices' };
         
@@ -78,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 // We have loaded
                 document.getElementById('remote-status').innerText = '';
+                document.getElementById('devices-holder').innerHTML = '';
 
                 let devicesHolder = document.getElementById('devices-holder');
 
