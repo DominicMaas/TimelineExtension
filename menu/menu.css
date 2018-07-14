@@ -58,9 +58,9 @@ h1 small {
 
 p {
     margin: 8px 0;
-    opacity: 1;
+    opacity: 0.8;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 h1, h2, h3, span, p, nav { user-select: none }
@@ -69,23 +69,49 @@ h1, h2, h3, span, p, nav { user-select: none }
     margin: 0px 15px 10px 15px;
 }
 
+.remote-device {
+    background:#FFFFFF;
+    border-top:1px solid #E4E4E4;
+    border-bottom:1px solid #E4E4E4;
+    padding:5px 15px;
+    margin-top:5px;
+    display:block;
+    text-decoration: none;
+    color: #111;
+    transition: all 250ms ease;
+}
+
+.remote-device p {
+    display: inline-block;
+    left:0;
+    width: 270px;
+    font-weight:600;
+    font-size:15px;
+}
+
+.remote-device:hover {
+    background:#ECEFF1;
+    border-top:1px solid #B0BEC5;
+    border-bottom:1px solid #B0BEC5;
+}
+
 .inline-button {
     background:#FFFFFF;
     border-top:1px solid #E4E4E4;
     border-bottom:1px solid #E4E4E4;
-    padding:10px 15px;
-    margin-top:10px;
+    padding:5px 15px;
+    margin-top:5px;
     display:block;
     text-decoration: none;
-    color: #24292e;
+    color: #111;
+    transition: all 250ms ease;
 }
 
 .inline-button p {
     display: inline-block;
     left:0;
     width: 270px;
-    font-weight:500;
-    opacity: 0.8;
+    font-weight:600;
     font-size:15px;
 }
 
@@ -98,18 +124,14 @@ h1, h2, h3, span, p, nav { user-select: none }
 }
 
 .inline-button:hover {
-    background:#FCFCFC;
-    border-top:1px solid #D0D0D0;
-    border-bottom:1px solid #D0D0D0;
-}
-
-.inline-button:hover > p {
-    font-weight:600;
-    opacity: 1.0;
+    background:#ECEFF1;
+    border-top:1px solid #B0BEC5;
+    border-bottom:1px solid #B0BEC5;
 }
 
 /* initial state */
 #section-settings,
+#section-remote,
 #section-login-completed {
     display: none;
 }

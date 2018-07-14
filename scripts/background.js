@@ -308,6 +308,47 @@ function RefreshToken() {
         });
 }
 
+function GetRemoteDevices(secondAttempt)
+{
+    return fetch('https://graph.microsoft.com/beta/me/devices/', {
+        cache: 'no-cache', 
+        headers: {
+            'authorization': `Bearer ${accessToken}`,
+            'content-type': 'application/json',
+        },
+        method: 'GET'
+    }).then(function(response) {
+        // The user is not allowed to access this resource
+        if (response.status === 401) {
+            console.debug("Returned 401, refreshing access token...");
+
+            // Get a new token
+            RefreshToken();
+
+            // Retry recording activity once
+            if (!secondAttempt) {
+                return GetRemoteDevices(true);
+            }
+            else
+            {
+                return {
+                    success : false,
+                    reason: 'Could not authorize user. Please try again.',
+                    payload: null
+                }
+            }
+        }
+
+        return response.json().then(function(json) {
+            return {
+                success : true,
+                reason: '',
+                payload: json.value
+            }
+        });
+    });
+}
+
 /**
  * Handle messages sent to this background script. Handles either
  */
@@ -330,4 +371,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     else if (request.type == 'Logout') {
         Logout();
     }
+
+    else if (request.type == 'RemoteDevices') {
+        GetRemoteDevices(false).then(function(data) {
+            sendResponse(data);
+        });
+    }
+
+    return true;
 });

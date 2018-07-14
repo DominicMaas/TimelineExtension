@@ -58,6 +58,52 @@ document.addEventListener('DOMContentLoaded', function() {
         settingsToggle = !settingsToggle;
     });
 
+    // When the user clicks on the devices button
+    document.getElementById('view-devices').addEventListener('click', function() {
+        // Update UI
+        document.getElementById('section-main').style.display = 'none';
+        document.getElementById('section-remote').style.display = 'block';
+
+        // We are loading
+        document.getElementById('remote-status').innerText = 'Loading...';
+
+        // Clear List
+        document.getElementById('devices-holder').innerHTML = '';
+
+        // Send a message to get data
+        let remoteMessage = { type: 'RemoteDevices' };
+        
+        // Get a list of user devices.
+        chrome.runtime.sendMessage(remoteMessage, function(data) {
+            if (data.success) {
+                // We have loaded
+                document.getElementById('remote-status').innerText = '';
+
+                let devicesHolder = document.getElementById('devices-holder');
+
+                // List devices
+                for (let index = 0; index < data.payload.length; index++) {              
+                    // Get the device
+                    let device = data.payload[index];
+                    
+                    console.log(device);
+
+                    // Update UI
+                    devicesHolder.insertAdjacentHTML('beforeend', '<a id="'+device.id+'" class="remote-device"><p>'+device.Name+'</p></div>');
+                }
+            } else {
+                // Say why the request failed
+                document.getElementById('remote-status').innerText = data.reason;
+            }      
+        });
+    });
+
+    // When the user closes the devices pane
+    document.getElementById('exit-remote').addEventListener('click', function() {
+        document.getElementById('section-main').style.display = 'block';
+        document.getElementById('section-remote').style.display = 'none';
+    });
+
     // login flow
     document.getElementById('login').addEventListener('click', function() {
         // Create the login message

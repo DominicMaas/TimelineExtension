@@ -45,6 +45,7 @@
         "identity",
         "storage",
         "https://graph.microsoft.com/v1.0/me/activities/*",
+        "https://graph.microsoft.com/beta/me/devices/*",
         "https://ge-functions.azurewebsites.net/api/get-token",
         "https://ge-functions.azurewebsites.net/api/refresh-token"
     ],
