@@ -89,7 +89,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(device);
 
                     // Update UI
-                    devicesHolder.insertAdjacentHTML('beforeend', '<a id="'+device.id+'" class="remote-device"><p>'+device.Name+'</p></div>');
+                    devicesHolder.insertAdjacentHTML('beforeend', '<a id="remote-device-'+device.id+'" class="remote-device"><p>'+device.Name+'</p></div>');
+
+                    // Attach click event
+                    document.getElementById('remote-device-' + device.id).addEventListener('click', function() {
+                        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+
+                            // Get the active tab
+                            var activeTab = tabs[0];
+                            
+                            // Create the navigate message
+                            let remoteNavigate = { type: 'RemoteNavigate', payload: { id: device.id, url: activeTab.url } };
+                            // Send the navigate request to the background
+                            chrome.runtime.sendMessage(remoteNavigate);
+                            // close the popout (for screen readers)
+                            window.close();
+                         });
+                    });
                 }
             } else {
                 // Say why the request failed

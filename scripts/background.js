@@ -349,6 +349,24 @@ function GetRemoteDevices(secondAttempt)
     });
 }
 
+function LaunchOnRemoteDevice(payload)
+{
+    console.log(payload);
+
+    fetch('https://graph.microsoft.com/beta/me/devices/' + payload.id + '/commands', {
+        body: '{"type":"LaunchUri","payload":{"uri":"'+payload.url+'"}}',
+        cache: 'no-cache', 
+        headers: {
+            'authorization': `Bearer ${accessToken}`,
+            'content-type': 'application/json',
+        },
+        method: 'POST'
+    }).then(function(response) {
+        // Log the response
+        response.text().then(function(text){console.debug(text)});
+    });
+}
+
 /**
  * Handle messages sent to this background script. Handles either
  */
@@ -376,6 +394,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         GetRemoteDevices(false).then(function(data) {
             sendResponse(data);
         });
+    }
+
+    else if (request.type == 'RemoteNavigate' && request.payload) {
+        LaunchOnRemoteDevice(request.payload);
     }
 
     return true;
