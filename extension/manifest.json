@@ -20,7 +20,7 @@
             "38": "images/icon_38.png"
         },
         "default_title": "Windows Timeline Support",
-        "default_popup": "menu/menu.html"
+        "default_popup": "menu.html"
     },
     "icons": {
         "16": "images/icon_16.png",
