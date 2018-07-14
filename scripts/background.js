@@ -6,11 +6,9 @@ const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'openid', 'offline_access
 // Redirect url for auth login
 const redirectURL = chrome.identity.getRedirectURL();
 
-// Access token for the users Microsoft Account
+// Access and refresh token for the users Microsoft Account
 var accessToken;
-
-// Used for re-login hint
-var preferredUsername;
+var refreshToken;
 
 // Client branding
 if (navigator.userAgent.includes('Vivaldi')) {
@@ -47,10 +45,10 @@ chrome.storage.local.get('access_token', function(data) {
     }
 });
 
-// Get the preferred username, this is used for re-login
-chrome.storage.local.get('preferred_username', function(data) {
-    if (data.preferred_username !== null) {
-        preferredUsername = data.preferred_username;
+// Get the refresh token (may be null if not logged in)
+chrome.storage.local.get('refresh_token', function(data) {
+    if (data.refresh_token !== null) {
+        refreshToken = data.refresh_token;
     }
 });
 
@@ -156,39 +154,26 @@ function SendActivityBeacon(webActivity, secondAttempt) {
 
 // Open the Microsoft account login dialog, let the user login,
 // grab the token and then store it for later use.
-function Login(silent) {
-    // Build required random numbers
-    let state = Math.floor(Math.random() * 1000000);
-    let nonce = Math.floor(Math.random()*1000000);
-
+function Login() {
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
         authURL += `?client_id=${clientId}`;
-        authURL += `&response_type=id_token+token`;
-        authURL += `&response_mode=fragment`;
+        authURL += `&response_type=code`;
+        authURL += `&response_mode=query`;
         authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
         authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
-        authURL += `&state=${state}`;
-        authURL += `&nonce=${nonce}`;
-
-    // If refreshing a token, don't display UI
-    if (silent)
-    {
-        authURL += `&prompt=none`;
-        authURL += `&preferred_username=${preferredUsername}`;
-    }    
 
     // Launch the web flow to login the user
     // COMPAT: Firefox requires promise, Chrome requires callback.
     if (typeof browser === 'undefined' || !browser) {
         chrome.identity.launchWebAuthFlow({
             'url': authURL,
-            'interactive': !silent
+            'interactive': true
         }, ValidateLogin);
     } else {
         browser.identity.launchWebAuthFlow({
             'url': authURL,
-            'interactive': !silent
+            'interactive': true
         }).then(ValidateLogin);
     }
 }
@@ -206,43 +191,66 @@ function Logout() {
 // Take in the redirect url and grab the access 
 // token from it.
 function ValidateLogin(redirect_url) {
-    console.log(redirect_url);
-
     // Get the data from the redirect url
-    let data = redirect_url.split('#')[1];
+    let data = redirect_url.split('?')[1];
 
     // Split the data into pairs
-    var pairsArray = data.split('&');
+    var dataArray = data.split('&');
     
     // Object that will store the key value pairs
-    var pairsKeyValuePair = {};
+    var parameters = {};
 
     // Store the data into a key value pair object
-    for (var pair in pairsArray) {
-        var split = pairsArray[pair].split('=');
-        pairsKeyValuePair[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
+    for (var pair in dataArray) {
+        var split = dataArray[pair].split('=');
+        parameters[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
     }
 
-    // If there is an error, log it
-    if (pairsKeyValuePair["error"] != null)
-        console.error(pairsKeyValuePair["error_description"]);
-    
-    // We need to get the preferred username from the id token
-    let base64Url = pairsKeyValuePair['id_token'].split('.')[1];
-    let base64 = base64Url.replace('-', '+').replace('_', '/');
-    
-    // Email
-    let email = JSON.parse(window.atob(base64)).email;
+    // If the request was not successful, log it
+    if (parameters['error'] != null) {
+        // Log the error, TODO: show some type of error dialog.
+        console.error(parameters['error_description']);
 
-    // Save the token in storage so it can be used later
-    chrome.storage.local.set({ 
-        'access_token' : pairsKeyValuePair['access_token'] ,
-        'preferred_username': email
-    }, null);
+        // Clear any tokens that may be cached.
+        Logout();
+    } else {
+        // Get the code
+        let code = parameters['code'];
 
-    // Update the local variable
-    accessToken = pairsKeyValuePair['access_token'];
-    preferredUsername = email;
+        // Call the wrapper service which will handle getting the access and refresh tokens
+        // The code for this function is located in the 'auth-backend' branch.
+        fetch('https://ge-functions.azurewebsites.net/api/get-token', {
+            body: JSON.stringify({
+                'client_id': clientId,
+                'scope': scopes.join(' '),
+                'code': code,
+                'redirect_uri': redirectURL
+            }),
+            method: 'POST'
+        }).then(function(response) {
+            // Get the data as json and update the variables
+            response.json().then(function(json) {
+                // Handle Server Errors
+                if (json.error !== null) {
+                    // Save the token in storage so it can be used later
+                    chrome.storage.local.set({ 
+                        'access_token' : json.access_token,
+                        'refresh_token': json.refresh_token
+                    }, null);
+
+                    // Update the local variable
+                    accessToken = json.access_token;
+                    refreshToken = json.refresh_token;
+                } else {
+                    // Log the error, TODO: show some type of error dialog.
+                    console.error(json.error_description);
+
+                    // Clear any tokens that may be cached.
+                    Logout();
+                }
+            })
+        });
+    }
 }
 
 // Handle messages sent to this background script. Handles either
@@ -259,7 +267,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     // The user has requested a login, open the login dialog 
     else if (request.type == 'Login') {
-        Login(false);
+        Login();
     }
 
     // The user has requested a logout
