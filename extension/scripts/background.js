@@ -69,8 +69,8 @@ function SendActivityBeacon(webActivity, secondAttempt) {
     let date = new Date().toISOString();
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-    // Grab the activity id (url with // replaced with _)
-    let activityId = window.btoa(webActivity.activityOriginUrl);
+    // Encode the url
+    let activityId = window.btoa(webActivity.activityDescription);
 
     // Create the microsoft graph activity url
     let url = `https://graph.microsoft.com/v1.0/me/activities/${activityId}`;
