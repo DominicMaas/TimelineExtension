@@ -2,7 +2,7 @@
 
 A web extension that integrates Windows Timeline support into popular browsers.
 
-![Timeline Image](images/store/timeline.png)
+![Timeline Image](extension/images/store/timeline.png)
 
 ## Introduction
 
@@ -30,9 +30,9 @@ A list of known issues and planned features is located below. Before opening a n
 
 ## More Screenshots
 
-![Signed In](images/store/signed-in.png)
+![Signed In](extension/images/store/signed-in.png)
 
-![Signed Out](images/store/signed-out.png)
+![Signed Out](extension/images/store/signed-out.png)
 
 ## Authors
 
