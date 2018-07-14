@@ -11,7 +11,7 @@ enum MessageType {
      * Start the 'push flow' which will send a url to another device and
      * open it on that device.
      */
-    OpenWithRemoteDevice,
+    OpenOnRemoteDevice,
 
     /**
      * Tells the background thread to get a list of devices that the 
