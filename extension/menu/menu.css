@@ -14,8 +14,7 @@ body {
     color: #24292e;
     width: 350px;
     margin: 0;
-    min-height: 400px;
-    max-height: 700px;
+    height: 500px;
     overflow: hidden;
     padding: 0;
 }
@@ -29,7 +28,16 @@ header {
 header nav {
     display: inline-block;
     float: right;
-    line-height: 26px;
+    line-height: 28px;
+}
+
+header svg {
+    opacity: 0.5;
+    transition: opacity 150ms ease-in-out;
+}
+
+header svg:hover {
+    opacity: 1.0;
 }
 
 h1, h2, h3 {
@@ -82,7 +90,8 @@ h1, h2, h3, span, p, nav { user-select: none }
     text-decoration: none;
     color: #111;
     position: relative;
-    transition: all 250ms ease;
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
 }
 
 .inline-button p {
@@ -155,9 +164,22 @@ h1, h2, h3, span, p, nav { user-select: none }
 #remote-status {
     font-weight: 600;
     text-align: center;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 #devices-holder {
     overflow-y: auto;
+    height:454px;
+}
+
+#devices-holder::-webkit-scrollbar {
+    width: 5px;
+}
+   
+#devices-holder::-webkit-scrollbar-thumb {
+    background: #666; 
+}
+
+#devices-holder::-webkit-scrollbar-track {
+    background: #ddd; 
 }
