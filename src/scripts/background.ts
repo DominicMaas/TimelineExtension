@@ -291,6 +291,11 @@ async function validateLoginAsync(redirectUrl: string) {
         // Update the local variable
         accessToken = body.access_token;
         refreshToken = body.refresh_token;
+
+        // Update the users devices
+        getRemoteDevicesAsync().then((devices) => {
+            userDevices = devices;
+        });
     }
 }
 
