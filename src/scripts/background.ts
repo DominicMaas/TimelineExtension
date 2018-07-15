@@ -168,7 +168,7 @@ async function sendActivityAsync(webActivity: ActivityMessage, secondAttempt: bo
 /**
  * Login the user into their Microsoft Account.
  */
-function Login() {
+function login() {
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
     authURL += `?client_id=${clientId}`;
@@ -183,19 +183,23 @@ function Login() {
         chrome.identity.launchWebAuthFlow({
             interactive: true,
             url: authURL
-        }, ValidateLogin);
+        }, (redirectUri) => {
+            validateLoginAsync(redirectUri);
+        });
     } else {
         browser.identity.launchWebAuthFlow({
             interactive: true,
             url: authURL
-        }).then(ValidateLogin);
+        }).then((redirectUri) => {
+            validateLoginAsync(redirectUri);
+        });
     }
 }
 
 /**
  * Logout the user from their Microsoft Account and delete any cached resources.
  */
-function Logout() {
+function logout() {
     // Remove the stored values
     chrome.storage.local.remove('preferred_username');
     chrome.storage.local.remove('access_token');
@@ -211,7 +215,7 @@ function Logout() {
  * refresh token.
  * @param redirectUrl Url containing the oauth code
  */
-function ValidateLogin(redirectUrl: string) {
+async function validateLoginAsync(redirectUrl: string) {
     // Get the data from the redirect url
     const data = redirectUrl.split('?')[1];
 
@@ -234,17 +238,17 @@ function ValidateLogin(redirectUrl: string) {
     // If the request was not successful, log it
     if (parameters.error != null) {
         // Log the error, TODO: show some type of error dialog.
-        console.error(parameters.error_description);
+        console.error('Error validating token: ' + parameters);
 
         // Clear any tokens that may be cached.
-        Logout();
+        logout();
     } else {
         // Get the code
         const urlCode = parameters.code;
 
         // Call the wrapper service which will handle getting the access and refresh tokens
         // The code for this function is located in the 'auth-backend' branch.
-        fetch('https://ge-functions.azurewebsites.net/api/get-token', {
+        const response = await fetch('https://ge-functions.azurewebsites.net/api/get-token', {
             body: JSON.stringify({
                 client_id: clientId,
                 code: urlCode,
@@ -252,32 +256,31 @@ function ValidateLogin(redirectUrl: string) {
                 scope: scopes.join(' '),
             }),
             method: 'POST'
-        }).then((response) => {
-            // Get the data as json and update the variables
-            response.json().then((json) => {
-                // Handle Server Errors
-                if (json.error !== null) {
-                    // Save the token in storage so it can be used later
-                    chrome.storage.local.set({
-                        access_token : json.access_token,
-                        refresh_token: json.refresh_token
-                    }, null);
-
-                    // Update the local variable
-                    accessToken = json.access_token;
-                    refreshToken = json.refresh_token;
-                } else {
-                    // Log the error, TODO: show some type of error dialog.
-                    console.error(json.error_description);
-
-                    // Clear any tokens that may be cached.
-                    Logout();
-                }
-            });
         });
+
+        // Grab the response body
+        const body = await response.json();
+
+        // If the error is not null, run this code
+        if (body.error !== undefined) {
+            // Show an error message to the user and logout
+            Message.sendMessage(new ErrorMessage('Error refreshing token', body.error_description));
+            console.error('Error validating token: ' + body);
+            logout();
+            return;
+        }
+
+        // Save the token in storage so it can be used later
+        chrome.storage.local.set({
+            access_token : body.access_token,
+            refresh_token: body.refresh_token
+        }, null);
+
+        // Update the local variable
+        accessToken = body.access_token;
+        refreshToken = body.refresh_token;
     }
 }
-
 
 /**
  * Calls the refresh azure function which will return a new refresh and
@@ -299,10 +302,11 @@ async function refreshTokenAsync(): Promise<boolean> {
     const body = await response.json();
 
     // If the error is not null, run this code
-    if (body.error !== null) {
+    if (body.error !== undefined) {
         // Show an error message to the user and logout
         Message.sendMessage(new ErrorMessage('Error refreshing token', body.error_description));
-        Logout();
+        console.error('Error refreshing token: ' + body);
+        logout();
         return false;
     }
 
@@ -366,8 +370,9 @@ async function getRemoteDevicesAsync(secondAttempt: boolean = false): Promise<an
     };
 }
 
-function LaunchOnRemoteDevice(payload: OpenOnRemoteDeviceMessage) {
-    fetch('https://graph.microsoft.com/beta/me/devices/' + payload.DeviceId + '/commands', {
+async function launchOnRemoteDeviceAsync(payload: OpenOnRemoteDeviceMessage, secondAttempt: boolean = false): Promise<void> {
+    // Attempt to open the url on the users device
+    const response = await fetch('https://graph.microsoft.com/beta/me/devices/' + payload.DeviceId + '/commands', {
         body: '{"type":"LaunchUri","payload":{"uri":"' + payload.Url + '"}}',
         cache: 'no-cache',
         headers: {
@@ -375,10 +380,28 @@ function LaunchOnRemoteDevice(payload: OpenOnRemoteDeviceMessage) {
             'content-type': 'application/json',
         },
         method: 'POST'
-    }).then((response) => {
-        // Log the response
-        response.text().then((text) => { console.debug(text); });
     });
+
+    // If we get a 401 in return, we need to refresh the token
+    if (response.status === 401) {
+        console.debug("Returned 401, refreshing access token...");
+
+        // Attempt to refresh the token
+        const refreshStatus = await refreshTokenAsync();
+
+        // If the refresh is successful and this is our first try,
+        // call the method again
+        if (refreshStatus && !secondAttempt) {
+            return await launchOnRemoteDeviceAsync(payload, true);
+        } else {
+            console.error('Could not authorize user. Please try again.');
+            Message.sendMessage(new ErrorMessage('Could not open link', 'Could not authorize user. Please try again.'));
+        }
+    }
+
+    // Grab the JSON body
+    const body = await response.json();
+    console.debug(body);
 }
 
 /**
@@ -397,13 +420,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     // The user has requested a login, open the login dialog
     if ((request as Message).Type === MessageType.Login) {
-        Login();
+        login();
         return;
     }
 
     // The user has requested a logout
     if ((request as Message).Type === MessageType.Logout) {
-        Logout();
+        logout();
         return;
     }
 
@@ -416,7 +439,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if ((request as Message).Type === MessageType.OpenOnRemoteDevice) {
-        LaunchOnRemoteDevice(request as OpenOnRemoteDeviceMessage);
+        launchOnRemoteDeviceAsync(request as OpenOnRemoteDeviceMessage);
         return;
     }
 });
