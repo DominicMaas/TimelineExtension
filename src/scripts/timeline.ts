@@ -1,3 +1,5 @@
+import { ActivityMessage } from "./common/messages/messages";
+import { Message } from "./common/messages/message";
 
 var minimumTimeOnPage = 8;
 
@@ -39,21 +41,10 @@ function CreateOrUpdateActivity() {
     ? '' 
     : (<HTMLLinkElement> document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]')).href;
     
-    // Build the activity message to send to the 
-    // background thread.
-    let activityMessage = {
-        type: 'WebActivity',
-        payload: {
-            activityTitle: title,
-            activityDescription: url,
-            activityOriginUrl: origin,
-            backgroundImage: image,
-            iconUrl: icon
-        }
-    }
+    var message = new ActivityMessage(title, url, origin, image, icon);
 
     setTimeout(function(activityMessage) {
         // send activity data to background script
-        chrome.runtime.sendMessage(activityMessage);
-    }, (minimumTimeOnPage * 1000), activityMessage);
+        Message.sendMessage(activityMessage);
+    }, (minimumTimeOnPage * 1000), message);
 }

@@ -1,4 +1,4 @@
-import { GetRemoteDevicesMessage } from "./common/messages/messages";
+import { GetRemoteDevicesMessage, OpenOnRemoteDeviceMessage, ActivityMessage } from "./common/messages/messages";
 import { Message } from "./common/messages/message";
 import { MessageType } from "./common/messages/message-type";
 
@@ -61,10 +61,10 @@ chrome.storage.local.get(['access_token', 'refresh_token'], function(data) {
 
 /**
  * Submit collected activity data to Microsoft
- * @param {*} webActivity The activity to post
- * @param {boolean} secondAttempt If this is the second attempt at posting the activity
+ * @param webActivity The activity to post
+ * @param secondAttempt If this is the second attempt at posting the activity
  */
-function SendActivityBeacon(webActivity, secondAttempt) {
+function SendActivityBeacon(webActivity : ActivityMessage, secondAttempt : boolean = false) {
     // Don't run if the user has not logged in
     if (!accessToken) {
         console.error('Unauthorized, no auth token set.');
@@ -76,46 +76,46 @@ function SendActivityBeacon(webActivity, secondAttempt) {
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     // Encode the url
-    let activityId = window.btoa(webActivity.activityDescription);
+    let activityId = window.btoa(webActivity.Description);
 
     // Create the microsoft graph activity url
     let url = `https://graph.microsoft.com/v1.0/me/activities/${activityId}`;
 
     // Get icon
-    let icon = webActivity.iconUrl === '' ? browserIcon : webActivity.iconUrl;
+    let icon = webActivity.IconImage === '' ? browserIcon : webActivity.IconImage;
 
     let data = JSON.stringify({
         'appActivityId': activityId,
-        'activitySourceHost': webActivity.activityOriginUrl,
+        'activitySourceHost': webActivity.OriginUrl,
         'userTimezone': timeZone,
         'appDisplayName': browserName,
-        'activationUrl': webActivity.activityDescription,
-        'fallbackUrl': webActivity.activityDescription,
+        'activationUrl': webActivity.Description,
+        'fallbackUrl': webActivity.Description,
         'visualElements': {
             'attribution': {
                 'iconUrl': icon,
-                'alternateText': webActivity.activityOriginUrl,
+                'alternateText': webActivity.OriginUrl,
                 'addImageQuery': 'false'
             },
-            'description': webActivity.activityDescription,
-            'displayText': webActivity.activityTitle,
+            'description': webActivity.Description,
+            'displayText': webActivity.Title,
             'content': {
                 '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',
                 'type': 'AdaptiveCard',
-                'backgroundImage': webActivity.backgroundImage,
+                'backgroundImage': webActivity.BackgroundImage,
                 'body':
                 [{
                     'type': 'Container',
                     'items': [{
                         'type': 'TextBlock',
-                        'text': webActivity.activityTitle,
+                        'text': webActivity.Title,
                         'weight': 'bolder',
                         'size': 'large',
                         'wrap': true,
                         'maxLines': 3
                     },{
                         'type': 'TextBlock',
-                        'text': webActivity.activityDescription,
+                        'text': webActivity.Description,
                         'size': 'default',
                         'wrap': true,
                         'maxLines': 3
@@ -149,12 +149,12 @@ function SendActivityBeacon(webActivity, secondAttempt) {
             console.debug("Returned 401, refreshing access token...");
 
             // Get a new token
-            RefreshToken();
-
-            // Retry recording activity once
-            if (!secondAttempt) {
-                SendActivityBeacon(webActivity, true);
-            }
+            RefreshToken(() => {
+                 // Retry recording activity once
+                if (!secondAttempt) {
+                    SendActivityBeacon(webActivity, true);
+                }
+            });
         }
 
         // Log the response
@@ -279,41 +279,44 @@ function ValidateLogin(redirect_url) {
  * Calls the refresh azure function which will return a new refresh and 
  * access token so we can continue accessing resources from the Microsoft Graph.
  */
-function RefreshToken() {
-    fetch('https://ge-functions.azurewebsites.net/api/refresh-token', {
+function RefreshToken(callback: () => any)  {
+    return fetch('https://ge-functions.azurewebsites.net/api/refresh-token', {
         body: JSON.stringify({
             'client_id': clientId,
             'scope': scopes.join(' '),
             'refresh_token': refreshToken,
             'redirect_uri': redirectURL
-            }),
-            method: 'POST'
-        }).then(function(response) {
-            // Get the data as json and update the variables
-            response.json().then(function(json) {
-                // Handle Server Errors
-                if (json.error !== null) {
-                    // Save the token in storage so it can be used later
-                    chrome.storage.local.set({ 
-                        'access_token' : json.access_token,
-                        'refresh_token': json.refresh_token
-                    }, null);
+        }),
+        method: 'POST'
+    }).then(function(response) {
+        // Get the data as json and update the variables
+        response.json().then(function(json) {
+            // Handle Server Errors
+            if (json.error !== null) {
+                // Save the token in storage so it can be used later
+                chrome.storage.local.set({ 
+                    'access_token' : json.access_token,
+                    'refresh_token': json.refresh_token
+                }, null);
 
-                    // Update the local variable
-                    accessToken = json.access_token;
-                    refreshToken = json.refresh_token;
-                } else {
-                    // Log the error, TODO: show some type of error dialog.
-                    console.error(json.error_description);
+                // Update the local variable
+                accessToken = json.access_token;
+                refreshToken = json.refresh_token;
 
-                    // Clear any tokens that may be cached.
-                    Logout();
-                }
-            })
-        });
+                // Success, run the callback
+                return callback();
+            } else {
+                // Log the error, TODO: show some type of error dialog.
+                console.error(json.error_description);
+
+                // Clear any tokens that may be cached.
+                Logout();
+            }
+        })
+    });
 }
 
-function GetRemoteDevices(secondAttempt)
+function GetRemoteDevices(secondAttempt : boolean = false)
 {
     return fetch('https://graph.microsoft.com/beta/me/devices/', {
         cache: 'no-cache', 
@@ -328,20 +331,20 @@ function GetRemoteDevices(secondAttempt)
             console.debug("Returned 401, refreshing access token...");
 
             // Get a new token
-            RefreshToken();
-
-            // Retry recording activity once
-            if (!secondAttempt) {
-                return GetRemoteDevices(true);
-            }
-            else
-            {
-                return {
-                    success : false,
-                    reason: 'Could not authorize user. Please try again.',
-                    payload: null
+            RefreshToken(() => {
+                // Retry recording activity once
+                if (!secondAttempt) {
+                    return GetRemoteDevices(true);
                 }
-            }
+                else
+                {
+                    return {
+                        success : false,
+                        reason: 'Could not authorize user. Please try again.',
+                        payload: null
+                    }
+                }
+            });  
         }
 
         return response.json().then(function(json) {
@@ -354,12 +357,10 @@ function GetRemoteDevices(secondAttempt)
     });
 }
 
-function LaunchOnRemoteDevice(payload)
+function LaunchOnRemoteDevice(payload : OpenOnRemoteDeviceMessage)
 {
-    console.log(payload);
-
-    fetch('https://graph.microsoft.com/beta/me/devices/' + payload.id + '/commands', {
-        body: '{"type":"LaunchUri","payload":{"uri":"'+payload.url+'"}}',
+    fetch('https://graph.microsoft.com/beta/me/devices/' + payload.DeviceId + '/commands', {
+        body: '{"type":"LaunchUri","payload":{"uri":"'+payload.Url+'"}}',
         cache: 'no-cache', 
         headers: {
             'authorization': `Bearer ${accessToken}`,
@@ -381,8 +382,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     // Send a web activity request to the Microsoft Graph.
-    else if (request.type == 'WebActivity' && request.payload) {
-        SendActivityBeacon(request.payload, false);
+    else if ((<Message> request).Type == MessageType.PublishActivity) {
+        SendActivityBeacon(request as ActivityMessage);
     }
 
     // The user has requested a login, open the login dialog 
@@ -401,8 +402,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         });
     }
 
-    else if (request.type == 'RemoteNavigate' && request.payload) {
-        LaunchOnRemoteDevice(request.payload);
+    else if ((<Message> request).Type == MessageType.OpenOnRemoteDevice) {
+        LaunchOnRemoteDevice(request as OpenOnRemoteDeviceMessage);
     }
 
     return true;
