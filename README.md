@@ -15,7 +15,7 @@ A list of known issues and planned features is located below. Before opening a n
 |Browser|Supported|Download|Note|
 |--|--|--|--|
 |Google Chrome|Yes|[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)|Fully Supported|
-|Firefox|Yes|Clone Repo|Fully Supported|
+|Firefox|Yes|[Firefox Addons](https://addons.mozilla.org/en-GB/firefox/addon/windows-timeline-support/)|Fully Supported|
 |Microsoft Edge|No|n/a|Microsoft Edge already has Windows Timeline integration. Might release a version that only contains Project Rome support.|
 |Vivaldi| Yes |[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)|Supported Icon Assets. Chrome OAuth Base.|
 |Opera|No|n/a| Use tool to install from Chrome Web Store. Missing Icon Assets.|
