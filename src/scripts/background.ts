@@ -86,8 +86,8 @@ async function sendActivityAsync(webActivity: ActivityMessage, secondAttempt: bo
     const date = new Date().toISOString();
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    // Encode the url
-    const activityId = window.btoa(webActivity.Description);
+    // Encode the url with base64, then make url friendly
+    const activityId = window.btoa(webActivity.Description).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
 
     // Create the microsoft graph activity url
     const url = `https://graph.microsoft.com/v1.0/me/activities/${activityId}`;
