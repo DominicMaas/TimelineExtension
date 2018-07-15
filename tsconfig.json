@@ -6,6 +6,8 @@
         "sourceMap": false,
         "rootDir": "src/scripts",
         "outDir": "extension/scripts",
-        "noEmitOnError": true
+        "noEmitOnError": true,
+        // You have to explicitly set @types to get DefinitelyTyped type definitions
+        "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
     }
 }

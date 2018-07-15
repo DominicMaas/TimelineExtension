@@ -19,11 +19,25 @@ if (window.parent.location == window.location) {
 // Create or update the activity
 function CreateOrUpdateActivity() {
     // Activity data
-    let title = (document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]') === null) ? document.title : document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]').content;
-    let url = (document.querySelector('link[rel~="canonical"][href]') === null) ? ((document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]') === null) ? document.location.toString() : document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]').content) : document.querySelector('link[rel~="canonical"][href]').href;
+    let title = (document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]') === null) 
+        ? document.title 
+        : (<HTMLMetaElement> document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]')).content;
+    
+    let url = (document.querySelector('link[rel~="canonical"][href]') === null) 
+        ? ((document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]') === null) 
+        ? document.location.toString() 
+        : (<HTMLMetaElement> document.querySelector('meta[property="og:url"][content],meta[name="og:url"][content]')).content) 
+        : (<HTMLLinkElement> document.querySelector('link[rel~="canonical"][href]')).href;
+    
     let origin = new URL(url).hostname;
-    let image = (document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]') === null) ? '' : document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]').content;
-    let icon = (document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]') === null) ? '' : document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]').href;
+    
+    let image = (document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]') === null) 
+    ? '' 
+    : (<HTMLMetaElement> document.querySelector('meta[property="og:image"][content],meta[name="og:image"][content]')).content;
+    
+    let icon = (document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]') === null) 
+    ? '' 
+    : (<HTMLLinkElement> document.querySelector('link[rel~="icon"][type="image/png"][sizes="24x24"][href],link[rel~="icon"][sizes~="24x24"][href],link[rel~="icon"][href]')).href;
     
     // Build the activity message to send to the 
     // background thread.

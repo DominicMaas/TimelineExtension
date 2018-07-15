@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@types/chrome": "0.0.69",
+    "web-ext-types": "2.1.0",
     "typescript": "2.9.2",
     "ts-loader": "4.4.2",
     "webpack": "4.16.0",

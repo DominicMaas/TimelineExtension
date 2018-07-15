@@ -1,6 +1,6 @@
 var settingsToggle : boolean = false;
 var minimumTimeOnPage : number = 8;
-var accessToken : string;
+var accessToken : any;
 
 // Get local preferences
 chrome.storage.local.get('access_token', function(data) {

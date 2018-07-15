@@ -1,4 +1,5 @@
-// @ts-check
+// Fix missing browser definitions
+//declare var browser: any;
 
 // Scopes required for this extension
 // UserActivity.ReadWrite.CreatedByApp - Timeline Support
