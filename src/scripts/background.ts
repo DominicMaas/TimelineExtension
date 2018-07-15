@@ -23,6 +23,9 @@ let clientId: string;
 let browserName: string;
 let browserIcon: string;
 
+// Used to cache the users devices (since loading devices can take a long time)
+let userDevices: any;
+
 // Client branding
 if (navigator.userAgent.includes('Vivaldi')) {
     browserName = 'Vivaldi';
@@ -52,9 +55,18 @@ chrome.storage.local.get(['access_token', 'refresh_token'], (data) => {
     if (data.access_token !== null) {
         accessToken = data.access_token;
     }
+
     // Get the refresh token (may be null if not logged in)
     if (data.refresh_token !== null) {
         refreshToken = data.refresh_token;
+    }
+
+    // This is a weird place to put this code, but it needs to run after the access
+    // token has been loaded from storage.
+    if (accessToken !== undefined) {
+        getRemoteDevicesAsync().then((devices) => {
+            userDevices = devices;
+        });
     }
 });
 
@@ -431,9 +443,23 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if ((request as Message).Type === MessageType.GetRemoteDevices) {
-        getRemoteDevicesAsync().then((data) => {
-            sendResponse(data);
-        });
+        // If we have cached devices, return them
+        if (userDevices !== undefined) {
+            // Send the response
+            sendResponse(userDevices);
+
+            // Update cached values
+            getRemoteDevicesAsync().then((data) => {
+                userDevices = data;
+            });
+
+        } else {
+            // Get a list of devices, cache them and then send the response
+            getRemoteDevicesAsync().then((data) => {
+                userDevices = data;
+                sendResponse(data);
+            });
+        }
 
         return true;
     }
