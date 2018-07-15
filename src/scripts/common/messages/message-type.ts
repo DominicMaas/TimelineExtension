@@ -29,5 +29,10 @@ export enum MessageType {
      * Start the login flow allowing the user to connect their
      * Microsoft Account.
      */
-    Login
+    Login,
+
+    /**
+     * Something has gone wrong and we need to tell the user something.
+     */
+    Error
 }

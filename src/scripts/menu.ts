@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Send a message to get the devices
         Message.sendMessageWithResult<any>(new GetRemoteDevicesMessage(), (data) => {
+            console.log(data);
             // If the message was not successful, say why
             if (!data.success) {
                 document.getElementById('remote-status').innerText = data.reason;

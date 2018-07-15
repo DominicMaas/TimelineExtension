@@ -1,4 +1,5 @@
 import { ActivityMessage } from './common/messages/activity-message';
+import { ErrorMessage } from './common/messages/error-message';
 import { Message } from './common/messages/message';
 import { MessageType } from './common/messages/message-type';
 import { OpenOnRemoteDeviceMessage } from './common/messages/open-on-remote-device-message';
@@ -45,6 +46,7 @@ if (navigator.userAgent.includes('Firefox')) {
     console.error('Unrecognized web browser, unknown client ID.');
 }
 
+// Get stored tokens
 chrome.storage.local.get(['access_token', 'refresh_token'], (data) => {
     // Get the access token (may be null if not logged in)
     if (data.access_token !== null) {
@@ -56,17 +58,16 @@ chrome.storage.local.get(['access_token', 'refresh_token'], (data) => {
     }
 });
 
-
 /**
  * Submit collected activity data to Microsoft
  * @param webActivity The activity to post
  * @param secondAttempt If this is the second attempt at posting the activity
  */
-function SendActivityBeacon(webActivity: ActivityMessage, secondAttempt: boolean = false) {
+async function sendActivityAsync(webActivity: ActivityMessage, secondAttempt: boolean = false): Promise<void> {
     // Don't run if the user has not logged in
     if (!accessToken) {
         console.error('Unauthorized, no auth token set.');
-        return false;
+        return;
     }
 
     // Get the current date time and time zone
@@ -129,8 +130,8 @@ function SendActivityBeacon(webActivity: ActivityMessage, secondAttempt: boolean
         }
     });
 
-    // Perform a fetch
-    fetch(url, {
+    // Call the url and get the response
+    const response = await fetch(url, {
         body: data,
         cache: 'no-cache',
         headers: {
@@ -138,24 +139,27 @@ function SendActivityBeacon(webActivity: ActivityMessage, secondAttempt: boolean
             'content-type': 'application/json',
         },
         method: 'PUT'
-    }).then((response) => {
-        // The user is not allowed to access this resource
-        if (response.status === 401) {
-            console.debug("Returned 401, refreshing access token...");
-
-            // Get a new token
-            RefreshToken(() => {
-                 // Retry recording activity once
-                if (!secondAttempt) {
-                    SendActivityBeacon(webActivity, true);
-                }
-            });
-        }
-
-        // Log the response
-        response.text().then((text) => { console.debug(text); });
     });
 
+    // If we get a 401 in return, we need to refresh the token
+    if (response.status === 401) {
+        console.debug("Returned 401, refreshing access token...");
+
+        // Attempt to refresh the token
+        const refreshStatus = await refreshTokenAsync();
+
+        // If the refresh is successful and this is our first try,
+        // call the method again
+        if (refreshStatus && !secondAttempt) {
+            return await sendActivityAsync(webActivity, true);
+        } else {
+            console.error("Could not post activity to Windows Timeline: " + webActivity);
+            return;
+        }
+    }
+
+    const body = await response.json();
+    console.debug(body);
 }
 
 // Open the Microsoft account login dialog, let the user login,
@@ -274,12 +278,14 @@ function ValidateLogin(redirectUrl: string) {
     }
 }
 
+
 /**
  * Calls the refresh azure function which will return a new refresh and
  * access token so we can continue accessing resources from the Microsoft Graph.
  */
-function RefreshToken(callback: () => any)  {
-    return fetch('https://ge-functions.azurewebsites.net/api/refresh-token', {
+async function refreshTokenAsync(): Promise<boolean> {
+    // Perform a post request to update the stored token
+    const response = await fetch('https://ge-functions.azurewebsites.net/api/refresh-token', {
         body: JSON.stringify({
             client_id: clientId,
             redirect_uri: redirectURL,
@@ -287,70 +293,77 @@ function RefreshToken(callback: () => any)  {
             scope: scopes.join(' ')
         }),
         method: 'POST'
-    }).then((response) => {
-        // Get the data as json and update the variables
-        response.json().then((json) => {
-            // Handle Server Errors
-            if (json.error !== null) {
-                // Save the token in storage so it can be used later
-                chrome.storage.local.set({
-                    access_token : json.access_token,
-                    refresh_token: json.refresh_token
-                }, null);
-
-                // Update the local variable
-                accessToken = json.access_token;
-                refreshToken = json.refresh_token;
-
-                // Success, run the callback
-                return callback();
-            } else {
-                // Log the error, TODO: show some type of error dialog.
-                console.error(json.error_description);
-
-                // Clear any tokens that may be cached.
-                Logout();
-            }
-        });
     });
+
+    // Grab the response body
+    const body = await response.json();
+
+    // If the error is not null, run this code
+    if (body.error !== null) {
+        // Show an error message to the user and logout
+        Message.sendMessage(new ErrorMessage('Error refreshing token', body.error_description));
+        Logout();
+        return false;
+    }
+
+    // Save the token in storage so it can be used later
+    chrome.storage.local.set({
+        access_token : body.access_token,
+        refresh_token: body.refresh_token
+    }, null);
+
+    // Update the local variable
+    accessToken = body.access_token;
+    refreshToken = body.refresh_token;
+
+    // Everything was successful
+    return true;
 }
 
-function GetRemoteDevices(secondAttempt: boolean = false) {
-    return fetch('https://graph.microsoft.com/beta/me/devices/', {
+/**
+ * Returns a list of devices that belong to the logged in users account
+ * @param secondAttempt If this is the second attempt at calling this function
+ */
+async function getRemoteDevicesAsync(secondAttempt: boolean = false): Promise<any> {
+    // Attempt to grab a list of the users devices
+    const response = await fetch('https://graph.microsoft.com/beta/me/devices/', {
         cache: 'no-cache',
         headers: {
             'authorization': `Bearer ${accessToken}`,
             'content-type': 'application/json',
         },
         method: 'GET'
-    }).then((response) => {
-        // The user is not allowed to access this resource
-        if (response.status === 401) {
-            console.debug("Returned 401, refreshing access token...");
-
-            // Get a new token
-            RefreshToken(() => {
-                // Retry recording activity once
-                if (!secondAttempt) {
-                    return GetRemoteDevices(true);
-                } else {
-                    return {
-                        payload: null,
-                        reason: 'Could not authorize user. Please try again.',
-                        success : false
-                    };
-                }
-            });
-        }
-
-        return response.json().then((json) => {
-            return {
-                payload: json.value,
-                reason: '',
-                success : true
-            };
-        });
     });
+
+    // If we get a 401 in return, we need to refresh the token
+    if (response.status === 401) {
+        console.debug("Returned 401, refreshing access token...");
+
+        // Attempt to refresh the token
+        const refreshStatus = await refreshTokenAsync();
+
+        // If the refresh is successful and this is our first try,
+        // call the method again
+        if (refreshStatus && !secondAttempt) {
+            return await getRemoteDevicesAsync(true);
+        } else {
+            return {
+                payload: null,
+                reason: 'Could not authorize user. Please try again.',
+                success : false
+            };
+        }
+    }
+
+    // Grab the JSON body
+    const body = await response.json();
+
+    // Return the list of devices
+    return {
+        payload: body.value,
+        reason: '',
+        success : true
+    };
 }
 
 function LaunchOnRemoteDevice(payload: OpenOnRemoteDeviceMessage) {
@@ -378,7 +391,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     // Send a web activity request to the Microsoft Graph.
     if ((request as Message).Type === MessageType.PublishActivity) {
-        SendActivityBeacon(request as ActivityMessage);
+        sendActivityAsync(request as ActivityMessage);
         return;
     }
 
@@ -395,9 +408,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if ((request as Message).Type === MessageType.GetRemoteDevices) {
-        GetRemoteDevices(false).then((data) => {
+        getRemoteDevicesAsync().then((data) => {
             sendResponse(data);
         });
+
         return true;
     }
 
