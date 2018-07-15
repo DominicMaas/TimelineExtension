@@ -16,6 +16,9 @@
     "url": "https://github.com/DominicMaas/TimelineExtension/issues"
   },
   "homepage": "https://github.com/DominicMaas/TimelineExtension#readme",
+  "dependencies": {
+    "adaptivecards": "1.0.0"
+  },
   "devDependencies": {
     "@types/chrome": "0.0.69",
     "typescript": "2.9.2",

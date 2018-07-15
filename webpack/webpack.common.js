@@ -8,9 +8,15 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, '../extension/scripts'),
-        filename: '[name]-complied.js'
+        filename: '[name]-ts.js'
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.tsx', '.js']
+    },
+    module: {
+        rules: [
+          // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+          { test: /\.tsx?$/, loader: "ts-loader" }
+        ]
     }
 };
