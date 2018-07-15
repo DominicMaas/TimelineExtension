@@ -18,6 +18,13 @@ A list of known issues and planned features is located below. Before opening a n
 |Firefox|Yes|Fully Supported|
 |Microsoft Edge|No|Microsoft Edge already has Windows Timeline integration|
 
+## Setup
+
+1. Clone the repository and open it.
+2. Run `npm install`.
+3. Run `npm run build` to build files or `npm run watch` for debugging.
+4. Open browser, load unpacked extension in the `extension` folder.
+
 ## Known Issues
 
 *None at the moment*
