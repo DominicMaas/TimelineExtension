@@ -14,12 +14,12 @@ if (window.parent.location === window.location) {
 
         // Run when document has loaded
         (document.readyState === 'complete' || document.readyState === 'interactive')
-            ? CreateOrUpdateActivity() : document.addEventListener('DOMContentLoaded', CreateOrUpdateActivity);
+            ? createOrUpdateActivity() : document.addEventListener('DOMContentLoaded', createOrUpdateActivity);
     });
 }
 
 // Create or update the activity
-function CreateOrUpdateActivity() {
+function createOrUpdateActivity() {
     // Activity data
     const title = (document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]') === null) ? document.title
         : (document.querySelector('meta[property="og:title"][content],meta[name="og:title"][content]') as HTMLMetaElement).content;

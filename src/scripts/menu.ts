@@ -43,7 +43,6 @@ function UpdateLoginState() {
 
 // Run when document has loaded
 document.addEventListener('DOMContentLoaded', () => {
-
     // Set some initial views and states
     UpdateLoginState();
     updateMinimumTimeOnPage();

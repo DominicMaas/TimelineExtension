@@ -31,7 +31,6 @@ A list of known issues and planned features is located below. Before opening a n
 
 ## Planned Features
 
-- Improved error checking.
 - Toggle switch for a built in ignore list (will include login urls, url shorteners etc.)
 - Ability to add a custom ignore list.
 

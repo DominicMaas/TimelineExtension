@@ -39,12 +39,11 @@
         "run_at": "document_end"
     }],
 
-    "incognito": "not_allowed",
-
     "permissions": [
         "identity",
         "storage",
         "tabs",
+        "notifications",
         "https://graph.microsoft.com/v1.0/me/activities/*",
         "https://graph.microsoft.com/beta/me/devices/*",
         "https://ge-functions.azurewebsites.net/api/get-token",

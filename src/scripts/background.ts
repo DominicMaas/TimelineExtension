@@ -276,7 +276,7 @@ async function validateLoginAsync(redirectUrl: string) {
         // If the error is not null, run this code
         if (body.error !== undefined) {
             // Show an error message to the user and logout
-            Message.sendMessage(new ErrorMessage('Error refreshing token', body.error_description));
+            showErrorMessage(new ErrorMessage('Error refreshing token', body.error_description));
             console.error('Error validating token: ' + body);
             logout();
             return;
@@ -321,7 +321,7 @@ async function refreshTokenAsync(): Promise<boolean> {
     // If the error is not null, run this code
     if (body.error !== undefined) {
         // Show an error message to the user and logout
-        Message.sendMessage(new ErrorMessage('Error refreshing token', body.error_description));
+        showErrorMessage(new ErrorMessage('Error refreshing token', body.error_description));
         console.error('Error refreshing token: ' + body);
         logout();
         return false;
@@ -412,13 +412,26 @@ async function launchOnRemoteDeviceAsync(payload: OpenOnRemoteDeviceMessage, sec
             return await launchOnRemoteDeviceAsync(payload, true);
         } else {
             console.error('Could not authorize user. Please try again.');
-            Message.sendMessage(new ErrorMessage('Could not open link', 'Could not authorize user. Please try again.'));
+            showErrorMessage(new ErrorMessage('Could not open link', 'Could not authorize user. Please try again.'));
         }
     }
 
     // Grab the JSON body
     const body = await response.json();
     console.debug(body);
+}
+
+/**
+ * Display an error message to the user
+ * @param message The error message
+ */
+function showErrorMessage(message: ErrorMessage) {
+    chrome.notifications.create('', {
+        iconUrl: 'images/icon_128.png',
+        message: message.Description,
+        title: message.Title,
+        type: "basic",
+    }, null);
 }
 
 /**
@@ -444,6 +457,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // The user has requested a logout
     if ((request as Message).Type === MessageType.Logout) {
         logout();
+        return;
+    }
+
+    // The user has requested a logout
+    if ((request as Message).Type === MessageType.Error) {
+        // Show a notification
+        showErrorMessage(request as ErrorMessage);
         return;
     }
 
