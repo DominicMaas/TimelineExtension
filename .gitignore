@@ -59,3 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+# Ignore these files for now
+extension/scripts/background-ts.js
+extension/scripts/menu-ts.js
+extension/scripts/timeline-ts.js
+
+extension/styles/menu-sc.css
