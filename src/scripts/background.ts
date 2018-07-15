@@ -1,10 +1,7 @@
-import { GetRemoteDevicesMessage, OpenOnRemoteDeviceMessage, ActivityMessage } from "./common/messages/messages";
-import { Message } from "./common/messages/message";
-import { MessageType } from "./common/messages/message-type";
-
-
-// Fix missing browser definitions
-//declare var browser: any;
+import { ActivityMessage } from './common/messages/activity-message';
+import { Message } from './common/messages/message';
+import { MessageType } from './common/messages/message-type';
+import { OpenOnRemoteDeviceMessage } from './common/messages/open-on-remote-device-message';
 
 // Scopes required for this extension
 // UserActivity.ReadWrite.CreatedByApp - Timeline Support
@@ -16,38 +13,39 @@ const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'Device.Read', 'Device.Co
 // Redirect url for auth login
 const redirectURL = chrome.identity.getRedirectURL();
 
-// Access and refresh token for the users Microsoft Account
-var accessToken;
-var refreshToken;
+// Auth variables
+let accessToken: string;
+let refreshToken: string;
+let clientId: string;
+
+// Browser resources
+let browserName: string;
+let browserIcon: string;
 
 // Client branding
 if (navigator.userAgent.includes('Vivaldi')) {
-    var browserName = 'Vivaldi';
-    var browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/vivaldi-32.png';
-}
-else if (navigator.userAgent.includes('Chrome')) {
-    var browserName = 'Google Chrome';
-    var browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/chrome-32.png';
-}
-else if (navigator.userAgent.includes('Firefox')) {
-    var browserName = 'Firefox';
-    var browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/firefox.png';
+    browserName = 'Vivaldi';
+    browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/vivaldi-32.png';
+} else if (navigator.userAgent.includes('Chrome')) {
+    browserName = 'Google Chrome';
+    browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/chrome-32.png';
+} else if (navigator.userAgent.includes('Firefox')) {
+    browserName = 'Firefox';
+    browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/firefox.png';
 }
 
 // Client Id
 if (navigator.userAgent.includes('Firefox')) {
     // Mozilla Add-Ons Catalog – (Firefox, Tor Browser)
-    var clientId = '6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3';
-}
-else if (navigator.userAgent.includes('Chrome')) {
+    clientId = '6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3';
+} else if (navigator.userAgent.includes('Chrome')) {
     // Chrome Web Store – (Google Chrome, Chromium, Vivaldi, others)
-    var clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
-}
-else {
+    clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
+} else {
     console.error('Unrecognized web browser, unknown client ID.');
 }
 
-chrome.storage.local.get(['access_token', 'refresh_token'], function(data) {
+chrome.storage.local.get(['access_token', 'refresh_token'], (data) => {
     // Get the access token (may be null if not logged in)
     if (data.access_token !== null) {
         accessToken = data.access_token;
@@ -64,7 +62,7 @@ chrome.storage.local.get(['access_token', 'refresh_token'], function(data) {
  * @param webActivity The activity to post
  * @param secondAttempt If this is the second attempt at posting the activity
  */
-function SendActivityBeacon(webActivity : ActivityMessage, secondAttempt : boolean = false) {
+function SendActivityBeacon(webActivity: ActivityMessage, secondAttempt: boolean = false) {
     // Don't run if the user has not logged in
     if (!accessToken) {
         console.error('Unauthorized, no auth token set.');
@@ -72,78 +70,75 @@ function SendActivityBeacon(webActivity : ActivityMessage, secondAttempt : boole
     }
 
     // Get the current date time and time zone
-    let date = new Date().toISOString();
-    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const date = new Date().toISOString();
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Encode the url
-    let activityId = window.btoa(webActivity.Description);
+    const activityId = window.btoa(webActivity.Description);
 
     // Create the microsoft graph activity url
-    let url = `https://graph.microsoft.com/v1.0/me/activities/${activityId}`;
+    const url = `https://graph.microsoft.com/v1.0/me/activities/${activityId}`;
 
     // Get icon
-    let icon = webActivity.IconImage === '' ? browserIcon : webActivity.IconImage;
+    const icon = webActivity.IconImage === '' ? browserIcon : webActivity.IconImage;
 
-    let data = JSON.stringify({
-        'appActivityId': activityId,
-        'activitySourceHost': webActivity.OriginUrl,
-        'userTimezone': timeZone,
-        'appDisplayName': browserName,
-        'activationUrl': webActivity.Description,
-        'fallbackUrl': webActivity.Description,
-        'visualElements': {
-            'attribution': {
-                'iconUrl': icon,
-                'alternateText': webActivity.OriginUrl,
-                'addImageQuery': 'false'
+    // Build the data
+    const data = JSON.stringify({
+        activationUrl: webActivity.Description,
+        activitySourceHost: webActivity.OriginUrl,
+        appActivityId: activityId,
+        appDisplayName: browserName,
+        fallbackUrl: webActivity.Description,
+        historyItems: [{
+            lastActiveDateTime: date,
+            startedDateTime: date,
+            userTimezone: timeZone,
+        }],
+        userTimezone: timeZone,
+        visualElements: {
+            attribution: {
+                addImageQuery: false,
+                alternateText: webActivity.OriginUrl,
+                iconUrl: icon
             },
-            'description': webActivity.Description,
-            'displayText': webActivity.Title,
-            'content': {
-                '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',
-                'type': 'AdaptiveCard',
-                'backgroundImage': webActivity.BackgroundImage,
-                'body':
+            content: {
+                $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+                backgroundImage: webActivity.BackgroundImage,
+                body:
                 [{
-                    'type': 'Container',
-                    'items': [{
-                        'type': 'TextBlock',
-                        'text': webActivity.Title,
-                        'weight': 'bolder',
-                        'size': 'large',
-                        'wrap': true,
-                        'maxLines': 3
-                    },{
-                        'type': 'TextBlock',
-                        'text': webActivity.Description,
-                        'size': 'default',
-                        'wrap': true,
-                        'maxLines': 3
-                    }]
-                }]
-            }
-        },
-        "historyItems":[
-            {
-                "userTimezone": timeZone,
-                "startedDateTime": date,
-                "lastActiveDateTime": date,
-            }
-        ]
+                    items: [{
+                        maxLines: 3,
+                        size: 'large',
+                        text: webActivity.Title,
+                        type: 'TextBlock',
+                        weight: 'bolder',
+                        wrap: true,
+                    }, {
+                        maxLines: 3,
+                        size: 'default',
+                        text: webActivity.Description,
+                        type: 'TextBlock',
+                        wrap: true
+                    }],
+                    type: 'Container',
+                }],
+                type: 'AdaptiveCard'
+            },
+            description: webActivity.Description,
+            displayText: webActivity.Title,
+        }
     });
-    
-    console.debug(data);
 
     // Perform a fetch
     fetch(url, {
         body: data,
-        cache: 'no-cache', 
+        cache: 'no-cache',
         headers: {
             'authorization': `Bearer ${accessToken}`,
             'content-type': 'application/json',
         },
         method: 'PUT'
-    }).then(function(response) {
+    }).then((response) => {
         // The user is not allowed to access this resource
         if (response.status === 401) {
             console.debug("Returned 401, refreshing access token...");
@@ -158,7 +153,7 @@ function SendActivityBeacon(webActivity : ActivityMessage, secondAttempt : boole
         }
 
         // Log the response
-        response.text().then(function(text){console.debug(text)});
+        response.text().then((text) => { console.debug(text); });
     });
 
 }
@@ -172,23 +167,23 @@ function SendActivityBeacon(webActivity : ActivityMessage, secondAttempt : boole
 function Login() {
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
-        authURL += `?client_id=${clientId}`;
-        authURL += `&response_type=code`;
-        authURL += `&response_mode=query`;
-        authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
-        authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
+    authURL += `?client_id=${clientId}`;
+    authURL += `&response_type=code`;
+    authURL += `&response_mode=query`;
+    authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
+    authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
 
     // Launch the web flow to login the user
     // COMPAT: Firefox requires promise, Chrome requires callback.
     if (typeof browser === 'undefined' || !browser) {
         chrome.identity.launchWebAuthFlow({
-            'url': authURL,
-            'interactive': true
+            interactive: true,
+            url: authURL
         }, ValidateLogin);
     } else {
         browser.identity.launchWebAuthFlow({
-            'url': authURL,
-            'interactive': true
+            interactive: true,
+            url: authURL
         }).then(ValidateLogin);
     }
 }
@@ -208,56 +203,60 @@ function Logout() {
 
 /**
  * Callback for the Login method. Extracts the oauth code from the
- * redirect url, calls the azure function to get both an access and 
+ * redirect url, calls the azure function to get both an access and
  * refresh token.
- * @param {string} redirect_url Url containing the oauth code
+ * @param redirectUrl Url containing the oauth code
  */
-function ValidateLogin(redirect_url) {
+function ValidateLogin(redirectUrl: string) {
     // Get the data from the redirect url
-    let data = redirect_url.split('?')[1];
+    const data = redirectUrl.split('?')[1];
 
     // Split the data into pairs
-    var dataArray = data.split('&');
-    
+    const dataArray = data.split('&');
+
     // Object that will store the key value pairs
-    var parameters = {};
+    const parameters = {
+        code: null,
+        error: null,
+        error_description: null
+    };
 
     // Store the data into a key value pair object
-    for (var pair in dataArray) {
-        var split = dataArray[pair].split('=');
+    for (const pair in dataArray) {
+        const split = dataArray[pair].split('=');
         parameters[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
     }
 
     // If the request was not successful, log it
-    if (parameters['error'] != null) {
+    if (parameters.error != null) {
         // Log the error, TODO: show some type of error dialog.
-        console.error(parameters['error_description']);
+        console.error(parameters.error_description);
 
         // Clear any tokens that may be cached.
         Logout();
     } else {
         // Get the code
-        let code = parameters['code'];
+        const urlCode = parameters.code;
 
         // Call the wrapper service which will handle getting the access and refresh tokens
         // The code for this function is located in the 'auth-backend' branch.
         fetch('https://ge-functions.azurewebsites.net/api/get-token', {
             body: JSON.stringify({
-                'client_id': clientId,
-                'scope': scopes.join(' '),
-                'code': code,
-                'redirect_uri': redirectURL
+                client_id: clientId,
+                code: urlCode,
+                redirect_uri: redirectURL,
+                scope: scopes.join(' '),
             }),
             method: 'POST'
-        }).then(function(response) {
+        }).then((response) => {
             // Get the data as json and update the variables
-            response.json().then(function(json) {
+            response.json().then((json) => {
                 // Handle Server Errors
                 if (json.error !== null) {
                     // Save the token in storage so it can be used later
-                    chrome.storage.local.set({ 
-                        'access_token' : json.access_token,
-                        'refresh_token': json.refresh_token
+                    chrome.storage.local.set({
+                        access_token : json.access_token,
+                        refresh_token: json.refresh_token
                     }, null);
 
                     // Update the local variable
@@ -270,33 +269,33 @@ function ValidateLogin(redirect_url) {
                     // Clear any tokens that may be cached.
                     Logout();
                 }
-            })
+            });
         });
     }
 }
 
 /**
- * Calls the refresh azure function which will return a new refresh and 
+ * Calls the refresh azure function which will return a new refresh and
  * access token so we can continue accessing resources from the Microsoft Graph.
  */
 function RefreshToken(callback: () => any)  {
     return fetch('https://ge-functions.azurewebsites.net/api/refresh-token', {
         body: JSON.stringify({
-            'client_id': clientId,
-            'scope': scopes.join(' '),
-            'refresh_token': refreshToken,
-            'redirect_uri': redirectURL
+            client_id: clientId,
+            redirect_uri: redirectURL,
+            refresh_token: refreshToken,
+            scope: scopes.join(' ')
         }),
         method: 'POST'
-    }).then(function(response) {
+    }).then((response) => {
         // Get the data as json and update the variables
-        response.json().then(function(json) {
+        response.json().then((json) => {
             // Handle Server Errors
             if (json.error !== null) {
                 // Save the token in storage so it can be used later
-                chrome.storage.local.set({ 
-                    'access_token' : json.access_token,
-                    'refresh_token': json.refresh_token
+                chrome.storage.local.set({
+                    access_token : json.access_token,
+                    refresh_token: json.refresh_token
                 }, null);
 
                 // Update the local variable
@@ -312,20 +311,19 @@ function RefreshToken(callback: () => any)  {
                 // Clear any tokens that may be cached.
                 Logout();
             }
-        })
+        });
     });
 }
 
-function GetRemoteDevices(secondAttempt : boolean = false)
-{
+function GetRemoteDevices(secondAttempt: boolean = false) {
     return fetch('https://graph.microsoft.com/beta/me/devices/', {
-        cache: 'no-cache', 
+        cache: 'no-cache',
         headers: {
             'authorization': `Bearer ${accessToken}`,
             'content-type': 'application/json',
         },
         method: 'GET'
-    }).then(function(response) {
+    }).then((response) => {
         // The user is not allowed to access this resource
         if (response.status === 401) {
             console.debug("Returned 401, refreshing access token...");
@@ -335,76 +333,76 @@ function GetRemoteDevices(secondAttempt : boolean = false)
                 // Retry recording activity once
                 if (!secondAttempt) {
                     return GetRemoteDevices(true);
-                }
-                else
-                {
+                } else {
                     return {
-                        success : false,
+                        payload: null,
                         reason: 'Could not authorize user. Please try again.',
-                        payload: null
-                    }
+                        success : false
+                    };
                 }
-            });  
+            });
         }
 
-        return response.json().then(function(json) {
+        return response.json().then((json) => {
             return {
-                success : true,
+                payload: json.value,
                 reason: '',
-                payload: json.value
-            }
+                success : true
+            };
         });
     });
 }
 
-function LaunchOnRemoteDevice(payload : OpenOnRemoteDeviceMessage)
-{
+function LaunchOnRemoteDevice(payload: OpenOnRemoteDeviceMessage) {
     fetch('https://graph.microsoft.com/beta/me/devices/' + payload.DeviceId + '/commands', {
-        body: '{"type":"LaunchUri","payload":{"uri":"'+payload.Url+'"}}',
-        cache: 'no-cache', 
+        body: '{"type":"LaunchUri","payload":{"uri":"' + payload.Url + '"}}',
+        cache: 'no-cache',
         headers: {
             'authorization': `Bearer ${accessToken}`,
             'content-type': 'application/json',
         },
         method: 'POST'
-    }).then(function(response) {
+    }).then((response) => {
         // Log the response
-        response.text().then(function(text){console.debug(text)});
+        response.text().then((text) => { console.debug(text); });
     });
 }
 
 /**
  * Handle messages sent to this background script. Handles either
  */
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (typeof request === 'undefined') {
         return;
     }
 
     // Send a web activity request to the Microsoft Graph.
-    else if ((<Message> request).Type == MessageType.PublishActivity) {
+    if ((request as Message).Type === MessageType.PublishActivity) {
         SendActivityBeacon(request as ActivityMessage);
+        return;
     }
 
-    // The user has requested a login, open the login dialog 
-    else if ((<Message> request).Type == MessageType.Login) {
+    // The user has requested a login, open the login dialog
+    if ((request as Message).Type === MessageType.Login) {
         Login();
+        return;
     }
 
     // The user has requested a logout
-    else if ((<Message> request).Type == MessageType.Logout) {
+    if ((request as Message).Type === MessageType.Logout) {
         Logout();
+        return;
     }
 
-    else if ((<Message> request).Type == MessageType.GetRemoteDevices) {
-        GetRemoteDevices(false).then(function(data) {
+    if ((request as Message).Type === MessageType.GetRemoteDevices) {
+        GetRemoteDevices(false).then((data) => {
             sendResponse(data);
         });
+        return true;
     }
 
-    else if ((<Message> request).Type == MessageType.OpenOnRemoteDevice) {
+    if ((request as Message).Type === MessageType.OpenOnRemoteDevice) {
         LaunchOnRemoteDevice(request as OpenOnRemoteDeviceMessage);
+        return;
     }
-
-    return true;
 });

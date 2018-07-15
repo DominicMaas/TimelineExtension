@@ -1,0 +1,30 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "max-line-length": false,
+        "new-parens": true,
+        "no-arg": true,
+        "quotemark": false,
+        "no-bitwise": true,
+        "trailing-comma":false,
+        "no-conditional-assignment": true,
+        "no-consecutive-blank-lines": false,
+        "forin": false,
+        "no-console": {
+            "severity": "off",
+            "options": [
+                "debug",
+                "info",
+                "log",
+                "time",
+                "timeEnd",
+                "trace"
+            ]
+        }
+    },
+    "jsRules": {
+        "max-line-length": {
+            "options": [120]
+        }
+    }
+}

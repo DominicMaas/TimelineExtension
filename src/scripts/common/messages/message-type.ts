@@ -14,19 +14,19 @@ export enum MessageType {
     OpenOnRemoteDevice,
 
     /**
-     * Tells the background thread to get a list of devices that the 
+     * Tells the background thread to get a list of devices that the
      * users Microsoft account is logged into.
      */
     GetRemoteDevices,
 
     /**
-     * Start the logout flow, disconnect the users Microsoft Account 
+     * Start the logout flow, disconnect the users Microsoft Account
      * and delete any cached tokens.
      */
     Logout,
 
     /**
-     * Start the login flow allowing the user to connect their 
+     * Start the login flow allowing the user to connect their
      * Microsoft Account.
      */
     Login
