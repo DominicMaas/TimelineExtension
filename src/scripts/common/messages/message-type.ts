@@ -1,7 +1,7 @@
 /**
  * A message type that can be sent in this extension
  */
-enum MessageType {
+export enum MessageType {
     /**
      * Push a timeline activity to the Microsoft Graph.
      */

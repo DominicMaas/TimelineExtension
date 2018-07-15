@@ -1,7 +1,10 @@
+import { Message } from "./message";
+import { MessageType } from "./message-type";
+
 /**
  * Message used to send activity request to the background page
  */
-class ActivityMessage extends Message {
+export class ActivityMessage extends Message {
     Title : string;
     Description: string;
     OriginUrl : string;
@@ -32,7 +35,7 @@ class ActivityMessage extends Message {
 /**
  * Open the login UI allowing the user to login
  */
-class LoginMessage extends Message {
+export class LoginMessage extends Message {
     
     /**
      * Construct a login message
@@ -47,7 +50,7 @@ class LoginMessage extends Message {
  * Logout the user and remove any cached tokens, also
  * provide a reason why the user was logged out
  */
-class LogoutMessage extends Message {
+export class LogoutMessage extends Message {
     Reason: string;
 
     /**
@@ -66,7 +69,7 @@ class LogoutMessage extends Message {
 /**
  * Get a list of remote devices connected to this users account
  */
-class GetRemoteDevicesMessage extends Message {
+export class GetRemoteDevicesMessage extends Message {
     /**
      * Construct a get remote devices message
      */
@@ -79,7 +82,7 @@ class GetRemoteDevicesMessage extends Message {
 /**
  * Send a link to a remote device and open it.
  */
-class OpenOnRemoteDeviceMessage extends Message {  
+export class OpenOnRemoteDeviceMessage extends Message {  
     DeviceId: string;
     Url: string;
 

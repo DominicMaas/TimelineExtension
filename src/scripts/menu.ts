@@ -1,3 +1,6 @@
+import { GetRemoteDevicesMessage, LoginMessage, LogoutMessage } from "./common/messages/messages";
+import { Message } from "./common/messages/message";
+
 var settingsToggle : boolean = false;
 var minimumTimeOnPage : number = 8;
 var accessToken : any;
@@ -66,8 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('remote-status').innerText = 'Loading...';
         document.getElementById('remote-status').style.display = 'block';
 
-        // Send a message to get data
-        let remoteMessage = { type: 'RemoteDevices' };
+        let remoteMessage = new GetRemoteDevicesMessage();
         
         // Get a list of user devices.
         chrome.runtime.sendMessage(remoteMessage, function(data) {
@@ -125,20 +127,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // login flow
     document.getElementById('login').addEventListener('click', function() {
-        // Create the login message
-        let loginMessage = { type: 'Login' };
-        // Send the login request to the background script
-        chrome.runtime.sendMessage(loginMessage);
+        // Send the message
+        Message.sendMessage(new LoginMessage());
+        
         // close the popout (for screen readers)
         window.close();
     });
 
     // log out flow
     document.getElementById('logout').addEventListener('click', function() {
-        // Create the login message
-        let logoutMessage = { type: 'Logout' };
-        // Send the login request to the background script
-        chrome.runtime.sendMessage(logoutMessage);
+        // Send the message
+        Message.sendMessage(new LogoutMessage('User initiated logout'));
+
         // close the popout
         window.close();
     });

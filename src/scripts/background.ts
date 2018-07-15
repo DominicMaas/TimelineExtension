@@ -1,3 +1,8 @@
+import { GetRemoteDevicesMessage } from "./common/messages/messages";
+import { Message } from "./common/messages/message";
+import { MessageType } from "./common/messages/message-type";
+
+
 // Fix missing browser definitions
 //declare var browser: any;
 
@@ -381,16 +386,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     // The user has requested a login, open the login dialog 
-    else if (request.type == 'Login') {
+    else if ((<Message> request).Type == MessageType.Login) {
         Login();
     }
 
     // The user has requested a logout
-    else if (request.type == 'Logout') {
+    else if ((<Message> request).Type == MessageType.Logout) {
         Logout();
     }
 
-    else if (request.type == 'RemoteDevices') {
+    else if ((<Message> request).Type == MessageType.GetRemoteDevices) {
         GetRemoteDevices(false).then(function(data) {
             sendResponse(data);
         });
