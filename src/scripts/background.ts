@@ -68,7 +68,6 @@ function SendActivityBeacon(webActivity, secondAttempt) {
 
     // Get the current date time and time zone
     let date = new Date().toISOString();
-    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     // Encode the url
     let activityId = window.btoa(webActivity.activityDescription);
@@ -79,10 +78,10 @@ function SendActivityBeacon(webActivity, secondAttempt) {
     // Get icon
     let icon = webActivity.iconUrl === '' ? browserIcon : webActivity.iconUrl;
 
+    // Build the request
     let data = JSON.stringify({
         'appActivityId': activityId,
         'activitySourceHost': webActivity.activityOriginUrl,
-        'userTimezone': timeZone,
         'appDisplayName': browserName,
         'activationUrl': webActivity.activityDescription,
         'fallbackUrl': webActivity.activityDescription,
@@ -120,7 +119,6 @@ function SendActivityBeacon(webActivity, secondAttempt) {
         },
         "historyItems":[
             {
-                "userTimezone": timeZone,
                 "startedDateTime": date,
                 "lastActiveDateTime": date,
             }
