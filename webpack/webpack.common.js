@@ -8,7 +8,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, '../extension/scripts'),
-        filename: '[name]-ts.js'
+        filename: '[name].js'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
