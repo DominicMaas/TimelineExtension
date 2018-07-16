@@ -34,5 +34,10 @@ export enum MessageType {
     /**
      * Something has gone wrong and we need to tell the user something.
      */
-    Error
+    Error,
+
+    /**
+     * Get a list of recent activities that this extension has created.
+     */
+    GetActivities
 }
