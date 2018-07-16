@@ -442,9 +442,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return;
     }
 
-    // Send a web activity request to the Microsoft Graph.
+    // Send a web activity request to the Microsoft Graph only if 
+    // the tab is not incognito.
     if ((request as Message).Type === MessageType.PublishActivity) {
-        sendActivityAsync(request as ActivityMessage);
+        if (!sender.tab.incognito) {
+            sendActivityAsync(request as ActivityMessage);
+        } else {
+            console.debug('Tab is in incognito mode, not sending activity.');
+        }
         return;
     }
 
