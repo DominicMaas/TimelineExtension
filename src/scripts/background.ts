@@ -27,7 +27,10 @@ let browserIcon: string;
 let userDevices: any;
 
 // Client branding
-if (navigator.userAgent.includes('Vivaldi')) {
+if (navigator.userAgent.includes('OPR/')) {
+    browserName = 'Opera';
+    browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/opera-128.png';
+} else if (navigator.userAgent.includes('Vivaldi')) {
     browserName = 'Vivaldi';
     browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/vivaldi-32.png';
 } else if (navigator.userAgent.includes('Chrome')) {
@@ -37,6 +40,9 @@ if (navigator.userAgent.includes('Vivaldi')) {
     browserName = 'Firefox';
     browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/firefox.png';
 }
+
+// Log the browser name
+console.debug("Selected Browser: " + browserName);
 
 // Client Id
 if (navigator.userAgent.includes('Firefox')) {
@@ -442,7 +448,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return;
     }
 
-    // Send a web activity request to the Microsoft Graph only if 
+    // Send a web activity request to the Microsoft Graph only if
     // the tab is not incognito.
     if ((request as Message).Type === MessageType.PublishActivity) {
         if (!sender.tab.incognito) {
