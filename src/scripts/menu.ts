@@ -47,6 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
     UpdateLoginState();
     updateMinimumTimeOnPage();
 
+    // When the user clicks on the activities button
+    attachClickEvent('view-activities', () => {
+        // Update UI
+        document.getElementById('section-main').style.display = 'none';
+        document.getElementById('section-activities').style.display = 'block';
+    });
+
     // When the user clicks on the devices button
     attachClickEvent('view-devices', () => {
         // Update UI
@@ -114,7 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
     attachClickEvent('exit-remote', () => {
         document.getElementById('section-main').style.display = 'block';
         document.getElementById('section-remote').style.display = 'none';
-    })
+    });
+
+    // When the user closes the activities pane
+    attachClickEvent('exit-activities', () => {
+        document.getElementById('section-main').style.display = 'block';
+        document.getElementById('section-activities').style.display = 'none';
+    });
 
     // login flow
     attachClickEvent('login', () => {

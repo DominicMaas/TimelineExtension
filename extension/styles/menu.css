@@ -156,18 +156,21 @@ h1, h2, h3, span, p, nav { user-select: none }
 /* initial state */
 #section-settings,
 #section-remote,
+#section-activities,
 #section-login-completed {
     display: none;
     overflow-y: hidden;
 }
 
-#remote-status {
+#remote-status,
+#activity-status {
     font-weight: 600;
     text-align: center;
     margin-top: 10px;
 }
 
-#devices-holder {
+#devices-holder,
+#activities-holder {
     overflow-y: auto;
     height:454px;
 }

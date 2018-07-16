@@ -69,21 +69,19 @@
                         <path d="M12 30 L24 16 12 2" />
                     </svg>
                 </a>
-    
-                <!-- Logout -->
-                <a id="logout" href="#" class="inline-button">
-                    <p>Sign out of your Microsoft Account</p>
+
+                <!-- View Activities -->
+                <a id="view-activities" href="#" class="inline-button">
+                    <p>View recent activities</p>
                     <!-- https://github.com/danklammer/bytesize-icons -->
                     <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                        <path d="M28 16 L8 16 M20 8 L28 16 20 24 M11 28 L3 28 3 4 11 4" />
+                        <path d="M12 30 L24 16 12 2" />
                     </svg>
                 </a>
-    
+                
                 <!-- Logout info -->
                 <p style="margin: 10px 15px;">You’re currently signed in and syncing your browser history with your Microsoft Account.</p>
-                <p style="margin: 10px 15px;">Visit the 'Microsoft Activity History Dashboard' to manage or delete your browsing history.</p>
-                <p style="margin: 10px 15px;">Private/incognito mode browsing history is not recorded.</p>
-    
+
                 <!-- View Microsoft Account Activity History Dashboard -->
                 <a href="https://account.microsoft.com/privacy/activity-history" target="_blank"  class="inline-button">
                     <p>Microsoft activity history dashboard</p>
@@ -91,7 +89,16 @@
                     <svg id="i-activity" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                         <path d="M4 16 L11 16 14 29 18 3 21 16 28 16" />
                     </svg>
-                </a>          
+                </a>
+
+                <!-- Logout -->
+                <a id="logout" href="#" class="inline-button">
+                    <p>Sign out of your Microsoft Account</p>
+                    <!-- https://github.com/danklammer/bytesize-icons -->
+                    <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M28 16 L8 16 M20 8 L28 16 20 24 M11 28 L3 28 3 4 11 4" />
+                    </svg>
+                </a>        
             </section>
         </section>
     </section>
@@ -117,5 +124,26 @@
         <!-- Hold a list of user devices -->
         <div id="devices-holder"></div>
     </section>
-  </body>
+  
+    <section id="section-activities">
+        <!-- Area heading -->
+        <header>
+            <nav>
+                <a href="#" id="exit-activities" class="header-button">
+                    <!-- https://github.com/danklammer/bytesize-icons -->
+                    <svg viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M2 30 L30 2 M30 30 L2 2" />
+                    </svg>
+                </a>
+            </nav>
+            <h1>Recent Activities</h1>
+        </header>
+    
+        <!-- Status -->
+        <p id="activity-status"></p>
+    
+        <!-- Hold a list of activities -->
+        <div id="activities-holder"></div>
+    </section>
+</body>
 </html>
