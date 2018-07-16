@@ -10,6 +10,8 @@ Windows Timeline Support is a web extension that integrates Windows Timeline sup
 
 A list of known issues and planned features is located below. Before opening a new issue, check that it's not mentioned below and does not already exist.
 
+See frequently asked questions [here](Faq.MD);
+
 ## Browser Support
 
 |Browser|Supported|Download|Note|
