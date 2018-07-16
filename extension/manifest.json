@@ -50,6 +50,8 @@
         "https://ge-functions.azurewebsites.net/api/refresh-token"
     ],
 
+    "incognito": "not_allowed",
+
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0Lvq6kJ/jA7CkrEFgidLbeNBlQaxroAML5quwXDy7uqZeK8/K1GYSu6fn9hYEq+75OQi8SXRYSe69KAzbtIGO2AyCj044FcHO6a3gXQN8sKhCGCGhPuSBLMXIlOFr26xp7oyvCubS5bvlRSlaIAvdWhkU6mQOTC1ewKYFy4BpIy7WoPSh9oiu2DUoZ2SVthNjZzF8quKrukmD6v6qMVo5AUdkrSijQYy4mjNmSrkaipf/tNQzvnoD4Ac4iQ0GC8yNAhR1mHXUEQuDgUgyxxQYXikzL/61yXk5gINA7QxRbgg9n3J8CfNM9oDtRp2YMavUxXBcxoa6g6PLFrHl3yFPwIDAQAB",
     "applications": {
         "gecko": {
