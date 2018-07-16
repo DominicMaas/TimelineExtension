@@ -10,7 +10,7 @@ Windows Timeline Support is a web extension that integrates Windows Timeline sup
 
 A list of known issues and planned features is located below. Before opening a new issue, check that it's not mentioned below and does not already exist.
 
-See frequently asked questions [here](FAQ.MD).
+See frequently asked questions [here](FAQ.md).
 
 ## Browser Support
 
@@ -20,7 +20,7 @@ See frequently asked questions [here](FAQ.MD).
 |Firefox|Yes|[Firefox Addons](https://addons.mozilla.org/en-GB/firefox/addon/windows-timeline-support/)|Fully Supported|
 |Microsoft Edge|No|n/a|Microsoft Edge already has Windows Timeline integration. Might release a version that only contains Project Rome support.|
 |Vivaldi| Yes |[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)|Supported Icon Assets. Chrome OAuth Base.|
-|Opera|No|n/a| Use tool to install from Chrome Web Store. Missing Icon Assets.|
+|Opera|No|n/a| Use tool to install from Chrome Web Store. Supported Icon Assets.|
 
 ## Version History
 
