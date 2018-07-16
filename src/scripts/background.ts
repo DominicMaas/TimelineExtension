@@ -90,7 +90,6 @@ async function sendActivityAsync(webActivity: ActivityMessage, secondAttempt: bo
 
     // Get the current date time and time zone
     const date = new Date().toISOString();
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     // Encode the url with base64, then make url friendly
     const activityId = window.btoa(webActivity.Description).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
@@ -109,11 +108,9 @@ async function sendActivityAsync(webActivity: ActivityMessage, secondAttempt: bo
         appDisplayName: browserName,
         fallbackUrl: webActivity.Description,
         historyItems: [{
-            lastActiveDateTime: date,
-            startedDateTime: date,
-            userTimezone: timeZone,
+            activeDurationSeconds: 30,
+            startedDateTime: date
         }],
-        userTimezone: timeZone,
         visualElements: {
             attribution: {
                 addImageQuery: false,
@@ -348,6 +345,52 @@ async function refreshTokenAsync(): Promise<boolean> {
 }
 
 /**
+ * Return a list of recent user activities.
+ * @param secondAttempt If this is the second attempt at calling this function
+ */
+async function getUserActivitiesAsync(secondAttempt: boolean = false): Promise<any> {
+    // Attempt to get a list of user activities
+    const response = await fetch('https://graph.microsoft.com/beta/me/activities?$top=20', {
+        cache: 'no-cache',
+        headers: {
+            'authorization': `Bearer ${accessToken}`,
+            'content-type': 'application/json',
+        },
+        method: 'GET'
+    });
+
+    // If we get a 401 in return, we need to refresh the token
+    if (response.status === 401) {
+        console.debug("Returned 401, refreshing access token...");
+
+        // Attempt to refresh the token
+        const refreshStatus = await refreshTokenAsync();
+
+        // If the refresh is successful and this is our first try,
+        // call the method again
+        if (refreshStatus && !secondAttempt) {
+            return await getUserActivitiesAsync(true);
+        } else {
+            return {
+                payload: null,
+                reason: 'Could not authorize user. Please try again.',
+                success : false
+            };
+        }
+    }
+
+    // Grab the JSON body
+    const body = await response.json();
+
+    // Return the list of devices
+    return {
+        payload: body.value,
+        reason: '',
+        success : true
+    };
+}
+
+/**
  * Returns a list of devices that belong to the logged in users account
  * @param secondAttempt If this is the second attempt at calling this function
  */
@@ -476,6 +519,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         // Show a notification
         showErrorMessage(request as ErrorMessage);
         return;
+    }
+
+    if ((request as Message).Type === MessageType.GetActivities) {
+        // Return the users activities
+        getUserActivitiesAsync().then((data) => {
+            sendResponse(data);
+        });
+
+        return true;
     }
 
     if ((request as Message).Type === MessageType.GetRemoteDevices) {

@@ -1,3 +1,5 @@
+import * as AdaptiveCards from "adaptivecards";
+import { GetActivitiesMessage } from './common/messages/get-activities-message';
 import { GetRemoteDevicesMessage } from './common/messages/get-remote-devices-message';
 import { LoginMessage } from './common/messages/login-message';
 import { LogoutMessage } from './common/messages/logout-message';
@@ -52,6 +54,61 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update UI
         document.getElementById('section-main').style.display = 'none';
         document.getElementById('section-activities').style.display = 'block';
+
+        // We are loading
+        document.getElementById('activity-status').innerText = 'Loading...';
+        document.getElementById('activity-status').style.display = 'block';
+
+        // Send a message to get activities
+        Message.sendMessageWithResult<any>(new GetActivitiesMessage(), (data) => {
+            // If the message was not successful, say why
+            if (!data.success) {
+                document.getElementById('activity-status').innerText = data.reason;
+                return;
+            }
+
+            // We have loaded
+            document.getElementById('activity-status').innerText = '';
+            document.getElementById('activity-status').style.display = 'none';
+            document.getElementById('activities-holder').innerHTML = '';
+
+            // Get the div that holds all the activities
+            const activitiesHolder = document.getElementById('activities-holder');
+
+            // Loop through all the activities
+            data.payload.forEach((activity) => {
+                // Create an AdaptiveCard instance
+                const adaptiveCard = new AdaptiveCards.AdaptiveCard();
+
+                // Host Config defines the style and behavior of a card
+                adaptiveCard.hostConfig = new AdaptiveCards.HostConfig({
+                    containerStyles: {
+                        default: {
+                            backgroundColor: "#FF555555",
+                            foregroundColors: {
+                                default: {
+                                    default: "#FFEEEEEE",
+                                    subtle: "#EEEEEEEE"
+                                }
+                            }
+                        }
+                    },
+                    fontFamily: "Segoe UI, Helvetica Neue, sans-serif"
+                });
+
+                // Set the version so the card wil render
+                activity.visualElements.content.version = "1.0";
+
+                // Parse the card payload
+                adaptiveCard.parse(activity.visualElements.content);
+
+                // Render the card to an HTML element:
+                const renderedCard = adaptiveCard.render();
+
+                // Insert the card
+                activitiesHolder.insertAdjacentHTML('beforeend', '<a class="activity-card" target="_blank" href="' + activity.activationUrl + '">' + renderedCard.outerHTML + '</a>');
+            });
+        });
     });
 
     // When the user clicks on the devices button
