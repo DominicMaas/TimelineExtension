@@ -52,7 +52,7 @@ See frequently asked questions [here](FAQ.md).
 ## Authors
 
 - **Dominic Maas** - *Initial Work and Lead* - [Twitter](https://twitter.com/dominicjmaas)
-- **Daniel Aleksandersen** - *Firefox Port, Icon and Other Misc Changes* - [GitHub](https://github.com/da2x)
+- **Daniel Aleksandersen** - *Firefox Port, Icon and Other Misc Changes* - [Homepage](https://www.daniel.priv.no/)
 
 See also the list of [contributors](https://github.com/DominicMaas/TimelineExtension/graphs/contributors) who participated in this project.
 
