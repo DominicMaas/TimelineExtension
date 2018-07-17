@@ -10,7 +10,11 @@ export class Message {
      * @param callback Handle the data you are returned
      */
     public static sendMessageWithResult<T>(message: Message, callback: (data: T) => any) {
-        chrome.runtime.sendMessage(message, (data) => callback(data as T));
+        if (typeof browser === 'undefined' || !browser) {
+            browser.runtime.sendMessage(message).then((data) => callback(data as T));
+        } else {
+            chrome.runtime.sendMessage(message, (data) => callback(data as T));
+        }
     }
 
     /**
@@ -18,7 +22,11 @@ export class Message {
      * @param message The message you want to send
      */
     public static sendMessage(message: Message) {
-        chrome.runtime.sendMessage(message);
+        if (typeof browser === 'undefined' || !browser) {
+            browser.runtime.sendMessage(message);
+        } else {
+            chrome.runtime.sendMessage(message);
+        }
     }
 
     /**
