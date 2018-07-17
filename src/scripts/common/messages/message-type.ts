@@ -39,5 +39,10 @@ export enum MessageType {
     /**
      * Get a list of recent activities that this extension has created.
      */
-    GetActivities
+    GetActivities,
+
+    /**
+     * When the foreground script passes through the auth callback string
+     */
+    AuthSubmit
 }
