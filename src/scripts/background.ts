@@ -1,14 +1,12 @@
 import { ActivityMessage } from './common/messages/activity-message';
+import { AuthMessage } from './common/messages/auth-message';
 import { ErrorMessage } from './common/messages/error-message';
 import { Message } from './common/messages/message';
 import { MessageType } from './common/messages/message-type';
 import { OpenOnRemoteDeviceMessage } from './common/messages/open-on-remote-device-message';
 
 // Scopes required for this extension
-// UserActivity.ReadWrite.CreatedByApp - Timeline Support
-// Device.Read - Read devices connected to Microsoft account (project rome)
-// Device.Command - Launch url on another device
-// offline_access - refresh tokens
+// See FAQ.md for more information.
 const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'Device.Read', 'Device.Command', 'offline_access'];
 
 // Auth variables
@@ -523,6 +521,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         // Show a notification
         showErrorMessage(request as ErrorMessage);
         return;
+    }
+
+    if ((request as Message).Type === MessageType.AuthSubmit) {
+        // Get the message and then validate the token
+        const message = request as AuthMessage;
+        validateLoginAsync(message.QueryString);
+
+        // Trigger the callback
+        sendResponse(null);
+        return true;
     }
 
     if ((request as Message).Type === MessageType.GetActivities) {
