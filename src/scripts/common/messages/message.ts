@@ -11,9 +11,9 @@ export class Message {
      */
     public static sendMessageWithResult<T>(message: Message, callback: (data: T) => any) {
         if (typeof browser === 'undefined' || !browser) {
-            browser.runtime.sendMessage(message).then((data) => callback(data as T));
-        } else {
             chrome.runtime.sendMessage(message, (data) => callback(data as T));
+        } else {
+            browser.runtime.sendMessage(message).then((data) => callback(data as T));
         }
     }
 
@@ -23,9 +23,9 @@ export class Message {
      */
     public static sendMessage(message: Message) {
         if (typeof browser === 'undefined' || !browser) {
-            browser.runtime.sendMessage(message);
-        } else {
             chrome.runtime.sendMessage(message);
+        } else {
+            browser.runtime.sendMessage(message);
         }
     }
 
