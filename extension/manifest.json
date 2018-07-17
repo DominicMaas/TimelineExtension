@@ -19,6 +19,18 @@
             "32": "images/icon_32.png",
             "38": "images/icon_38.png"
         },
+        "theme_icons": [
+            {
+                "light": "images/icon_light_16.png",
+                "dark": "images/icon_dark_16.png",
+                "size": 16
+            },
+            {
+                "light": "images/icon_light_32.png",
+                "dark": "images/icon_dark_32.png",
+                "size": 32
+            }
+        ],
         "default_title": "Windows Timeline Support",
         "default_popup": "menu.html"
     },
