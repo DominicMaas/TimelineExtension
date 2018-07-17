@@ -9,7 +9,8 @@
     "homepage_url": "https://github.com/DominicMaas/TimelineExtension#readme",
 
     "background": {
-		"scripts": ["scripts/background.js"]
+        "scripts": ["scripts/background.js"],
+        "persistent": false
     },
     "browser_action": {
         "default_icon": {
