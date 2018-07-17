@@ -121,6 +121,10 @@ namespace AuthBackend
                 // Firefox
                 case "6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3":
                     return Environment.GetEnvironmentVariable("firefox_client_secret");
+
+                // Generic
+                case "3e8214c9-265d-42b6-aa93-bdd810fda5e6":
+                    return Environment.GetEnvironmentVariable("generic_client_secret");
                 default:
                     return string.Empty;
             }
