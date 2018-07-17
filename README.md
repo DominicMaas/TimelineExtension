@@ -24,14 +24,18 @@ See frequently asked questions [here](FAQ.md).
 
 ## Version History
 
+### 1.0.3
+
+* Fixed issue that broke login for Opera users.
+* Added new authentication system for generic browsers (Opera, Firefox Mobile) so they can login.
+
 ### 1.0.2
 
-* Testing support for Firefox Mobile login.
 * Fixed scaling issue for Firefox Mobile.
 * Fix issue where websites would be stored in your feed while in private mode.
 * Added recent activities button.
 * Added Opera icon assets.
-* Potentially fixed an issue where timeline activities would not appear or take a while to appear.
+* Fixed an issue where timeline activities would not appear or take a while to appear.
 
 ### 1.0.1
 
