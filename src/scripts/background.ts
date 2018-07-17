@@ -215,22 +215,29 @@ function login() {
     authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
     authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
 
-    // Launch the web flow to login the user
-    // COMPAT: Firefox requires promise, Chrome requires callback.
-    if (typeof browser === 'undefined' || !browser) {
-        chrome.identity.launchWebAuthFlow({
-            interactive: true,
-            url: authURL
-        }, (redirectUri) => {
-            validateLoginAsync(redirectUri);
-        });
+    // If the client id matches the fallback id, we need to open the
+    // oauth screen in a new tab.
+    if (clientId === '3e8214c9-265d-42b6-aa93-bdd810fda5e6') {
+        // Open the URL in a new tab (not yet tested)
+        window.open(authURL, '', 'location=yes');
     } else {
-        browser.identity.launchWebAuthFlow({
-            interactive: true,
+        // Launch the web flow to login the user
+        // COMPAT: Firefox requires promise, Chrome requires callback.
+        if (typeof browser === 'undefined' || !browser) {
+            chrome.identity.launchWebAuthFlow({
+                    interactive: true,
             url: authURL
-        }).then((redirectUri) => {
-            validateLoginAsync(redirectUri);
-        });
+            }, (redirectUri) => {
+                validateLoginAsync(redirectUri);
+            });
+        } else {
+            browser.identity.launchWebAuthFlow({
+                    interactive: true,
+            url: authURL
+            }).then((redirectUri) => {
+                validateLoginAsync(redirectUri);
+            });
+        }
     }
 }
 
