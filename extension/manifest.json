@@ -4,7 +4,7 @@
     "name": "Windows Timeline Support",
     "short_name": "Timeline",
     "description": "Automatically sync your browsing history to your Windows 10 PC with Windows Timeline. Push active websites to any of your devices.",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Dominic Maas",
     "homepage_url": "https://github.com/DominicMaas/TimelineExtension#readme",
 
