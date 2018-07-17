@@ -67,6 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // If the array is empty
+            if (data.payload.length === 0) {
+                document.getElementById('activity-status').innerText = 'No recent activities.';
+                return;
+            }
+
             // We have loaded
             document.getElementById('activity-status').innerText = '';
             document.getElementById('activity-status').style.display = 'none';
@@ -127,6 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // If the message was not successful, say why
             if (!data.success) {
                 document.getElementById('remote-status').innerText = data.reason;
+                return;
+            }
+
+            // If the array is empty
+            if (data.payload.length === 0) {
+                document.getElementById('remote-status').innerText = 'No devices.';
                 return;
             }
 
