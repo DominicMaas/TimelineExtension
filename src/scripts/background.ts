@@ -11,9 +11,6 @@ import { OpenOnRemoteDeviceMessage } from './common/messages/open-on-remote-devi
 // offline_access - refresh tokens
 const scopes = ['UserActivity.ReadWrite.CreatedByApp', 'Device.Read', 'Device.Command', 'offline_access'];
 
-// Redirect url for auth login
-const redirectURL = chrome.identity.getRedirectURL();
-
 // Auth variables
 let accessToken: string;
 let refreshToken: string;
@@ -25,6 +22,9 @@ let browserIcon: string;
 
 // Used to cache the users devices (since loading devices can take a long time)
 let userDevices: any;
+
+// Redirect url for auth login
+let redirectURL: string;
 
 // Client branding
 if (navigator.userAgent.includes('OPR/')) {
@@ -48,11 +48,15 @@ console.debug("Selected Browser: " + browserName);
 if (navigator.userAgent.includes('Firefox')) {
     // Mozilla Add-Ons Catalog – (Firefox, Tor Browser)
     clientId = '6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3';
+    redirectURL = 'https://5bed674f74ec59875d4860fbe854e945b81b4dac.extensions.allizom.org/';
 } else if (navigator.userAgent.includes('Chrome')) {
     // Chrome Web Store – (Google Chrome, Chromium, Vivaldi, others)
     clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
+    redirectURL = 'https://meokcjmjkobffcgldbjjklmaaediikdj.chromiumapp.org/';
 } else {
-    console.error('Unrecognized web browser, unknown client ID.');
+    // Use fallback auth system
+    clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
+    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback';
 }
 
 // Get stored tokens

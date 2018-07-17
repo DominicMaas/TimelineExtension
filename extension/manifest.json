@@ -49,6 +49,9 @@
         "matches": ["http://*/*", "https://*/*"],
         "js": ["scripts/timeline.js"],
         "run_at": "document_end"
+    }, {
+        "matches": ["https://timeline.dominicmaas.co.nz/auth-callback"],
+        "js": ["scripts/fallback-auth.js"]
     }],
 
     "permissions": [

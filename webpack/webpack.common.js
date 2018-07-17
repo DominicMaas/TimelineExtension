@@ -4,7 +4,8 @@ module.exports = {
     entry: {
         background: path.join(__dirname, '../src/scripts/background.ts'),
         menu: path.join(__dirname, '../src/scripts/menu.ts'),
-        timeline: path.join(__dirname, '../src/scripts/timeline.ts')
+        timeline: path.join(__dirname, '../src/scripts/timeline.ts'),
+        fallbackAuth: path.join(__dirname, '../src/scripts/fallback-auth.ts')
     },
     output: {
         path: path.join(__dirname, '../extension/scripts'),
