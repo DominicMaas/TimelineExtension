@@ -28,12 +28,15 @@ let redirectURL: string;
 if (navigator.userAgent.includes('OPR/')) {
     browserName = 'Opera';
     browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/opera-128.png';
+
 } else if (navigator.userAgent.includes('Vivaldi')) {
     browserName = 'Vivaldi';
     browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/vivaldi-32.png';
+
 } else if (navigator.userAgent.includes('Chrome')) {
     browserName = 'Google Chrome';
     browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/chrome-32.png';
+
 } else if (navigator.userAgent.includes('Firefox')) {
     browserName = 'Firefox';
     browserIcon = 'https://timeline.dominicmaas.co.nz/assets/browsers/firefox.png';
@@ -48,16 +51,26 @@ if (navigator.userAgent.includes('Edge') || navigator.userAgent.includes('OPR/')
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
     redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback';
     console.debug("[Auth Setup] Using fallback system (Edge or Opera).");
+
+} else if (navigator.userAgent.includes('Firefox')
+    && (navigator.userAgent.includes('Mobile') || navigator.userAgent.includes('Tablet'))) {
+    // Firefox for phones and tablets
+    clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
+    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback';
+    console.debug("[Auth Setup] Using fallback system (Firefox Mobile).");
+
 } else if (navigator.userAgent.includes('Firefox')) {
     // Mozilla Add-Ons Catalog – (Firefox, Tor Browser)
     clientId = '6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3';
     redirectURL = 'https://5bed674f74ec59875d4860fbe854e945b81b4dac.extensions.allizom.org/';
     console.debug("[Auth Setup] Using Firefox based system.");
+
 } else if (navigator.userAgent.includes('Chrome')) {
     // Chrome Web Store – (Google Chrome, Chromium, Vivaldi, others)
     clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
     redirectURL = 'https://meokcjmjkobffcgldbjjklmaaediikdj.chromiumapp.org/';
     console.debug("[Auth Setup] Using Chrome based system.");
+
 } else {
     // Use fallback auth system
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
