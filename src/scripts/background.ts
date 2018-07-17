@@ -218,8 +218,8 @@ function login() {
     // If the client id matches the fallback id, we need to open the
     // oauth screen in a new tab.
     if (clientId === '3e8214c9-265d-42b6-aa93-bdd810fda5e6') {
-        // Open the URL in a new tab (not yet tested)
-        window.open(authURL, '', 'location=yes');
+        // Open the URL in a new tab
+        chrome.tabs.create({ url: authURL });
     } else {
         // Launch the web flow to login the user
         // COMPAT: Firefox requires promise, Chrome requires callback.
@@ -261,6 +261,13 @@ function logout() {
  * @param redirectUrl Url containing the oauth code
  */
 async function validateLoginAsync(redirectUrl: string) {
+    // If using fallback, we need to close the window (as we cannot
+    // do it in the script)
+    // Close the tab as it cannot be closed in the window
+    chrome.tabs.query({ url: redirectUrl }, (tabs) => {
+        chrome.tabs.remove(tabs[0].id);
+    });
+
     // Get the data from the redirect url
     const data = redirectUrl.split('?')[1];
 
@@ -555,10 +562,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         // Get the message and then validate the token
         const message = request as AuthMessage;
         validateLoginAsync(message.QueryString);
-
-        // Trigger the callback
-        sendResponse(null);
-        return true;
+        return;
     }
 
     if ((request as Message).Type === MessageType.GetActivities) {
