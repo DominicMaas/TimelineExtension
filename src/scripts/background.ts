@@ -49,14 +49,14 @@ console.debug("Selected Browser: " + browserName);
 if (navigator.userAgent.includes('Edge') || navigator.userAgent.includes('OPR/')) {
     // Microsoft Edge or Opera
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
-    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback';
+    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
     console.debug('[Auth Setup] Using fallback system (Edge or Opera).');
 
 } else if (navigator.userAgent.includes('Firefox')
     && (navigator.userAgent.includes('Mobile') || navigator.userAgent.includes('Tablet'))) {
     // Firefox for phones and tablets
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
-    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback';
+    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
     console.debug('[Auth Setup] Using fallback system (Firefox Mobile).');
 
 } else if (navigator.userAgent.includes('Firefox')) {
