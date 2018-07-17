@@ -74,7 +74,7 @@ if (navigator.userAgent.includes('Edge') || navigator.userAgent.includes('OPR/')
 } else {
     // Use fallback auth system
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
-    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback';
+    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
     console.debug('[Auth Setup] Using fallback system.');
 }
 
