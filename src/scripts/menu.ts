@@ -6,7 +6,6 @@ import { LogoutMessage } from './common/messages/logout-message';
 import { Message } from './common/messages/message';
 import { OpenOnRemoteDeviceMessage } from './common/messages/open-on-remote-device-message';
 
-let settingsToggle: boolean = false;
 let minimumTimeOnPage: number = 8;
 let accessToken: string;
 
@@ -172,18 +171,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // When the user toggles the settings button
-    attachClickEvent('toggle-settings', () => {
-        // Set the styles
-        document.getElementById('section-home').style.display = settingsToggle ? 'block' : 'none';
-        document.getElementById('section-settings').style.display = settingsToggle ? 'none' : 'block';
+    attachClickEvent('settings', () => {
+        document.getElementById('section-main').style.display = 'none';
+        document.getElementById('section-settings').style.display = 'block';
+    });
 
-        // https://github.com/danklammer/bytesize-icons
-        document.getElementById('toggle-settings').innerHTML = settingsToggle
-        ? '<svg id="i-settings" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M13 2 L13 6 11 7 8 4 4 8 7 11 6 13 2 13 2 19 6 19 7 21 4 24 8 28 11 25 13 26 13 30 19 30 19 26 21 25 24 28 28 24 25 21 26 19 30 19 30 13 26 13 25 11 28 8 24 4 21 7 19 6 19 2 Z" /><circle cx="16" cy="16" r="4" /></svg>'
-        : '<svg id="i-home" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 20 L12 30 4 30 4 12 16 2 28 12 28 30 20 30 20 20 Z" /></svg>';
+    // When the user closes the settings pane
+    attachClickEvent('exit-settings', () => {
+        document.getElementById('section-main').style.display = 'block';
+        document.getElementById('section-settings').style.display = 'none';
+    });
 
-        // Toggle internal variable
-        settingsToggle = !settingsToggle;
+    // When the user closes the about pane
+    attachClickEvent('exit-about', () => {
+        document.getElementById('section-main').style.display = 'block';
+        document.getElementById('section-about').style.display = 'none';
     });
 
     // When the user closes the devices pane
