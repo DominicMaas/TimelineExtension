@@ -1,9 +1,11 @@
 * {
     user-select: none;
+    cursor: default;
 }
 
 html {
     margin: 0;
+    background-color: #263238;
     padding: 0;
     min-height: 400px;
     max-height: 700px;
@@ -14,8 +16,8 @@ html {
 body {
     font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
-    background-color: #F8F8F8;
-    color: #24292e;
+    background-color: #263238;
+    color: #EEE;
     width: 350px;
     margin: 0;
     height: 500px;
@@ -24,9 +26,8 @@ body {
 }
 
 header {
-    background-color: #FFFFFF;
-    padding: 10px 15px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background-color: #263238;
+    padding: 10px 10px;
     z-index: 30;
     position:fixed;
     width: 350px;
@@ -36,8 +37,7 @@ header {
 header nav {
     position: relative;
     top:1px;
-    right:30px;
-    
+    right:30px; 
     display: inline-block;
     float: right;
     line-height: 28px;
@@ -62,21 +62,12 @@ h1, h2, h3 {
 h1 {
     font-size: 18px;
     font-weight: 700;
-    margin: 0;
+    margin-top:4px;
+    text-align:center;
 }
 
 h2 {
     font-size: 18px;
-}
-
-h1 small {
-    text-transform: uppercase;
-    color: red;
-    font-weight: 600;
-    font-size: 10px;
-    position: relative;
-    right: 0px;
-    top: -8px;
 }
 
 p {
@@ -93,16 +84,14 @@ h1, h2, h3, span, p, nav { user-select: none }
 }
 
 .inline-button {
-    background: #FFFFFF;
-    border-top: 1px solid #E4E4E4;
-    border-bottom: 1px solid #E4E4E4;
+    background-color: #37474F;
     padding: 5px 15px;
-    margin-top: 5px;
+    margin-bottom: 5px;
     display: block;
     text-decoration: none;
-    color: #111;
+    color: #FFF;
     position: relative;
-    transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in;
 }
 
 .inline-button p {
@@ -111,6 +100,7 @@ h1, h2, h3, span, p, nav { user-select: none }
     width: 270px;
     font-weight: 600;
     font-size: 15px;
+    opacity: 1;
 }
 
 .inline-button .description  {
@@ -118,14 +108,13 @@ h1, h2, h3, span, p, nav { user-select: none }
     position: absolute;
     font-weight: 400;
     font-size: 12px;
-    opacity: 0.8;
     left: 36px;
     top: 35px;
 }
 
-.inline-button svg {
+.inline-button i {
     float: right;
-    margin-top: 7px;
+    margin-top: 12px;
     margin-right: 0px;
     width: 22px;
     height: 22px;
@@ -133,16 +122,11 @@ h1, h2, h3, span, p, nav { user-select: none }
 
 .inline-button:hover {
     cursor:default;
-    background: #ECEFF1;
-    border-top: 1px solid #B0BEC5;
-    border-bottom: 1px solid #B0BEC5;
+    background: #455A64;
 }
 
-.inline-button:active,
-.inline-button:focus {
-    background: #CFD8DC;
-    border-top: 1px solid #90A4AE;
-    border-bottom: 1px solid #90A4AE;
+.inline-button:active {
+    background: #546E7A;
 }
 
 .status-icon {
@@ -154,28 +138,22 @@ h1, h2, h3, span, p, nav { user-select: none }
 }
 
 .Unknown {
-    background-color: lightgray;
+    background-color: #BDBDBD;
 }
 
 .Offline {
-    background-color: lightcoral;
+    background-color: #ef5350;
 }
 
 .Online {
-    background-color: lightgreen;
-}
-
-.activity-card {
-    margin-left:10px;
-    margin-right:10px;
-    margin-top:10px;
+    background-color: #66BB6A;
 }
 
 #section-settings,
 #section-remote,
 #section-home,
 #section-activities {
-   padding-top:50px;
+   margin-top:50px;
 }
 
 /* initial state */
@@ -207,34 +185,38 @@ h1, h2, h3, span, p, nav { user-select: none }
    
 #devices-holder::-webkit-scrollbar-thumb,
 #activities-holder::-webkit-scrollbar-thumb {
-    background: #666; 
+    background: #607D8B; 
 }
 
 #devices-holder::-webkit-scrollbar-track,
 #activities-holder::-webkit-scrollbar-track {
-    background: #ddd; 
+    background: #263238; 
 }
-
 
 .activity-card {
+    background: #37474F;
     display:block;
-    color: #000;
+    color: #FFF;
     text-decoration: none;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    border-radius: 2px;
-    transform: translateY(0px);
-}
-
-.activity-card:hover {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    transform: translateY(-3px);
-    cursor:default;
+    
+    margin-bottom:5px;
 }
 
 /* Fun hack to darken image background */
 .activity-card > .ac-container > .ac-container  {
-    background-color: rgba(20,20,20,0.65);
+    background-color: rgba(55,71,79,0.80);
     margin:-15px;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     padding:15px;
+}
+
+.activity-card:hover > .ac-container > .ac-container  {
+    background-color: rgba(69,90,100,0.60);
+}
+
+hr {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #455A64, rgba(0, 0, 0, 0));
+    border: 0;
+    height:1px;
+    margin:15px 10px;
 }

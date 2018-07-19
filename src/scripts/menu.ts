@@ -90,11 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 adaptiveCard.hostConfig = new AdaptiveCards.HostConfig({
                     containerStyles: {
                         default: {
-                            backgroundColor: "#FF555555",
+                            backgroundColor: "#FF37474F",
                             foregroundColors: {
                                 default: {
                                     default: "#FFEEEEEE",
-                                    subtle: "#EEEEEEEE"
+                                    subtle: "#FFEEEEEE"
                                 }
                             }
                         }
