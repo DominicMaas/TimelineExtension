@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // When the user toggles the settings button
+    // When the user clicks the settings button
     attachClickEvent('settings', () => {
         document.getElementById('section-main').style.display = 'none';
         document.getElementById('section-settings').style.display = 'block';
@@ -180,6 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
     attachClickEvent('exit-settings', () => {
         document.getElementById('section-main').style.display = 'block';
         document.getElementById('section-settings').style.display = 'none';
+    });
+
+    // When the user clicks on the about button
+    attachClickEvent('about', () => {
+        document.getElementById('section-main').style.display = 'none';
+        document.getElementById('section-about').style.display = 'block';
     });
 
     // When the user closes the about pane

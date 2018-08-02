@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
-    <title>Windows Timeline Support</title>
+    <title>Timeline Support</title>
     <!-- CSS for this page -->
     <link rel="stylesheet" href="styles/menu.css" />
     <!-- Javascript for this page -->
@@ -14,7 +14,7 @@
     <section id="section-main">
         <!-- Header -->
         <header>
-            <h1>Windows Timeline Support</h1>
+            <h1>Timeline Support</h1>
         </header> 
         
         <hr style="margin-top:0; margin-bottom:10px;" />
@@ -141,11 +141,13 @@
 
         <hr style="margin-top:0; margin-bottom:10px;" />
 
-        <section id="section-timeout">
-            <h3>Minimum time on page</h3>
-            <p>The number of seconds a page must remain open before its included in Windows Timeline.</p>
-            <input id="setting-timeout" type="number" value="0" />
-        </section>
+        <div class="wrapper">
+            <section id="section-timeout">
+                <h3>Minimum time on page</h3>
+                <p>The number of seconds a page must remain open before its included in Windows Timeline.</p>
+                <input id="setting-timeout" type="number" value="0" />
+            </section>
+        </div>
     </section>
 
     <!-- About extension -->
@@ -157,8 +159,32 @@
                     <i class="fas fa-chevron-left fa-lg"></i>
                 </a>
             </nav>
-            <h1>Settings</h1>
+            <h1>About</h1>
         </header>
+
+        <hr style="margin-top:0; margin-bottom:10px;" />
+
+        <div class="wrapper">
+            <p>
+                Please Note: Timeline Support is still in development. 
+            </p>
+            
+            <p>
+                If you encounter any issues or have any future requests, either tweet (<a href="https://twitter.com/dominicjmaas">@dominicjmaas</a>) or leave an issue on <a href="https://github.com/DominicMaas/TimelineExtension">GitHub</a>.
+            </p>
+
+            <p>
+                Timeline Support provides deeper Windows 10 integration features into browsers such as Windows Timeline activities 
+                and Project Rome.
+            </p>
+
+            <ul>
+                <li>Sync your browsing history to Windows Timeline, access it at a later date or on another device with the same Microsoft Account.</li>
+                <li>Adjust how many seconds you have to be on a page before it's stored in Windows Timeline (by default, 8 seconds).</li>
+                <li>Continue browsing on another device quickly by 'pushing' your current active tab to other devices sharing the same Microsoft Account.</li>
+            </ul>
+        </div>
+
     </section>
 
 </body>
