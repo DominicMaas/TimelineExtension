@@ -19,10 +19,17 @@ See frequently asked questions [here](FAQ.md).
 |Google Chrome|Yes|[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)|Fully Supported|
 |Firefox|Yes|[Firefox Addons](https://addons.mozilla.org/en-GB/firefox/addon/windows-timeline-support/)|Fully Supported|
 |Microsoft Edge|No|n/a|Microsoft Edge already has Windows Timeline integration. Might release a version that only contains Project Rome support.|
-|Vivaldi| Yes |[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)|Supported Icon Assets. Chrome OAuth Base.|
-|Opera|No|n/a| Use tool to install from Chrome Web Store. Supported Icon Assets.|
+|Vivaldi|Yes|[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)|Supported Icon Assets. Chrome OAuth Base.|
+|Opera|Yes|[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)| Supported Icon Assets. Download from Chrome Web Store on supported Opera versions.|
 
 ## Version History
+
+### 1.0.4
+
+* New UI design.
+* Added about page.
+* Renamed extension to "Timeline Support" due to take-down request.
+* Updated packages.
 
 ### 1.0.3
 
