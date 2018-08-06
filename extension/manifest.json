@@ -32,7 +32,7 @@
                 "size": 32
             }
         ],
-        "default_title": "Windows Timeline Support",
+        "default_title": "Timeline Support",
         "default_popup": "menu.html"
     },
     "icons": {
