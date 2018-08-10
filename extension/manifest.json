@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "__MSG_TimeName__",
+    "name": "__MSG_ExtensionName__",
     "short_name": "Timeline",
-    "description": "__MSG_TimeDescription__",
+    "description": "__MSG_ExtensionDescription__",
     "version": "1.0.4",
     "default_locale": "en",
     "author": "Dominic Maas",
@@ -33,7 +33,7 @@
                 "size": 32
             }
         ],
-        "default_title": "Timeline Support",
+        "default_title": "__MSG_ExtensionName__",
         "default_popup": "menu.html"
     },
     "icons": {
