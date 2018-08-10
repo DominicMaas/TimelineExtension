@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "__MSG_ExtensionName__",
-    "short_name": "Timeline",
+    "short_name": "__MSG_TimeSName__",
     "description": "__MSG_ExtensionDescription__",
     "version": "1.0.4",
     "default_locale": "en",
