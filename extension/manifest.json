@@ -2,9 +2,9 @@
     "manifest_version": 2,
 
     "name": "__MSG_ExtensionName__",
-    "short_name": "Timeline",
+    "short_name": "__MSG_ExtensionShortName_",
     "description": "__MSG_ExtensionDescription__",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "default_locale": "en",
     "author": "Dominic Maas",
     "homepage_url": "https://github.com/DominicMaas/TimelineExtension#readme",

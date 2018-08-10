@@ -1,6 +1,6 @@
 {
   "name": "timeline-extension",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Windows Timeline + Project Rome support for browsers.",
   "scripts": {
     "watch": "webpack --config webpack/webpack.dev.js --watch",
@@ -25,7 +25,7 @@
     "typescript": "3.0.1",
     "ts-loader": "4.4.2",
     "tslint": "5.11.0",
-    "webpack": "4.16.3",
+    "webpack": "4.16.5",
     "webpack-cli": "3.1.0",
     "webpack-merge": "4.1.4"
   }

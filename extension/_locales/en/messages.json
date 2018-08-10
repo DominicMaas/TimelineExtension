@@ -2,6 +2,9 @@
     "ExtensionName": {
         "message": "Timeline Support"
     },
+    "ExtensionShortName": {
+        "message": "Timeline"
+    },
     "ExtensionDescription": {
         "message": "Automatically sync your browsing history to your Windows 10 PC with Windows Timeline. Push active websites to any of your devices."
     },
