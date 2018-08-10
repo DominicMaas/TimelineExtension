@@ -1,10 +1,68 @@
 {
-    "ExtensionName": 
-    {
+    "ExtensionName": {
         "message": "Timeline Support"
     },
-    "ExtensionDescription": 
-    {
+    "ExtensionDescription": {
         "message": "Automatically sync your browsing history to your Windows 10 PC with Windows Timeline. Push active websites to any of your devices."
+    },
+    "MicrosoftAccountLogin": {
+        "message": "Sign in with your Microsoft Account"
+    },
+    "MicrosoftAccountLogout": {
+        "message": "Sign out of your Microsoft Account"
+    },
+    "MicrosoftAccountLoginAlt1": {
+        "message": "Sign in with the same Microsoft Account as you use on Windows 10."
+    },
+    "MicrosoftAccountLoginAlt2": {
+        "message": "After you sign in, your browsing history will be sent to the Windows Timeline and synced across devices."
+    },
+    "MicrosoftAccountPrivacy": {
+        "message": "Activity history and your privacy"
+    },
+    "MicrosoftAccountActivityDashboard": {
+        "message": "Microsoft activity history dashboard"
+    },
+    "ProjectRomeHeader": {
+        "message": "Your Devices"
+    },
+    "ProjectRomeOpenOnDevice": {
+        "message": "Open this page on another device"
+    },
+    "ActivitesHeader": {
+        "message": "Recent Activities"
+    },
+    "ActivitiesViewRecent": {
+        "message": "View recent activities"
+    },
+    "SettingsHeader": {
+        "message": "Settings"
+    },
+    "SettingsTimeoutHeader": {
+        "message": "Minimum time on page"
+    },
+    "SettingsTimeoutDescription": {
+        "message": "The number of seconds a page must remain open before its included in Windows Timeline."
+    },
+    "AboutHeader": {
+        "message": "About"
+    },
+    "AboutParagraph1": {
+        "message": "Please Note: Timeline Support is still in development."
+    },
+    "AboutParagraph2": {
+        "message": "If you encounter any issues or have any future requests, either tweet (<a href='https://twitter.com/dominicjmaas'>@dominicjmaas</a>) or leave an issue on <a href='https://github.com/DominicMaas/TimelineExtension'>GitHub</a>."
+    },
+    "AboutParagraph3": {
+        "message": "Timeline Support provides deeper Windows 10 integration features into browsers such as Windows Timeline activities and Project Rome."
+    },
+    "AboutFeatures1": {
+        "message": "Sync your browsing history to Windows Timeline, access it at a later date or on another device with the same Microsoft Account."
+    },
+    "AboutFeatures2": {
+        "message": "Adjust how many seconds you have to be on a page before it's stored in Windows Timeline (by default, 8 seconds)."
+    },
+    "AboutFeatures3": {
+        "message": "Continue browsing on another device quickly by 'pushing' your current active tab to other devices sharing the same Microsoft Account."
     }
 }

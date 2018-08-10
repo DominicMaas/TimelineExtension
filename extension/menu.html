@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
-    <title>Timeline Support</title>
+    <title>__MSG__ExtensionName__</title>
     <!-- CSS for this page -->
     <link rel="stylesheet" href="styles/menu.css" />
     <!-- Javascript for this page -->
@@ -14,7 +14,7 @@
     <section id="section-main">
         <!-- Header -->
         <header>
-            <h1>Timeline Support</h1>
+            <h1>__MSG_ExtensionName__</h1>
         </header> 
         
         <hr style="margin-top:0; margin-bottom:10px;" />
@@ -22,22 +22,17 @@
         <section id="section-login-pending">
             <!-- Login -->
             <a id="login" href="#" class="inline-button">
-                <p>Sign in with your Microsoft Account</p>
+                <p>__MSG_MicrosoftAccountLogin__</p>
                 <i class="fas fa-sign-in-alt"></i>
             </a>
     
             <!-- Login Info -->
-            <p style="margin: 10px 15px;">
-                Sign in with the same Microsoft Account as you use on Windows 10. 
-            </p>
-
-            <p style="margin: 10px 15px;">
-                After you sign in, your browsing history will be sent to the Windows Timeline and synced across devices.
-            </p>
-                
+            <p style="margin: 10px 15px;">__MSG_MicrosoftAccountLoginAlt1__</p>
+            <p style="margin: 10px 15px;">__MSG_MicrosoftAccountLoginAlt2__</p>
+             
             <!-- View Microsoft privacy statement -->
             <a href="https://privacy.microsoft.com/en-us/windows-10-activity-history-and-privacy" target="_blank" class="inline-button">
-                <p>Activity history and your privacy</p>
+                <p>__MSG_MicrosoftAccountPrivacy__</p>
                 <i class="fas fa-info"></i>
             </a>
         </section>
@@ -45,13 +40,13 @@
         <section id="section-login-completed"> 
             <!-- Project Rome -->
             <a id="view-devices" href="#" class="inline-button">
-                <p>Open this page on another device</p>
+                <p>__MSG_ProjectRomeOpenOnDevice__</p>
                 <i class="fas fa-chevron-circle-right"></i>
             </a>
 
             <!-- View Activities -->
             <a id="view-activities" href="#" class="inline-button">
-                <p>View recent activities</p>
+                <p>__MSG_ActivitiesViewRecent__</p>
                 <i class="fas fa-chevron-circle-right"></i>
             </a>
                 
@@ -59,13 +54,13 @@
 
             <!-- View Microsoft Account Activity History Dashboard -->
             <a href="https://account.microsoft.com/privacy/activity-history" target="_blank"  class="inline-button">
-                <p>Microsoft activity history dashboard</p>
+                <p>__MSG_MicrosoftAccountActivityDashboard__</p>
                 <i class="fas fa-heartbeat"></i>
             </a>
 
             <!-- Logout -->
             <a id="logout" href="#" class="inline-button">
-                <p>Sign out of your Microsoft Account</p>
+                <p>__MSG_MicrosoftAccountLogout__</p>
                 <i class="fas fa-sign-out-alt"></i>
             </a>     
                 
@@ -73,13 +68,13 @@
 
             <!-- Settings -->
             <a id="settings" href="#" class="inline-button">
-                <p>Settings</p>
+                <p>__MSG_SettingsHeader__</p>
                 <i class="fas fa-cogs"></i>
             </a>
                 
             <!-- About -->
             <a id="about" href="#" class="inline-button">
-                <p>About</p>
+                <p>__MSG_AboutHeader__</p>
                 <i class="fas fa-info"></i>
             </a>
         </section>
@@ -94,7 +89,7 @@
                     <i class="fas fa-chevron-left fa-lg"></i>
                 </a>
             </nav>
-            <h1>Your Devices</h1>
+            <h1>__MSG_ProjectRomeHeader__</h1>
         </header>
 
         <hr style="margin-top:0; margin-bottom:10px;" />
@@ -115,7 +110,7 @@
                     <i class="fas fa-chevron-left fa-lg"></i>                
                 </a>
             </nav>
-            <h1>Recent Activities</h1>
+            <h1>__MSG_ActivitesHeader__</h1>
         </header>
 
         <hr style="margin-top:0; margin-bottom:10px;" />
@@ -136,15 +131,15 @@
                     <i class="fas fa-chevron-left fa-lg"></i>
                 </a>
             </nav>
-            <h1>Settings</h1>
+            <h1>__MSG_SettingsHeader__</h1>
         </header>
 
         <hr style="margin-top:0; margin-bottom:10px;" />
 
         <div class="wrapper">
             <section id="section-timeout">
-                <h3>Minimum time on page</h3>
-                <p>The number of seconds a page must remain open before its included in Windows Timeline.</p>
+                <h3>__MSG_SettingsTimeoutHeader__</h3>
+                <p>__MSG_SettingsTimeoutDescription__</p>
                 <input id="setting-timeout" type="number" value="0" />
             </section>
         </div>
@@ -159,29 +154,20 @@
                     <i class="fas fa-chevron-left fa-lg"></i>
                 </a>
             </nav>
-            <h1>About</h1>
+            <h1>__MSG_AboutHeader__</h1>
         </header>
 
         <hr style="margin-top:0; margin-bottom:10px;" />
 
         <div class="wrapper">
-            <p>
-                Please Note: Timeline Support is still in development. 
-            </p>
-            
-            <p>
-                If you encounter any issues or have any future requests, either tweet (<a href="https://twitter.com/dominicjmaas">@dominicjmaas</a>) or leave an issue on <a href="https://github.com/DominicMaas/TimelineExtension">GitHub</a>.
-            </p>
-
-            <p>
-                Timeline Support provides deeper Windows 10 integration features into browsers such as Windows Timeline activities 
-                and Project Rome.
-            </p>
-
+            <p>__MSG_AboutParagraph1__</p>
+            <p>__MSG_AboutParagraph2__</p>
+            <p>__MSG_AboutParagraph3__</p>
+        
             <ul>
-                <li>Sync your browsing history to Windows Timeline, access it at a later date or on another device with the same Microsoft Account.</li>
-                <li>Adjust how many seconds you have to be on a page before it's stored in Windows Timeline (by default, 8 seconds).</li>
-                <li>Continue browsing on another device quickly by 'pushing' your current active tab to other devices sharing the same Microsoft Account.</li>
+                <li>__MSG_AboutFeatures1__</li>
+                <li>__MSG_AboutFeatures2__</li>
+                <li>__MSG_AboutFeatures3__</li>
             </ul>
         </div>
 
