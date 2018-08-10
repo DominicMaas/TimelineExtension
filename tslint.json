@@ -7,6 +7,7 @@
         "quotemark": false,
         "no-bitwise": true,
         "trailing-comma":false,
+        "prefer-for-of": false,
         "no-conditional-assignment": true,
         "no-consecutive-blank-lines": false,
         "forin": false,

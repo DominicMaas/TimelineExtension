@@ -1,4 +1,5 @@
 import * as AdaptiveCards from "adaptivecards";
+import { Helpers } from './common/helpers';
 import { GetActivitiesMessage } from './common/messages/get-activities-message';
 import { GetRemoteDevicesMessage } from './common/messages/get-remote-devices-message';
 import { LoginMessage } from './common/messages/login-message';
@@ -44,6 +45,9 @@ function UpdateLoginState() {
 
 // Run when document has loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Translate the page
+    Helpers.LocalizeHtmlPage();
+
     // Set some initial views and states
     UpdateLoginState();
     updateMinimumTimeOnPage();
