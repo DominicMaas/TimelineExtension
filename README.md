@@ -23,6 +23,13 @@ See frequently asked questions [here](FAQ.md).
 |Opera|Yes|[Chrome Web Store](https://chrome.google.com/webstore/detail/windows-timeline-support/meokcjmjkobffcgldbjjklmaaediikdj)| Supported Icon Assets. Download from Chrome Web Store on supported Opera versions.|
 |Safari|No| n/a | No support is planned. The costs and effort to port the extension (and then deal with Apple Support) is not worth it.|
 
+## Setup
+
+1. Clone the repository and open it.
+2. Run `npm install`.
+3. Run `npm run build` to build files or `npm run watch` for debugging.
+4. Open browser, load unpacked extension in the `extension` folder.
+
 ## Version History
 
 ### 1.0.4
@@ -48,22 +55,6 @@ See frequently asked questions [here](FAQ.md).
 ### 1.0.1
 
 * Initial public beta.
-
-## Setup
-
-1. Clone the repository and open it.
-2. Run `npm install`.
-3. Run `npm run build` to build files or `npm run watch` for debugging.
-4. Open browser, load unpacked extension in the `extension` folder.
-
-## Known Issues
-
-*None at the moment*
-
-## Planned Features
-
-- Toggle switch for a built in ignore list (will include login urls, url shorteners etc.)
-- Ability to add a custom ignore list.
 
 ## More Screenshots
 
