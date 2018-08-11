@@ -1,10 +1,80 @@
 {
-    "ExtensionName": 
-    {
-        "message": "Tidslinje stöd"
+    "ExtensionName": {
+        "message": "Tidslinjestöd"
     },
-    "ExtensionDescription": 
-    {
+    "ExtensionShortName": {
+        "message": "Tidslinje"
+    },
+    "ExtensionDescription": {
         "message": "Synkronisera din webbhistorik automatiskt till din Windows 10-dator med Windows-tidslinjen. Tryck på aktiva webbplatser på någon av dina enheter."
+    },
+    "LoadingText": {
+        "message": "Laddar..."
+    },
+    "MicrosoftAccountLogin": {
+        "message": "Logga in med ditt Microsoft konto"
+    },
+    "MicrosoftAccountLogout": {
+        "message": "Logga ut från ditt Microsoft konto"
+    },
+    "MicrosoftAccountLoginAlt1": {
+        "message": "Logga in med samma Microsoft konto som du använder på Windows 10."
+    },
+    "MicrosoftAccountLoginAlt2": {
+        "message": "När du loggar in skickas din surfhistorik till Windows tidslinjen och synkroniseras över enheter."
+    },
+    "MicrosoftAccountPrivacy": {
+        "message": "Aktivitetshistoriken och din integritet"
+    },
+    "MicrosoftAccountActivityDashboard": {
+        "message": "Microsoft Aktivitetshistorikpanel"
+    },
+    "ProjectRomeHeader": {
+        "message": "Dina enheter"
+    },
+    "ProjectRomeOpenOnDevice": {
+        "message": "Öppna den här sidan på en annan enhet"
+    },
+    "ProjectRomeNoDevices": {
+        "message": "Inga enheter."
+    },
+    "ActivitesHeader": {
+        "message": "Senaste aktiviteterna"
+    },
+    "ActivitiesViewRecent": {
+        "message": "Visa senaste aktiviteter"
+    },
+    "ActivitiesNoRecent": {
+        "message": "Inga nya aktiviteter."
+    },
+    "SettingsHeader": {
+        "message": "Inställningar"
+    },
+    "SettingsTimeoutHeader": {
+        "message": "Minsta tid på sidan"
+    },
+    "SettingsTimeoutDescription": {
+        "message": "Antalet sekunder en sida måste förbli öppen innan den ingår i Windows tidslinjen."
+    },
+    "AboutHeader": {
+        "message": "Om"
+    },
+    "AboutParagraph1": {
+        "message": "Observera: Tidslinjestöd är fortfarande under utveckling."
+    },
+    "AboutParagraph2": {
+        "message": "Om du stöter på några problem eller har framtida förfrågningar, antingen tweet (<a href='https://twitter.com/dominicjmaas'>@dominicjmaas</a>) eller lämna ett problem på <a href='https://github.com/DominicMaas/TimelineExtension'>GitHub</a>."
+    },
+    "AboutParagraph3": {
+        "message": "Tidslinjestöd ger djupare integrationsfunktioner för Windows 10 till webbläsare som Windows Timeline-aktiviteter och Project Rome."
+    },
+    "AboutFeatures1": {
+        "message": "Synkronisera din surfhistorik till Windows tidslinjen, öppna den senare eller på en annan enhet med samma Microsoft-konto."
+    },
+    "AboutFeatures2": {
+        "message": "Justera hur många sekunder du måste vara på en sida innan den lagras i Windows-tidslinjen (som standard, 8 sekunder)."
+    },
+    "AboutFeatures3": {
+        "message": "Fortsätt att bläddra på en annan enhet snabbt genom att 'trycka' din aktuella aktiva flik till andra enheter som delar samma Microsoft-konto."
     }
 }
