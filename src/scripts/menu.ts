@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('section-activities').style.display = 'block';
 
         // We are loading
-        document.getElementById('activity-status').innerText = 'Loading...';
+        document.getElementById('activity-status').innerText = Helpers.GetLocalizedString("LoadingText");
         document.getElementById('activity-status').style.display = 'block';
 
         // Send a message to get activities
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // If the array is empty
             if (data.payload.length === 0) {
-                document.getElementById('activity-status').innerText = 'No recent activities.';
+                document.getElementById('activity-status').innerText = Helpers.GetLocalizedString("ActivitiesNoRecent");
                 return;
             }
 
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('section-remote').style.display = 'block';
 
         // We are loading
-        document.getElementById('remote-status').innerText = 'Loading...';
+        document.getElementById('remote-status').innerText = Helpers.GetLocalizedString("LoadingText");
         document.getElementById('remote-status').style.display = 'block';
 
         // Send a message to get the devices
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // If the array is empty
             if (data.payload.length === 0) {
-                document.getElementById('remote-status').innerText = 'No devices.';
+                document.getElementById('remote-status').innerText = Helpers.GetLocalizedString("ProjectRomeNoDevices");
                 return;
             }
 

@@ -8,6 +8,9 @@
     "ExtensionDescription": {
         "message": "Automatically sync your browsing history to your Windows 10 PC with Windows Timeline. Push active websites to any of your devices."
     },
+    "LoadingText": {
+        "message": "Loading..."
+    },
     "MicrosoftAccountLogin": {
         "message": "Sign in with your Microsoft Account"
     },
@@ -32,11 +35,17 @@
     "ProjectRomeOpenOnDevice": {
         "message": "Open this page on another device"
     },
+    "ProjectRomeNoDevices": {
+        "message": "No Devices."
+    },
     "ActivitesHeader": {
         "message": "Recent Activities"
     },
     "ActivitiesViewRecent": {
         "message": "View recent activities"
+    },
+    "ActivitiesNoRecent": {
+        "message": "No recent activities."
     },
     "SettingsHeader": {
         "message": "Settings"
