@@ -8,8 +8,6 @@ A web extension that integrates Windows Timeline support into popular browsers.
 
 Timeline Support is a web extension that integrates Windows Timeline support into popular browsers. This is done by publishing your browsing history as activities to the Microsoft Graph (so a Microsoft Account is required to use this extension). Personal Microsoft Accounts are confirmed to work, work and school accounts should work.
 
-A list of known issues and planned features is located below. Before opening a new issue, check that it's not mentioned below and does not already exist.
-
 See frequently asked questions [here](FAQ.md).
 
 ## Browser Support
