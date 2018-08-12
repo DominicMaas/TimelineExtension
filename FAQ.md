@@ -2,8 +2,6 @@
 
 ## What do the permissions do?
 
-*For the one person who wanted to know on reddit*
-
 ### Microsoft Account Permissions
 
 |Scope|Reason|
@@ -26,5 +24,6 @@
 
 - `https://graph.microsoft.com/v1.0/me/activities/*`: Publish, update and get activities.
 - `https://graph.microsoft.com/beta/me/devices/*`: Get a list of your devices and send commands to a device.
+- `https://graph.microsoft.com/beta/me/activities/*`: Get a list of recent activities.
 - `https://ge-functions.azurewebsites.net/api/get-token`: Get access and refresh tokens from a auth code.
 - `https://ge-functions.azurewebsites.net/api/refresh-token`: Refresh access tokens.
