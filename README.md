@@ -28,6 +28,10 @@ See frequently asked questions [here](FAQ.md).
 3. Run `npm run build` to build files or `npm run watch` for debugging.
 4. Open browser, load unpacked extension in the `extension` folder.
 
+## Translating
+Extension translation is done via the usual web extension method. Simply create a folder under `extension/_locales` for your language, then copy the `messages.json` file from the `en` folder as a template into your new folder. Once complete, create a pull request.
+
+
 ## Version History
 
 ### 1.0.4
@@ -54,16 +58,17 @@ See frequently asked questions [here](FAQ.md).
 
 * Initial public beta.
 
-## More Screenshots
+## Screenshots
 
 ![Signed In](extension/images/store/signed-in.png)
 
 ![Signed Out](extension/images/store/signed-out.png)
 
-## Authors
+## Credits
 
-- **Dominic Maas** - *Initial Work and Lead* - [Twitter](https://twitter.com/dominicjmaas)
-- **Daniel Aleksandersen** - *Firefox Port, Icon and Other Misc Changes* - [Homepage](https://www.daniel.priv.no/)
+- **Dominic Maas** - *Initial work and lead* - [Twitter](https://twitter.com/dominicjmaas)
+- **Daniel Aleksandersen** - *Firefox port, icon and lots of other misc changes* - [Homepage](https://www.daniel.priv.no/)
+- **Mikael** - *Swedish translation* - [GitHub](https://github.com/dwm1909)
 
 See also the list of [contributors](https://github.com/DominicMaas/TimelineExtension/graphs/contributors) who participated in this project.
 
