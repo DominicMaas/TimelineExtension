@@ -1,0 +1,108 @@
+{
+    "ExtensionName": {
+        "message": "时间线支持",
+        "hash": "190e116cf24ec3d9028f5d351b1fc37b"
+    },
+    "ExtensionShortName": {
+        "message": "时间线",
+        "hash": "fb11fc2565c9d304f13b9fbb93be0234"
+    },
+    "ExtensionDescription": {
+        "message": "使用“Windows 时间线”功能自动在您的 Windows 10 PC 之间同步浏览器历史记录。推送您的网络活动记录到您的设备。",
+        "hash": "0fcaef75ffa84e611c6137fc1c291834"
+    },
+    "LoadingText": {
+        "message": "正在加载...",
+        "hash": "cca811acea481929b53f41706724462c"
+    },
+    "MicrosoftAccountLogin": {
+        "message": "使用您的微软帐户登录",
+        "hash": "f425c59395e23735d5489dbaa9b2529c"
+    },
+    "MicrosoftAccountLogout": {
+        "message": "退出您的微软帐户登录",
+        "hash": "bce353d1c2e73e5f027da1990ac274a7"
+    },
+    "MicrosoftAccountLoginAlt1": {
+        "message": "在您使用 Windows 10 的设备上使用同一个微软帐户登录。",
+        "hash": "cc73b1b9ba1c32c640029980d5b943e3"
+    },
+    "MicrosoftAccountLoginAlt2": {
+        "message": "在您登录后，您的浏览记录将通过 Windows 时间线同步到您的各台设备。",
+        "hash": "8b7b7fb59c0cce9bfe158b06cea735bb"
+    },
+    "MicrosoftAccountPrivacy": {
+        "message": "活动历史记录和你的隐私",
+        "hash": "24ec451547c7ff1783f1aa63bcf47e1f"
+    },
+    "MicrosoftAccountActivityDashboard": {
+        "message": "微软活动历史记录面板",
+        "hash": "fe1e2764583680fa880f40e7a9276aab"
+    },
+    "ProjectRomeHeader": {
+        "message": "您的设备",
+        "hash": "27d0d082a688d7466f7f023994bf399e"
+    },
+    "ProjectRomeOpenOnDevice": {
+        "message": "在另一台设备上打开此页面",
+        "hash": "f1815ee7970611306fe56b0e1203122f"
+    },
+    "ProjectRomeNoDevices": {
+        "message": "我的设备",
+        "hash": "dc278f6cb728d2b006ebab1d600a9f88"
+    },
+    "ActivitesHeader": {
+        "message": "近期活动",
+        "hash": "12ccd0e7548ab0b85c626a4e6fb8eb45"
+    },
+    "ActivitiesViewRecent": {
+        "message": "查看近期活动",
+        "hash": "84d8df3b4467822eebbb27253ed0f4c7"
+    },
+    "ActivitiesNoRecent": {
+        "message": "没有近期活动。",
+        "hash": "1d611ee6ad84aebe8708767ed60fb9a7"
+    },
+    "SettingsHeader": {
+        "message": "设置",
+        "hash": "9c49db0871c842c3afc2c09b8a957eba"
+    },
+    "SettingsTimeoutHeader": {
+        "message": "页面停留时间下限",
+        "hash": "ad298d0006676a3fbf0bec2ff0ae95d4"
+    },
+    "SettingsTimeoutDescription": {
+        "message": "一个页面录入 Windows 时间线前，它至少打开多少秒。",
+        "hash": "f89e3b0268e0038d038c11e1ffa0f575"
+    },
+    "AboutHeader": {
+        "message": "关于",
+        "hash": "da73d37076fcb711ec18ea36c7efb1d5"
+    },
+    "AboutParagraph1": {
+        "message": "请注意：Timeline Support 仍处在开发阶段。",
+        "hash": "65dbdf5fc269d9867b0f69eb8555c046"
+    },
+    "AboutParagraph2": {
+        "message": "如果您遇到了任何问题，或者有任何功能请求、意见，在 Twitter 上 <a href='https://twitter.com/dominicjmaas'>@dominicjmaas</a>，或者在 <a href='https://github.com/DominicMaas/TimelineExtension'>GitHub</a> 上提报问题。",
+        "hash": "7269cd4c1d4aba669d86c8f6ac8a117a"
+    },
+    "AboutParagraph3": {
+        "message": "Timeline Support 将 Windows 10 集成功能更深度地融入到网页浏览器，这包括 Windows 时间线功能以及 Project Rome。",
+        "hash": "1e3cabc3c376af0640e55329bc30ef82"
+    },
+    "AboutFeatures1": {
+        "message": "将你的浏览历史记录同步到 Windows 时间线，以便稍后在本设备或其他使用相同微软帐户登录的设备上访问。",
+        "hash": "c55aa8bdfa2ea31657e7cfcfa05d87ca"
+    },
+    "AboutFeatures2": {
+        "message": "调整至少在页面上停留多少秒才同步到 Windows 时间线，默认为 8 秒。",
+        "hash": "30ab5cdd06ab0e1753b0bfbabbca4ef0"
+    },
+    "AboutFeatures3": {
+        "message": "将当前的活动标签页推送到使用同一微软帐户的其他设备，以便您在其他设备上继续浏览。",
+        "hash": "1f0c8c754b1c2ab0c529ca755a46d67c"
+    },
+
+    "__WET_LOCALE__": { "message": "zh-CN" }
+}
