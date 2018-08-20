@@ -1,0 +1,80 @@
+{
+    "ExtensionName": {
+        "message": "Timeline Support"
+    },
+    "ExtensionShortName": {
+        "message": "Timeline"
+    },
+    "ExtensionDescription": {
+        "message": "Sincronizar automaticamente o seu histórico do Windows 10 PC com seu Windows Timeline. Adicionar todos os sites ativos em seus dispositivos."        
+    },
+    "LoadingText": {
+        "message": "Carregando..."
+    },
+    "MicrosoftAccountLogin": {
+        "message": "Efetuar Login com sua Conta Microsoft"
+    },
+    "MicrosoftAccountLogout": {
+        "message": "Efetuar Logoff com sua Conta Microsoft"
+    },
+    "MicrosoftAccountLoginAlt1": {
+        "message": "Efetuar Login com a mesma Conta Microsoft que está usando no Windows 10."        
+    },
+    "MicrosoftAccountLoginAlt2": {
+        "message": "Depois que efetuar login, seu histórico será enviado para Windows Timeline e sincronizado em todos os dispositivos."        
+    },
+    "MicrosoftAccountPrivacy": {
+        "message": "Histórico de atividades e sua privacidade"        
+    },
+    "MicrosoftAccountActivityDashboard": {
+        "message": "Gráficos de histórico de atividades Microsoft"        
+    },
+    "ProjectRomeHeader": {
+        "message": "Seus Dispositivos"
+    },
+    "ProjectRomeOpenOnDevice": {
+        "message": "Abrir esta página em outro dispositivo"
+    },
+    "ProjectRomeNoDevices": {
+        "message": "Sem dispositivos."
+    },
+    "ActivitesHeader": {
+        "message": "Atividades recentes"
+    },
+    "ActivitiesViewRecent": {
+        "message": "Visualizar atividades recentes"
+    },
+    "ActivitiesNoRecent": {
+        "message": "Sem atividades recentes."
+    },
+    "SettingsHeader": {
+        "message": "Configurações"
+    },
+    "SettingsTimeoutHeader": {
+        "message": "Menor tempo na página"
+    },
+    "SettingsTimeoutDescription": {
+        "message": "O número de segundos que uma página deve permanecer aberta antes de ser incluída na Linha do tempo do Windows."
+    },
+    "AboutHeader": {
+        "message": "Sobre"
+    },
+    "AboutParagraph1": {
+        "message": "Por favor Entenda: Timeline Suporte ainda está em desenvolvimento."
+    },
+    "AboutParagraph2": {
+        "message": "Se você encontrar problemas ou tiver sugestões futuras, ou tweet (<a href='https://twitter.com/dominicjmaas'>@dominicjmaas</a>) ou abra uma issue em <a href='https://github.com/DominicMaas/TimelineExtension'>GitHub</a>."
+    },
+    "AboutParagraph3": {
+        "message": "O Timeline Support oferece recursos de integração mais profundos do Windows 10 em navegadores como as atividades da Linha de Tempo do Windows e o Projeto Roma."
+    },
+    "AboutFeatures1": {
+        "message": "Sincronize seu histórico de navegação com a Linha do tempo do Windows, acesse-a em uma data posterior ou em outro dispositivo com a mesma conta da Microsoft."
+    },
+    "AboutFeatures2": {
+        "message": "Ajuste quantos segundos você precisa estar em uma página antes de armazená-la na Linha do tempo do Windows (por padrão, 8 segundos)."
+    },
+    "AboutFeatures3": {
+        "message": "Continue navegando em outro dispositivo rapidamente \"enviando\" sua guia ativa atual para outros dispositivos compartilhando a mesma conta da Microsoft."
+    }
+}
