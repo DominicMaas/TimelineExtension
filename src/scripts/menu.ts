@@ -9,6 +9,7 @@ import { OpenOnRemoteDeviceMessage } from './common/messages/open-on-remote-devi
 
 let minimumTimeOnPage: number = 8;
 let accessToken: string;
+let theme: string = 'dark';
 
 // Get local preferences
 chrome.storage.local.get('access_token', (data) => {
@@ -19,10 +20,21 @@ chrome.storage.local.get('access_token', (data) => {
 });
 
 // Get synced preferences
-(chrome.storage.sync || chrome.storage.local).get('min_sec_loaded', (data) => {
+(chrome.storage.sync || chrome.storage.local).get(['min_sec_loaded', 'theme'], (data) => {
+    // Min time on page
     if (data.min_sec_loaded) {
         minimumTimeOnPage = data.min_sec_loaded;
         updateMinimumTimeOnPage();
+    }
+
+    // The theme
+    if (data.theme) {
+        theme = data.theme;
+        document.body.classList.add(data.theme);
+        (document.getElementById('setting-selected-theme') as HTMLSelectElement).value = data.theme;
+    } else {
+        document.body.classList.add(theme);
+        (document.getElementById('setting-selected-theme') as HTMLSelectElement).value = theme;
     }
 });
 
@@ -227,6 +239,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // When the user changes the timeout field
     document.getElementById('setting-timeout').addEventListener('change', () => {
         setMinimumTimeOnPage(Number((document.getElementById('setting-timeout') as HTMLInputElement).value));
+    });
+
+    // When the user changes the theme combo box
+    document.getElementById('setting-selected-theme').addEventListener('change', () => {
+        // Get the new theme
+        const newTheme = (document.getElementById('setting-selected-theme') as HTMLSelectElement).value;
+
+        // Save the theme
+        (chrome.storage.sync || chrome.storage.local).set({
+            theme : newTheme
+        }, null);
+
+        // Remove old theme
+        document.body.classList.remove(theme);
+
+        // Update variable
+        theme = newTheme;
+
+        // Add new theme
+        document.body.classList.add(theme);
     });
 });
 

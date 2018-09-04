@@ -5,7 +5,6 @@
 
 html {
     margin: 0;
-    background-color: #263238;
     padding: 0;
     min-height: 400px;
     max-height: 700px;
@@ -13,11 +12,12 @@ html {
     width: 350px;
 }
 
+html.light { background-color: #F9F9F9; }
+html.dark { background-color: #263238;  } 
+
 body {
     font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
-    background-color: #263238;
-    color: #EEE;
     width: 350px;
     margin: 0;
     height: 500px;
@@ -25,14 +25,19 @@ body {
     padding: 0;
 }
 
+body.light { background-color: #F9F9F9; color: #333; }
+body.dark { background-color: #263238; color: #EEE;  } 
+
 header {
-    background-color: #263238;
     padding: 10px 10px;
     z-index: 30;
     position:fixed;
     width: 350px;
     top:0;
 }
+
+.light header { background-color: #F9F9F9; }
+.dark header { background-color: #263238; } 
 
 header h1 {
     margin-left:auto;
@@ -52,10 +57,12 @@ header nav {
 }
 
 header i {
-    color: #FFF;
     opacity: 0.5;
     transition: opacity 150ms ease-in-out;
 }
+
+.light header i { color: #000; }
+.dark header i { color: #FFF; } 
 
 header i:hover {
     opacity: 1.0;
@@ -68,6 +75,9 @@ h1, h2, h3 {
     font-size: 16px;
 }
 
+h3 {
+    margin-bottom:-5px;
+}
 
 h2 {
     font-size: 18px;
@@ -81,15 +91,16 @@ p {
 }
 
 .inline-button {
-    background-color: #37474F;
     padding: 5px 15px;
     margin-bottom: 5px;
     display: block;
     text-decoration: none;
-    color: #FFF;
     position: relative;
     transition: all 150ms ease-in;
 }
+
+.light .inline-button { color: #000; background-color: #E9E9E9; }
+.dark .inline-button { color: #FFF; background-color: #37474F; } 
 
 .inline-button p {
     display: inline-block;
@@ -117,12 +128,13 @@ p {
 
 .inline-button:hover {
     cursor:default;
-    background: #455A64;
 }
 
-.inline-button:active {
-    background: #546E7A;
-}
+.light .inline-button:hover { background-color: #DADADA; }
+.dark .inline-button:hover { background-color: #455A64; } 
+
+.light .inline-button:active { background-color: #D1D1D1; }
+.dark .inline-button:active { background-color: #546E7A; } 
 
 .status-icon {
     display:inline-block;
@@ -212,11 +224,13 @@ p {
 }
 
 hr {
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #455A64, rgba(0, 0, 0, 0));
     border: 0;
     height:1px;
     margin:15px 10px;
 }
+
+.light hr { background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #AAAAAA, rgba(0, 0, 0, 0)); }
+.dark hr { background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #455A64, rgba(0, 0, 0, 0)); } 
 
 section > .wrapper {
     padding:0px 15px;
@@ -240,6 +254,24 @@ section > .wrapper li {
 }
 
 section > .wrapper a {
-    color: #FFF;
     cursor:pointer;
+}
+
+.light section > .wrapper a { color: #000; }
+.dark section > .wrapper a { color: #FFF; } 
+
+
+/* Style input button */
+input[type="number"] {
+    margin-top:5px;
+    padding:5px;  
+    border:0;
+    width:150px;
+}
+
+select {
+    padding:5px; 
+    margin-top:5px;
+    border:0;
+    width:160px;
 }
