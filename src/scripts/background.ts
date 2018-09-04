@@ -50,36 +50,36 @@ if (navigator.userAgent.includes('Edge') || navigator.userAgent.includes('OPR/')
     // Microsoft Edge or Opera
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
     redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
-    console.debug('[Auth Setup] Using fallback system (Edge or Opera).');
+    console.debug('[Auth Setup] Using new auth based system.');
 
 } else if (navigator.userAgent.includes('Firefox')
     && (navigator.userAgent.includes('Mobile') || navigator.userAgent.includes('Tablet'))) {
     // Firefox for phones and tablets
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
     redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
-    console.debug('[Auth Setup] Using fallback system (Firefox Mobile).');
+    console.debug('[Auth Setup] Using new auth based system.');
 
 } else if (navigator.userAgent.includes('Firefox')) {
     // Mozilla Add-Ons Catalog – (Firefox, Tor Browser)
     clientId = '6a421ae0-f2b1-4cf9-84e0-857dc0a4c9a3';
     redirectURL = 'https://5bed674f74ec59875d4860fbe854e945b81b4dac.extensions.allizom.org/';
-    console.debug('[Auth Setup] Using Firefox based system.');
+    console.debug('[Auth Setup] Using legacy Firefox auth based system.');
 
 } else if (navigator.userAgent.includes('Chrome')) {
     // Chrome Web Store – (Google Chrome, Chromium, Vivaldi, others)
     clientId = '70c5f06f-cef4-4541-a705-1adeea3fa58f';
     redirectURL = 'https://meokcjmjkobffcgldbjjklmaaediikdj.chromiumapp.org/';
-    console.debug('[Auth Setup] Using Chrome based system.');
+    console.debug('[Auth Setup] Using legacy Chrome auth based system.');
 
 } else {
-    // Use fallback auth system
+    // Use the new auth system
     clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
     redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
-    console.debug('[Auth Setup] Using fallback system.');
+    console.debug('[Auth Setup] Using new auth based system.');
 }
 
 // Get stored tokens
-chrome.storage.local.get(['access_token', 'refresh_token'], (data) => {
+chrome.storage.local.get(['access_token', 'refresh_token', 'new_login'], (data) => {
     // Get the access token (may be null if not logged in)
     if (data.access_token !== null) {
         accessToken = data.access_token;
@@ -88,6 +88,14 @@ chrome.storage.local.get(['access_token', 'refresh_token'], (data) => {
     // Get the refresh token (may be null if not logged in)
     if (data.refresh_token !== null) {
         refreshToken = data.refresh_token;
+    }
+
+    // If the user has not logged in before, set them up to use the fallback auth (now primary)
+    // auth system or if the user has logged in before with the new system.
+    if (accessToken === undefined || data.new_login === true) {
+        clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
+        redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
+        console.debug('[Auth Setup] Change to use new auth based system (either no access token, or logged in with the new system).');
     }
 
     // This is a weird place to put this code, but it needs to run after the access
@@ -207,6 +215,10 @@ async function sendActivityAsync(webActivity: ActivityMessage, secondAttempt: bo
  * Login the user into their Microsoft Account.
  */
 function login() {
+    // A little messy, but when logging in, force the user to use the new auth system
+    clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
+    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
+
     // Build the request url
     let authURL = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
     authURL += `?client_id=${clientId}`;
@@ -215,29 +227,15 @@ function login() {
     authURL += `&redirect_uri=${encodeURIComponent(redirectURL)}`;
     authURL += `&scope=${encodeURIComponent(scopes.join(' '))}`;
 
-    // If the client id matches the fallback id, we need to open the
-    // oauth screen in a new tab.
-    if (clientId === '3e8214c9-265d-42b6-aa93-bdd810fda5e6') {
+    // The new auth system just opens a new tab for the user to login
+    // Is more likely to work compared to the old system. Since login only
+    // supports the new system, all old code has been removed.
+    if (typeof browser === 'undefined' || !browser) {
         // Open the URL in a new tab
         chrome.tabs.create({ url: authURL });
     } else {
-        // Launch the web flow to login the user
-        // COMPAT: Firefox requires promise, Chrome requires callback.
-        if (typeof browser === 'undefined' || !browser) {
-            chrome.identity.launchWebAuthFlow({
-                    interactive: true,
-            url: authURL
-            }, (redirectUri) => {
-                validateLoginAsync(redirectUri);
-            });
-        } else {
-            browser.identity.launchWebAuthFlow({
-                    interactive: true,
-            url: authURL
-            }).then((redirectUri) => {
-                validateLoginAsync(redirectUri);
-            });
-        }
+        // Open the URL in a new tab
+        browser.tabs.create({ url: authURL });
     }
 }
 
@@ -252,6 +250,11 @@ function logout() {
     // Update the local variables
     accessToken = undefined;
     refreshToken = undefined;
+
+    // The user has logged out, so we can now use the new auth system (if not already)
+    clientId = '3e8214c9-265d-42b6-aa93-bdd810fda5e6';
+    redirectURL = 'https://timeline.dominicmaas.co.nz/auth-callback/index.html';
+    console.debug('[Auth Setup] Change to use new auth based system.');
 }
 
 /**
@@ -325,6 +328,7 @@ async function validateLoginAsync(redirectUrl: string) {
         // Save the token in storage so it can be used later
         chrome.storage.local.set({
             access_token : body.access_token,
+            new_login: true,
             refresh_token: body.refresh_token
         }, null);
 
