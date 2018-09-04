@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
                         // Send the message and then close the popup
                         Message.sendMessage(new OpenOnRemoteDeviceMessage(device.id, tabs[0].url));
-                        window.close();
+                        closeMenu();
                     });
                 });
             });
@@ -214,14 +214,14 @@ document.addEventListener('DOMContentLoaded', () => {
     attachClickEvent('login', () => {
         // Send the message and close
         Message.sendMessage(new LoginMessage());
-        window.close();
+        closeMenu();
     });
 
     // log out flow
     attachClickEvent('logout', () => {
         // Send the message and close
         Message.sendMessage(new LogoutMessage('User initiated logout'));
-        window.close();
+        closeMenu();
     });
 
     // When the user changes the timeout field
@@ -232,4 +232,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function attachClickEvent(elementName: string, callback: (ev: MouseEvent) => any) {
     document.getElementById(elementName).addEventListener('click', callback);
+}
+
+function closeMenu() {
+    if (typeof browser === 'undefined' || !browser) {
+        chrome.runtime.getPlatformInfo((platInfo) => {
+            if (platInfo.os === 'android') {
+                chrome.tabs.update({active: true});
+            } else {
+                window.close();
+            }
+        });
+    } else {
+        browser.runtime.getPlatformInfo().then((platInfo) => {
+            if (platInfo.os === 'android') {
+
+                // TODO, USE BELOW
+                // browser.tabs.update({active: true});
+                chrome.tabs.update({active: true});
+            } else {
+                window.close();
+            }
+        });
+    }
 }
