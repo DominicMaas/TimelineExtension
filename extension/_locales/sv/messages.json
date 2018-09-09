@@ -76,5 +76,17 @@
     },
     "AboutFeatures3": {
         "message": "Fortsätt att bläddra på en annan enhet snabbt genom att 'trycka' din aktuella aktiva flik till andra enheter som delar samma Microsoft-konto."
+    },
+    "SettingsThemeHeader": {
+        "message": "Tema"
+    },
+    "SettingsThemeDescription": {
+        "message": "Välj ett tema för den här utvidgningen."
+    },
+    "SettingsThemeLight": {
+        "message": "Ljus"
+    },
+    "SettingsThemeDark": {
+        "message": "Mörkt"
     }
 }
