@@ -512,16 +512,11 @@ async function launchOnRemoteDeviceAsync(payload: OpenOnRemoteDeviceMessage, sec
 }
 
 /**
- * Display an error message to the user
+ * Log an error message to the console
  * @param message The error message
  */
 function showErrorMessage(message: ErrorMessage) {
-    chrome.notifications.create('', {
-        iconUrl: 'images/icon_128.png',
-        message: message.Description,
-        title: message.Title,
-        type: "basic",
-    }, null);
+    console.error('Title: ' + message.Title + ', Message: ' + message.Description);
 }
 
 /**

@@ -58,10 +58,8 @@
     }],
 
     "permissions": [
-        "identity",
         "storage",
         "tabs",
-        "notifications",
         "https://graph.microsoft.com/v1.0/me/activities/*",
         "https://graph.microsoft.com/beta/me/devices/*",
         "https://graph.microsoft.com/beta/me/activities/*",
