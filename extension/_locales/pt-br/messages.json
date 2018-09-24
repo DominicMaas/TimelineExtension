@@ -76,5 +76,17 @@
     },
     "AboutFeatures3": {
         "message": "Continue navegando em outro dispositivo rapidamente \"enviando\" sua guia ativa atual para outros dispositivos compartilhando a mesma conta da Microsoft."
+    },
+    "SettingsThemeHeader": {
+        "message": "Theme"
+    },
+    "SettingsThemeDescription": {
+        "message": "Choose a theme for this extension."
+    },
+    "SettingsThemeLight": {
+        "message": "Light"
+    },
+    "SettingsThemeDark": {
+        "message": "Dark"
     }
 }
