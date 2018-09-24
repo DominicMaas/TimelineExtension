@@ -103,7 +103,6 @@
         "message": "将当前的活动标签页推送到使用同一微软帐户的其他设备，以便您在其他设备上继续浏览。",
         "hash": "1f0c8c754b1c2ab0c529ca755a46d67c"
     },
-    },
     "SettingsThemeHeader": {
         "message": "Theme"
     },
@@ -115,6 +114,6 @@
     },
     "SettingsThemeDark": {
         "message": "Dark"
-
+    },
     "__WET_LOCALE__": { "message": "zh-CN" }
 }
