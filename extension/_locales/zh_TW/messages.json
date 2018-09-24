@@ -103,6 +103,17 @@
         "message": "將當前的活動標籤頁推送到使用同一微軟帳戶的其他設備，以便您在其他設備上繼續瀏覽。",
         "hash": "1f0c8c754b1c2ab0c529ca755a46d67c"
     },
-
+    "SettingsThemeHeader": {
+        "message": "Theme"
+    },
+    "SettingsThemeDescription": {
+        "message": "Choose a theme for this extension."
+    },
+    "SettingsThemeLight": {
+        "message": "Light"
+    },
+    "SettingsThemeDark": {
+        "message": "Dark"
+    },
     "__WET_LOCALE__": { "message": "zh-CN" }
 }
