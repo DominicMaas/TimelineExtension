@@ -15,10 +15,8 @@
 
 |Permission|Reason|
 |--|--|
-|`identity`|Used for login and redirect urls.|
 |`storage`|Store the access and refresh tokens. Also keeps track of any saved settings.|
 |`tabs`|Get the current open tab so the extension knows what url to send to a device.|
-|`notifications`|Show a notification when an error occurs.|
 
 ### Allowed Urls
 
