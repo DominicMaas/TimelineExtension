@@ -36,6 +36,7 @@ export class Helpers {
             });
 
             if (valNewH !== valStrH) {
+                // This has to use innerHTML
                 obj.innerHTML = valNewH;
             }
         }
