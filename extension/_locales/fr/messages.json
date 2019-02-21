@@ -1,0 +1,92 @@
+{
+    "ExtensionName": {
+        "message": "Timeline Support"
+    },
+    "ExtensionShortName": {
+        "message": "Timeline"
+    },
+    "ExtensionDescription": {
+        "message": "Synchronise automatiquement votre historique de navigation vers votre PC Windows 10 grâce à la Timeline Windows. Envoie les sites visités à tous vos appareils."
+    },
+    "LoadingText": {
+        "message": "Chargement..."
+    },
+    "MicrosoftAccountLogin": {
+        "message": "Connectez-vous à votre compte Microsoft"
+    },
+    "MicrosoftAccountLogout": {
+        "message": "Déconnectez-vous de votre compte Microsoft"
+    },
+    "MicrosoftAccountLoginAlt1": {
+        "message": "Connectez-vous avec le même compte Microsoft que vous utilisez pour Windows 10."
+    },
+    "MicrosoftAccountLoginAlt2": {
+        "message": "Une fois identifié, votre historique de navigation sera envoyé à la Timeline Windows et sera synchronisé entre vos appareils."
+    },
+    "MicrosoftAccountPrivacy": {
+        "message": "Historique d'activités et vie privée"
+    },
+    "MicrosoftAccountActivityDashboard": {
+        "message": "Tableau de bord de l'historique des activités Microsoft"
+    },
+    "ProjectRomeHeader": {
+        "message": "Vos appareils"
+    },
+    "ProjectRomeOpenOnDevice": {
+        "message": "Ouvrir cette page sur un autre appareil"
+    },
+    "ProjectRomeNoDevices": {
+        "message": "Aucun appareil."
+    },
+    "ActivitesHeader": {
+        "message": "Activités récentes"
+    },
+    "ActivitiesViewRecent": {
+        "message": "Voir les activités récentes"
+    },
+    "ActivitiesNoRecent": {
+        "message": "Aucune activité récente."
+    },
+    "SettingsHeader": {
+        "message": "Paramètres"
+    },
+    "SettingsTimeoutHeader": {
+        "message": "Temps minimal sur une page"
+    },
+    "SettingsTimeoutDescription": {
+        "message": "Nombre de secondes pendant lesquelles une page doit rester ouverte avant d'être inclus dans la Timeline Windows."
+    },
+    "AboutHeader": {
+        "message": "À propos"
+    },
+    "AboutParagraph1": {
+        "message": "Remarque : le support pour la Timeline est toujours en cours de développement."
+    },
+    "AboutParagraph2": {
+        "message": "Si vous rencontrez des problèmes ou si vous avez des suggestions, laissez un tweet (<a href='https://twitter.com/dominicjmaas'>@dominicjmaas</a>) ou ouvrez une rapport de bug sur <a href='https://github.com/DominicMaas/TimelineExtension'>GitHub</a>."
+    },
+    "AboutParagraph3": {
+        "message": "Timeline Support fournit une meilleure intégration à Windows 10 des fonctionnalités apportées par la Timeline Windows ainsi que par le projet Rome."
+    },
+    "AboutFeatures1": {
+        "message": "Synchronisez votre historique de navigation à la Timeline Windows et accédez-y ultérieurement et/ou depuis un autre appareil lié au même compte Microsoft."
+    },
+    "AboutFeatures2": {
+        "message": "Ajustez le nombre de secondes que vous devez passer sur une page avant que celle-ci ne soit stockée dans la Timeline Windows (8 secondes par défaut)."
+    },
+    "AboutFeatures3": {
+        "message": "Poursuivez rapidement votre navigation depuis un autre appareil en 'envoyant' votre onglet courant vers vos autres appareils liés au même compte Microsoft."
+    },
+    "SettingsThemeHeader": {
+        "message": "Thème"
+    },
+    "SettingsThemeDescription": {
+        "message": "Choisissez un thème pour cette extension."
+    },
+    "SettingsThemeLight": {
+        "message": "Clair"
+    },
+    "SettingsThemeDark": {
+        "message": "Sombre"
+    }
+}
