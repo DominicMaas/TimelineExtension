@@ -104,16 +104,16 @@
         "hash": "1f0c8c754b1c2ab0c529ca755a46d67c"
     },
     "SettingsThemeHeader": {
-        "message": "Theme"
+        "message": "主題"
     },
     "SettingsThemeDescription": {
-        "message": "Choose a theme for this extension."
+        "message": "爲本擴展選擇一個主題"
     },
     "SettingsThemeLight": {
-        "message": "Light"
+        "message": "白"
     },
     "SettingsThemeDark": {
-        "message": "Dark"
+        "message": "黑"
     },
     "__WET_LOCALE__": { "message": "zh-CN" }
 }
