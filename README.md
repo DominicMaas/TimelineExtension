@@ -1,4 +1,4 @@
-This extension is no longer being developer, and the login backend has been shutdown. Please use the official Microsoft Extension: https://chrome.google.com/webstore/detail/web-activities/eiipeonhflhoiacfbniealbdjoeoglid
+This extension is no longer being developed, and the login backend has been shutdown. Please use the official Microsoft Extension: https://chrome.google.com/webstore/detail/web-activities/eiipeonhflhoiacfbniealbdjoeoglid
 
 ---
 
