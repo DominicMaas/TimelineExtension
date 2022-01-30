@@ -1,3 +1,9 @@
+This extension is no longer being developer, and the login backend has been shutdown. Please use the official Microsoft Extension: https://chrome.google.com/webstore/detail/web-activities/eiipeonhflhoiacfbniealbdjoeoglid
+
+---
+
+
+
 # Timeline Support - Web Extension
 
 A web extension that integrates Windows Timeline support into popular browsers.
